@@ -3,6 +3,7 @@ import Grid from './grid.jsx';
 import gp from '../game_play.js';
 import ReactHowler from 'react-howler';
 
+import socket from '../socket';
 
 function MegatronDisplay(props) {
     return (
@@ -18,7 +19,7 @@ function MegatronScoreBoard (players){
                 return <div>{players[player].playerName + ': ' + players[player].score}</div>
             })}
         </div>
-        
+
         )
 }
 class Megatron extends React.Component {
@@ -27,9 +28,7 @@ class Megatron extends React.Component {
         super(props);
 
         this.state = {
-            socket: this.props.socket,
-            activePlayers: {},
-            playing: false
+            activePlayers: {}
         };
 
         // this.handleSound = this.handleSound.bind(this)
@@ -37,20 +36,16 @@ class Megatron extends React.Component {
 
     componentDidMount() {
         var that = this;
-        this.state.socket.emit('megatron_activated')
-        this.state.socket.on('update_megatron', function(data) {
-            console.log(data, 'joeys data')
+        socket.emit('megatron_activated')
+        socket.on('update_megatron', function(data) {
             that.state.activePlayers[data.playerName] = data;
-            // that.setState({
-            //     activePlayers: that.state.activePlayers,
-            //     playing: true
-            // })
         })
         this.timer = setInterval(function() {that.forceUpdate()}, 250);
     }
-    
+
     componentWillUnmount() {
         this.state.socket.emit('megatron_deactivated')
+        clearInterval(this.timer);
     }
 
 
@@ -58,10 +53,10 @@ class Megatron extends React.Component {
         // console.log(this.state.activePlayers, "THIS IS THE STATE")
         var that = this;
         var TO_RENDER = (<div className='admin-wait'>Waiting for Admin to start game</div>);
-        
+
         var players = this.state.activePlayers;
         var playerNames = Object.keys(players);
-        
+
         if (playerNames.length > 0) {
             TO_RENDER = playerNames.map(function(playerName) {
                 var player = players[playerName]
@@ -69,7 +64,7 @@ class Megatron extends React.Component {
                     return (
                         <div key={player.playerName}>
                             <MegatronDisplay {...player}/>
-                            
+
                         </div>
                     );
                 }
@@ -86,7 +81,7 @@ class Megatron extends React.Component {
                     playing={this.state.playing}
             />
         {TO_RENDER}
-        
+
         <div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
         </div>
         )

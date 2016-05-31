@@ -6,9 +6,9 @@ function Row(props) {
     function giveClass(num){
         var theClass;
         switch (num){
-           case 0: 
+           case 0:
                 theClass = "emptyCell";
-                break; 
+                break;
            case 1:
                 theClass = "I";
                 break;
@@ -30,16 +30,17 @@ function Row(props) {
            case 7:
                 theClass = "Z";
                 break;
+           case 8:
+                theClass = "addedLines";
+                break;
         }
         if (props.shadow){
             theClass += " shadow";
         }
-        // if (props.hardDrop){
-        //     theClass += " hardDrop";            
-        // } 
+
         return theClass;
     }
-    
+
     return (
         <div className="row">
             {props.row.map(
@@ -49,46 +50,51 @@ function Row(props) {
     )
 }
 
-function Grid(props) {
 
-    var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
-    var currentY;
-    // if (props.hardDrop) {
-    //     currentY = props.hardDrop / constants.GRID_ROWS * 100;
-    // }
-    // else {
-        currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
-    // }
-    var shadowY = props.shadowY / constants.GRID_ROWS * 100;
-    return (
-        <div className="container">
-            <div className="grid">
-            {   
+function Grid(props) {
+        // var currentPieceLength = props.activePiece.length;
+        // var currentPieceWidth = currentPieceLength/constants.GRID_COLS * 100;
+        // var currentPieceHeight = currentPieceLength/constants.GRID_ROWS * 100;
+        // var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
+        var currentX = props.activePiece.activePiecePosition.x * 4;
+        var currentY;
+        //currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
+        currentY = Math.floor(props.activePiece.activePiecePosition.y) * 4;
+        //var shadowY = props.shadowY / constants.GRID_ROWS * 100;
+        var shadowY = props.shadowY * 4;
+        return (
+
+            <div className={props.handicap === 'shake' ? 'shake container' : (props.handicap === 'blur' ? 'blur container' : (props.handicap === 'flip' ? 'flipdiv container' : 'container'))}>
+                {props.handicap === 'troll' ? <div className='troll'><img src='http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' /></div> : '' }
+                {props.message ? <h1 className='message'>{props.message}</h1> : ''}
+                {props.handicap === 'reverse' ? <h1 className='message'>REVERSE</h1> : ''}
+                <div className="grid" id="grid">
+            {
                 props.grid.map(
                     (row, index) => <Row row={row} key={"r"+index} />
                 )
             }
             </div>
-            <div className="currentPiece" style={{position: 'absolute', top: currentY + '%', left: currentX + '%'}}>
-                {   
-                    props.activePiece.activePiece.map(
-                        (row, index) => <Row row={row} hardDrop={props.hardDrop} key={"pr"+index} />
-                    )
-                }
+            <div className="currentPiece" style={{position: 'absolute', top: currentY + 'vh', left: currentX + 'vh'}}>
+                  {
+                        props.activePiece.activePiece.map(
+                            (row, index) => <Row row={row} key={"pr"+index} />
+                        )
+                  }
             </div>
-            <div className="shadowPiece" style={{position: 'absolute', top: shadowY + '%', left: currentX + '%'}}>
-                {   
-                    props.activePiece.activePiece.map(
-                        (row, index) => <Row row={row} shadow={true} key={"sr"+index} />
-                    )
-                }            
+                <div className="shadowPiece" style={{position: 'absolute', top: shadowY + 'vh', left: currentX + 'vh'}}>
+                    {
+                        props.activePiece.activePiece.map(
+                            (row, index) => <Row row={row} shadow={true} key={"sr"+index} />
+                        )
+                    }
+                </div>
             </div>
-        </div>
-    )
+        )
 }
 
 //get initial grid of 0s for any given height/width
-function GetInitialGrid(rows, cols){
+function getInitialGrid(rows, cols){
     var grid = [];
     for (var row=0; row<rows; row++){
         grid[row]=[];
@@ -100,7 +106,7 @@ function GetInitialGrid(rows, cols){
 }
 
 module.exports={
-    GetInitialGrid: GetInitialGrid,
+    getInitialGrid: getInitialGrid,
     Grid: Grid,
     Row: Row
 }

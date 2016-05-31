@@ -97,12 +97,12 @@ function canMoveDown(currGrid, currTet, currTetY, currTetX) {
 }
 
 function getBottomMostPosition(currGrid, currTet, currTetY, currTetX){
-	var tetLength = getTetLength(currTet);	
+	var tetLength = getTetLength(currTet);
 	var canMove = true;
 	var bottomMostY = currTetY;
 	var floorCurrTetY = Math.floor(currTetY);
 	var bottomCells = [];
-	
+
 	currTet.forEach(function(row, rowIndex){
 		row.forEach(function(cell, cellIndex){
 			if (cell != 0 && (!currTet[rowIndex + 1] ? true : (currTet[rowIndex + 1][cellIndex] === 0 ? true : false))) {
@@ -110,7 +110,7 @@ function getBottomMostPosition(currGrid, currTet, currTetY, currTetX){
 			}
 		});
 	});
-	
+
 	while(canMove){
 		bottomCells.forEach(function(bottomCell){
 			if(!currGrid[bottomCell.y+1] || currGrid[bottomCell.y+1][bottomCell.x] != 0){
@@ -180,7 +180,6 @@ function canRotate(currGrid, currTet, currTetY, currTetX) {
 	}
 }
 
-
 function clearLines(grid) {
 	var fullRows = 0;
 	grid.map(function (row, index) {
@@ -208,32 +207,6 @@ function rotateRight(array) {
 		})
 	})
     return rotated;
-}
-
-function shuffleBag() {
-	var array = ['I', 'J', 'Z', 'S', 'O', 'L', 'T'];
-	var arrLength = array.length;
-
-    while (arrLength > 0) {
-        var index = Math.floor(Math.random() * arrLength);
-        arrLength--;
-        var temp = array[arrLength];
-        array[arrLength] = array[index];
-        array[index] = temp;
-    }
-    return array;
-}
-
-
-function getGamePieces() {
-    var array = [];
-    var i = 0;
-    while (i < 150) {
-		array.push(shuffleBag())
-		i++;
-	}
-    var gamePieces = [].concat.apply([], array);
-    return gamePieces;
 }
 
 function getPoints(clearedLines){
@@ -267,6 +240,25 @@ function combos(prevLines, currLines){
 
 
 
+function getRandomBomb(handicapArr, clearedLines){
+	var bombs = [
+        {name: 'extraLines'},
+        {name: 'speedUp', maxTime: 8000},
+        {name: 'shake', maxTime: 2000},
+        {name: 'reverse', maxTime: 5000},
+        {name: 'blur', maxTime: 5000},
+        {name: 'flip', maxTime: 8000},
+		{name: 'troll', maxTime: 5000},
+		// {name: 'cat', maxTime: 5000}
+        ];
+	var randomBomb = bombs[Math.floor(Math.random() * bombs.length)];
+
+	if (clearedLines > 0){
+        handicapArr.push(randomBomb);
+	}
+	return handicapArr;
+}
+
 module.exports = {
     getTetLength: getTetLength,
     checkGameOver: checkGameOver,
@@ -278,8 +270,7 @@ module.exports = {
     canRotate: canRotate,
     clearLines: clearLines,
     rotateRight: rotateRight,
-    shuffleBag: shuffleBag,
-    getGamePieces: getGamePieces,
     getPoints: getPoints,
-    combos: combos
+    combos: combos,
+	getRandomBomb: getRandomBomb
 }

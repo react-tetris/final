@@ -46,8 +46,6 @@
 
 	'use strict';
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -58,566 +56,33 @@
 	
 	var _reactRouter = __webpack_require__(168);
 	
-	var _socket = __webpack_require__(229);
+	var _App = __webpack_require__(229);
 	
-	var _socket2 = _interopRequireDefault(_socket);
+	var _App2 = _interopRequireDefault(_App);
 	
-	var _player = __webpack_require__(279);
+	var _Admin = __webpack_require__(278);
 	
-	var _player2 = _interopRequireDefault(_player);
+	var _Admin2 = _interopRequireDefault(_Admin);
 	
-	var _admin = __webpack_require__(280);
+	var _Megatron = __webpack_require__(284);
 	
-	var _admin2 = _interopRequireDefault(_admin);
-	
-	var _megatron_screen = __webpack_require__(286);
-	
-	var _megatron_screen2 = _interopRequireDefault(_megatron_screen);
-	
-	var _constants = __webpack_require__(288);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	var _grid = __webpack_require__(287);
-	
-	var _grid2 = _interopRequireDefault(_grid);
-	
-	var _game_play = __webpack_require__(289);
-	
-	var _game_play2 = _interopRequireDefault(_game_play);
+	var _Megatron2 = _interopRequireDefault(_Megatron);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } //Node modules
+	//Node modules
 	
 	
-	//socket
-	
-	
-	var socket = (0, _socket2.default)();
+	var routes = _react2.default.createElement(
+	   _reactRouter.Router,
+	   { history: _reactRouter.browserHistory },
+	   _react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default }),
+	   _react2.default.createElement(_reactRouter.Route, { path: '/admin', component: _Admin2.default }),
+	   _react2.default.createElement(_reactRouter.Route, { path: '/megatron', component: _Megatron2.default })
+	);
 	
 	//Game components
 	
-	var App = function (_React$Component) {
-		_inherits(App, _React$Component);
-	
-		function App(props) {
-			_classCallCheck(this, App);
-	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
-	
-			_this.state = {
-				grid: _grid2.default.GetInitialGrid(_constants2.default.GRID_ROWS, _constants2.default.GRID_COLS),
-				gameBag: _this.props.gameBag,
-				activePiece: _constants2.default.SHAPES[_this.props.gameBag[0]],
-				activePiecePosition: {
-					x: _constants2.default.X_START,
-					y: _constants2.default.Y_START
-				},
-				nextPiece: _constants2.default.SHAPES[_this.props.gameBag[1]],
-				ySpeed: 8,
-				lines: 0,
-				totalLines: 0,
-				score: 0,
-				gameStatus: props.serverState.gameStatus,
-				playerName: ''
-			};
-			_this.updateGameState = _this.updateGameState.bind(_this);
-			_this.handleKeydown = _this.handleKeydown.bind(_this);
-			_this.handleKeyup = _this.handleKeyup.bind(_this);
-	
-			_this.addPlayer = _this.addPlayer.bind(_this);
-			_this.handleGameFull = _this.handleGameFull.bind(_this);
-			return _this;
-		}
-	
-		_createClass(App, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-	
-				document.addEventListener('keydown', this.handleKeydown);
-				document.addEventListener('keyup', this.handleKeyup);
-				this.pieceCounter = 1;
-				this.serverTimer = new Date();
-				this.updateGameState();
-			}
-		}, {
-			key: 'componentWillUnmount',
-			value: function componentWillUnmount() {
-				document.removeEventListener('keydown', this.handleKeydown);
-				document.removeEventListener('keyup', this.handleKeyup);
-			}
-		}, {
-			key: 'componentWillReceiveProps',
-			value: function componentWillReceiveProps() {
-				console.log(this.props);
-				console.log("THIS SHIT IS RUNNING IN THE FORCEING OF TSHIT");
-				this.state.gameStatus = this.props.serverState.gameStatus;
-				if (this.props.serverState.dropTheBase) {
-					this.forceUpdate();
-				}
-			}
-		}, {
-			key: 'addPlayer',
-			value: function addPlayer(name) {
-				var playerName = {
-					name: name
-				};
-				this.setState({
-					playerName: name
-				});
-				socket.emit('new_player', playerName);
-			}
-		}, {
-			key: 'handleGameFull',
-			value: function handleGameFull() {
-				this.setState({
-					gameStatus: "DENIED"
-				});
-			}
-	
-			//right 39
-			//left 37
-			//up 38
-			//down 40
-			//space 32
-	
-		}, {
-			key: 'handleKeydown',
-			value: function handleKeydown(e) {
-				//only handle key events if piece is not in hard drop mode
-				if (!this.hardDrop) {
-					switch (e.which) {
-						case 39:
-							if (_game_play2.default.canMoveRight(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x)) {
-								var x = this.state.activePiecePosition.x;
-								var newX = x + 1;
-								this.state.activePiecePosition.x = newX;
-								this.setState({
-									activePiecePosition: this.state.activePiecePosition
-								});
-							}
-							return;
-						case 37:
-							if (_game_play2.default.canMoveLeft(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x)) {
-								var x = this.state.activePiecePosition.x;
-								var newX = x - 1;
-								this.state.activePiecePosition.x = newX;
-								this.setState({
-									activePiecePosition: this.state.activePiecePosition
-								});
-							}
-							return;
-						case 38:
-							if (_game_play2.default.canRotate(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x)) {
-								this.setState({
-									activePiece: _game_play2.default.rotateRight(this.state.activePiece)
-								});
-							}
-							return;
-						case 40:
-							this.fastDrop = true;
-							return;
-						case 32:
-							var yPositionDiff = 20 - Math.floor(this.state.activePiecePosition.y);
-							var newScore = this.state.score + yPositionDiff;
-							this.setState({
-								ySpeed: 60,
-								score: newScore
-							});
-							this.hardDrop = true;
-					}
-				}
-			}
-		}, {
-			key: 'handleKeyup',
-			value: function handleKeyup(e) {
-				if (e.which === 40) {
-					this.fastDrop = false;
-				}
-			}
-		}, {
-			key: 'updateGameState',
-			value: function updateGameState() {
-	
-				if (this.state.gameStatus === "ACTIVE") {
-					var speed = this.fastDrop ? 15 : this.state.ySpeed;
-					var currentState = this.state;
-					var y = currentState.activePiecePosition.y;
-	
-					if (_game_play2.default.canMoveDown(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) && !this.hardDrop) {
-						this.time = null;
-						var newY = this.state.activePiecePosition.y + 1 / 60 * speed;
-						this.state.activePiecePosition.y = newY;
-						this.setState({
-							activePiecePosition: this.state.activePiecePosition
-						});
-					} else {
-						if (this.time || this.hardDrop) {
-							if (new Date() - this.time > 1000 / 2 || this.hardDrop) {
-								this.time = null;
-								var finalY = this.state.activePiecePosition.y;
-								if (this.hardDrop) {
-									finalY = _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x);
-								}
-								var mergedGrid = _game_play2.default.mergeGrid(this.state.grid, this.state.activePiece, this.state.activePiecePosition.x, finalY);
-								var gridStatus = _game_play2.default.clearLines(mergedGrid);
-								var clearedGrid = gridStatus.clearedGrid;
-								var gameOver = gridStatus.gameOver;
-								var currLines = this.state.totalLines;
-								var newLines = gridStatus.clearedLines + currLines;
-								var currScore = this.state.score;
-								var newScore = _game_play2.default.getPoints(gridStatus.clearedLines) + currScore;
-								if (gameOver) {
-									return;
-								} else {
-	
-									var playerState = {
-										grid: clearedGrid,
-										nextPiece: _constants2.default.SHAPES[this.state.gameBag[this.pieceCounter + 1]],
-										activePiece: _constants2.default.SHAPES[this.state.gameBag[this.pieceCounter]],
-										activePiecePosition: {
-											x: _constants2.default.X_START,
-											y: _constants2.default.Y_START
-										},
-										totalLines: newLines,
-										score: newScore,
-										ySpeed: 8
-									};
-	
-									this.setState(playerState);
-									this.pieceCounter++;
-									this.hardDrop = false;
-								}
-							}
-						} else {
-							this.time = new Date();
-						}
-					}
-				}
-	
-				if (new Date() - this.serverTimer > 250) {
-					var playerInfo = {
-						grid: this.state.grid,
-						nextPiece: this.state.nextPiece,
-						activePiece: this.state.activePiece,
-						activePiecePosition: this.state.activePiecePosition,
-						totalLines: this.state.totalLines,
-						score: this.state.score,
-						hardDrop: this.hardDrop,
-						playerName: this.state.playerName
-					};
-	
-					console.log(this.state.playerName, "THIS SHOULD BE THE PLAYER");
-	
-					if (this.state.playerName && this.state.gameStatus === 'ACTIVE') {
-						console.log(this.state.playerName);
-						socket.emit('megatron_screen', playerInfo);
-					}
-	
-					this.serverTimer = new Date();
-				}
-				requestAnimationFrame(this.updateGameState);
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				var _this2 = this;
-	
-				console.log(this.state, "THE STATE IN APP");
-				if (this.props.serverState.gameStatus === "QUEUED") {
-	
-					return _react2.default.createElement(
-						'div',
-						{ className: 'allPage' },
-						_react2.default.createElement(
-							'h1',
-							{ className: 'waiting-h1' },
-							'Waiting for all players'
-						),
-						_react2.default.createElement(
-							'div',
-							null,
-							_react2.default.createElement('img', { src: '../img/loading.gif' })
-						),
-						_react2.default.createElement(
-							'h2',
-							{ className: 'connected-title' },
-							'Connected players'
-						),
-						_react2.default.createElement(
-							'ul',
-							null,
-							Object.keys(this.props.serverState.allplayers).map(function (player, i) {
-								return _react2.default.createElement(
-									'li',
-									{ className: 'player-list-waiting', key: _this2.props.serverState.allplayers[player].socketId },
-									_this2.props.serverState.allplayers[player].playerName
-								);
-							})
-						)
-					);
-				}
-	
-				if (this.props.serverState.gameStatus === 'DENIED') {
-					return _react2.default.createElement(
-						'div',
-						null,
-						'there are too many players, please wait for the next game'
-					);
-				}
-	
-				if (this.props.serverState.gameStatus === 'STOPPED') {
-					return _react2.default.createElement(
-						'div',
-						null,
-						_react2.default.createElement(_player2.default, { checkName: this.props.serverState.nameTaken, onAddPlayer: this.addPlayer, denied: this.props.serverState.gameStatus, onGameFull: this.handleGameFull, allPlayers: this.props.serverState.allplayers }),
-						this.props.children
-					);
-				} else {
-					return _react2.default.createElement(
-						'div',
-						{ className: 'page' },
-						_react2.default.createElement(
-							'div',
-							{ className: 'leftSidebar' },
-							_react2.default.createElement(
-								'h1',
-								null,
-								'NEXT'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'nextPiece' },
-								this.state.nextPiece.map(function (row, index) {
-									return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
-								})
-							),
-							_react2.default.createElement('div', { className: 'rank' }),
-							_react2.default.createElement(
-								'div',
-								{ className: 'lines' },
-								_react2.default.createElement(
-									'h1',
-									null,
-									'LINES'
-								),
-								_react2.default.createElement(
-									'h2',
-									null,
-									this.state.totalLines
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'score' },
-								_react2.default.createElement(
-									'h1',
-									null,
-									'SCORE'
-								),
-								_react2.default.createElement(
-									'h2',
-									null,
-									this.state.score
-								)
-							)
-						),
-						_react2.default.createElement(_grid2.default.Grid, { grid: this.state.grid, hardDrop: this.hardDrop ? _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null, activePiece: { activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) }),
-						_react2.default.createElement(
-							'div',
-							{ className: 'sidebar' },
-							_react2.default.createElement(
-								'div',
-								{ className: 'players' },
-								'PLAYERS'
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'handicaps' },
-								'HANDICAPS'
-							)
-						)
-					);
-				}
-			}
-		}]);
-	
-		return App;
-	}(_react2.default.Component);
-	
-	// App.propTypes = {};
-	// App.defaultProps = {};
-	
-	var AdminWrapper = function (_React$Component2) {
-		_inherits(AdminWrapper, _React$Component2);
-	
-		function AdminWrapper() {
-			_classCallCheck(this, AdminWrapper);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(AdminWrapper).apply(this, arguments));
-		}
-	
-		_createClass(AdminWrapper, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(_admin2.default, { socket: socket });
-			}
-		}]);
-	
-		return AdminWrapper;
-	}(_react2.default.Component);
-	
-	var AppWrapper = function (_React$Component3) {
-		_inherits(AppWrapper, _React$Component3);
-	
-		function AppWrapper() {
-			_classCallCheck(this, AppWrapper);
-	
-			var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(AppWrapper).call(this));
-	
-			_this4.state = {
-				gameStatus: 'STOPPED',
-				connect: false,
-				disconnect: false,
-				denied: false,
-				allplayers: {},
-				nameTaken: false,
-				playerName: '',
-				gameBag: _game_play2.default.getGamePieces()
-			};
-			return _this4;
-		}
-	
-		_createClass(AppWrapper, [{
-			key: 'componentWillMount',
-			value: function componentWillMount() {
-	
-				var that = this;
-				socket.on('connect', function () {
-					that.setState({
-						connect: true
-					});
-				});
-	
-				//on player disconnect, server sends a refreshed list of queued users  
-				socket.on('logout', function (data) {
-					//console.log(data, "THIS IS THE NEW LIST after someone exits")
-					that.setState({
-						allplayers: data
-					});
-				});
-	
-				//If your name is submited in the first 6 players you are queued
-				socket.on('queued', function () {
-					that.setState({
-						gameStatus: 'QUEUED'
-					});
-				});
-	
-				//If game room is full, 7th player will be refused
-				socket.on('denied', function (msg) {
-					//console.log(msg);
-					that.setState({
-						gameStatus: 'DENIED'
-					});
-				});
-	
-				//Get the list of players from the server
-				socket.on('playerList', function (data) {
-					//console.log(data, "All players Data")
-					that.setState({
-						allplayers: data
-					});
-				});
-	
-				//Retrieving score from each player Waiting for the girls for merge
-				socket.on('update_score', function (score) {
-					console.log(score);
-					that.setState({
-						scores: score
-					});
-				});
-	
-				//When the Clear player button is clicked on the Admin page all players are removed from server
-				socket.on('dropPlayers', function () {
-					console.log("THIS IS WHEN THE BASE WAS DROPPED");
-					that.setState({
-						gameStatus: 'STOPPED',
-						connect: false,
-						disconnect: false,
-						denied: false,
-						allplayers: {},
-						nameTaken: false,
-						playerName: '',
-						gameBag: _game_play2.default.getGamePieces(),
-						dropTheBase: true
-					});
-	
-					that.forceUpdate();
-				});
-	
-				socket.on('start_game', function () {
-					console.log("GAME WAS STARTED");
-					that.setState({
-						gameStatus: 'ACTIVE'
-					});
-					that.forceUpdate();
-				});
-	
-				socket.on('name_taken', function () {
-					that.setState({
-						nameTaken: true
-					});
-				});
-	
-				socket.on('create_ok', function (name) {
-					that.setState({
-						playerName: name
-					});
-				});
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				console.log(this.state.gameStatus, "THE STATUSES");
-				return _react2.default.createElement(App, { serverState: this.state, gameBag: this.state.gameBag });
-			}
-		}]);
-	
-		return AppWrapper;
-	}(_react2.default.Component);
-	
-	var MegatronWrapper = function (_React$Component4) {
-		_inherits(MegatronWrapper, _React$Component4);
-	
-		function MegatronWrapper() {
-			_classCallCheck(this, MegatronWrapper);
-	
-			return _possibleConstructorReturn(this, Object.getPrototypeOf(MegatronWrapper).apply(this, arguments));
-		}
-	
-		_createClass(MegatronWrapper, [{
-			key: 'render',
-			value: function render() {
-				return _react2.default.createElement(_megatron_screen2.default, { socket: socket });
-			}
-		}]);
-	
-		return MegatronWrapper;
-	}(_react2.default.Component);
-	
-	var routes = _react2.default.createElement(
-		_reactRouter.Router,
-		{ history: _reactRouter.browserHistory },
-		_react2.default.createElement(_reactRouter.Route, { path: '/', component: AppWrapper }),
-		_react2.default.createElement(_reactRouter.Route, { path: '/admin', component: AdminWrapper }),
-		_react2.default.createElement(_reactRouter.Route, { path: '/megatron', component: MegatronWrapper })
-	);
 	
 	_reactDom2.default.render(routes, document.querySelector('#app'));
 
@@ -26404,15 +25869,205 @@
 /* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _socket = __webpack_require__(230);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	var _Player = __webpack_require__(288);
+	
+	var _Player2 = _interopRequireDefault(_Player);
+	
+	var _Queued = __webpack_require__(289);
+	
+	var _Queued2 = _interopRequireDefault(_Queued);
+	
+	var _Game = __webpack_require__(290);
+	
+	var _Game2 = _interopRequireDefault(_Game);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var App = function (_React$Component) {
+		_inherits(App, _React$Component);
+	
+		function App() {
+			_classCallCheck(this, App);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
+	
+			_this.state = {
+				playState: 'STOPPED',
+				players: {}
+			};
+	
+			_this.scores = {};
+			return _this;
+		}
+	
+		_createClass(App, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var that = this;
+				_socket2.default.emit('entering_game');
+	
+				_socket2.default.on('game_status', function (newGameState) {
+					that.setState({
+						playState: newGameState
+					});
+				});
+	
+				_socket2.default.on('start_game', function (state) {
+					that.setState({
+						playState: 'PLAYING',
+						pieces: state.pieces,
+						isPlayer: true,
+						playerName: state.name
+					});
+				});
+	
+				_socket2.default.on('update_players', function (players) {
+					that.setState({
+						players: players
+					});
+				});
+	
+				_socket2.default.on('score_update', function (scoreData) {
+					that.scores[scoreData.name] = scoreData.score;
+	
+					var rank = Object.keys(that.scores).map(function (playerName) {
+						return { name: playerName, score: that.scores[playerName] };
+					}).sort(function (a, b) {
+						return b.score - a.score;
+					}).findIndex(function (scoreData) {
+						return scoreData.name === that.state.playerName;
+					}) + 1;
+	
+					that.setState({
+						rank: rank
+					});
+				});
+	
+				// //Retrieving score from each player Waiting for the girls for merge
+				// socket.on('update_score', function(score) {
+				// 	console.log(score);
+				// 	that.setState({
+				// 		scores: score
+				// 	})
+				// })
+	
+				// socket.on('name_taken', function() {
+				//     that.setState({
+				//     	nameTaken: true
+				//     })
+				// })
+	
+				// socket.on('create_ok', function(name) {
+				//     that.setState({
+				//     	playerName: name
+				//     })
+				// })
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				if (this.state.playState === "STOPPED") {
+					return _react2.default.createElement(
+						'div',
+						null,
+						'loading...'
+					);
+				}
+	
+				if (this.state.playState === 'ACCEPTING_PLAYERS') {
+					return _react2.default.createElement(_Player2.default, null);
+				}
+	
+				if (this.state.playState === 'PLAYING') {
+					if (this.state.isPlayer === true) {
+						return _react2.default.createElement(_Game2.default, { rank: this.state.rank, playerName: this.state.playerName, gameBag: this.state.pieces });
+					} else {
+						return _react2.default.createElement(
+							'div',
+							null,
+							'A game is being played, please wait for the next game'
+						);
+					}
+				}
+	
+				if (this.state.playState === 'QUEUED') {
+					return _react2.default.createElement(_Queued2.default, { players: this.state.players });
+				}
+	
+				if (this.state.playState === 'TOO_MANY_PLAYERS') {
+					return _react2.default.createElement(
+						'div',
+						null,
+						'There are too many players right now, wait for the next game'
+					);
+				}
+	
+				return _react2.default.createElement(
+					'div',
+					null,
+					'you have reached an unreachable state!'
+				);
+			}
+		}]);
+	
+		return App;
+	}(_react2.default.Component);
+	
+	exports.default = App;
+
+/***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _socket = __webpack_require__(231);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = (0, _socket2.default)();
+
+/***/ },
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
 	
 	/**
 	 * Module dependencies.
 	 */
 	
-	var url = __webpack_require__(230);
-	var parser = __webpack_require__(235);
-	var Manager = __webpack_require__(243);
-	var debug = __webpack_require__(232)('socket.io-client');
+	var url = __webpack_require__(232);
+	var parser = __webpack_require__(237);
+	var Manager = __webpack_require__(245);
+	var debug = __webpack_require__(234)('socket.io-client');
 	
 	/**
 	 * Module exports.
@@ -26494,12 +26149,12 @@
 	 * @api public
 	 */
 	
-	exports.Manager = __webpack_require__(243);
+	exports.Manager = __webpack_require__(245);
 	exports.Socket = __webpack_require__(271);
 
 
 /***/ },
-/* 230 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -26507,8 +26162,8 @@
 	 * Module dependencies.
 	 */
 	
-	var parseuri = __webpack_require__(231);
-	var debug = __webpack_require__(232)('socket.io-client:url');
+	var parseuri = __webpack_require__(233);
+	var debug = __webpack_require__(234)('socket.io-client:url');
 	
 	/**
 	 * Module exports.
@@ -26582,7 +26237,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 231 */
+/* 233 */
 /***/ function(module, exports) {
 
 	/**
@@ -26627,7 +26282,7 @@
 
 
 /***/ },
-/* 232 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -26637,7 +26292,7 @@
 	 * Expose `debug()` as the module.
 	 */
 	
-	exports = module.exports = __webpack_require__(233);
+	exports = module.exports = __webpack_require__(235);
 	exports.log = log;
 	exports.formatArgs = formatArgs;
 	exports.save = save;
@@ -26801,7 +26456,7 @@
 
 
 /***/ },
-/* 233 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -26817,7 +26472,7 @@
 	exports.disable = disable;
 	exports.enable = enable;
 	exports.enabled = enabled;
-	exports.humanize = __webpack_require__(234);
+	exports.humanize = __webpack_require__(236);
 	
 	/**
 	 * The currently active debug mode names, and names to skip.
@@ -27004,7 +26659,7 @@
 
 
 /***/ },
-/* 234 */
+/* 236 */
 /***/ function(module, exports) {
 
 	/**
@@ -27135,7 +26790,7 @@
 
 
 /***/ },
-/* 235 */
+/* 237 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -27143,12 +26798,12 @@
 	 * Module dependencies.
 	 */
 	
-	var debug = __webpack_require__(232)('socket.io-parser');
-	var json = __webpack_require__(236);
-	var isArray = __webpack_require__(239);
-	var Emitter = __webpack_require__(240);
-	var binary = __webpack_require__(241);
-	var isBuf = __webpack_require__(242);
+	var debug = __webpack_require__(234)('socket.io-parser');
+	var json = __webpack_require__(238);
+	var isArray = __webpack_require__(241);
+	var Emitter = __webpack_require__(242);
+	var binary = __webpack_require__(243);
+	var isBuf = __webpack_require__(244);
 	
 	/**
 	 * Protocol version.
@@ -27541,14 +27196,14 @@
 
 
 /***/ },
-/* 236 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! JSON v3.3.2 | http://bestiejs.github.io/json3 | Copyright 2012-2014, Kit Cambridge | http://kit.mit-license.org */
 	;(function () {
 	  // Detect the `define` function exposed by asynchronous module loaders. The
 	  // strict `define` check is necessary for compatibility with `r.js`.
-	  var isLoader = "function" === "function" && __webpack_require__(238);
+	  var isLoader = "function" === "function" && __webpack_require__(240);
 	
 	  // A set of types used to distinguish objects from primitives.
 	  var objectTypes = {
@@ -28447,10 +28102,10 @@
 	  }
 	}).call(this);
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(237)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(239)(module), (function() { return this; }())))
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -28466,7 +28121,7 @@
 
 
 /***/ },
-/* 238 */
+/* 240 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {module.exports = __webpack_amd_options__;
@@ -28474,7 +28129,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ },
-/* 239 */
+/* 241 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -28483,7 +28138,7 @@
 
 
 /***/ },
-/* 240 */
+/* 242 */
 /***/ function(module, exports) {
 
 	
@@ -28653,7 +28308,7 @@
 
 
 /***/ },
-/* 241 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -28662,8 +28317,8 @@
 	 * Module requirements
 	 */
 	
-	var isArray = __webpack_require__(239);
-	var isBuf = __webpack_require__(242);
+	var isArray = __webpack_require__(241);
+	var isBuf = __webpack_require__(244);
 	
 	/**
 	 * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
@@ -28801,7 +28456,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 242 */
+/* 244 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -28821,7 +28476,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 243 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -28829,15 +28484,15 @@
 	 * Module dependencies.
 	 */
 	
-	var eio = __webpack_require__(244);
+	var eio = __webpack_require__(246);
 	var Socket = __webpack_require__(271);
 	var Emitter = __webpack_require__(272);
-	var parser = __webpack_require__(235);
+	var parser = __webpack_require__(237);
 	var on = __webpack_require__(274);
 	var bind = __webpack_require__(275);
-	var debug = __webpack_require__(232)('socket.io-client:manager');
+	var debug = __webpack_require__(234)('socket.io-client:manager');
 	var indexOf = __webpack_require__(269);
-	var Backoff = __webpack_require__(278);
+	var Backoff = __webpack_require__(277);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -29384,19 +29039,19 @@
 
 
 /***/ },
-/* 244 */
+/* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	module.exports =  __webpack_require__(245);
+	module.exports =  __webpack_require__(247);
 
 
 /***/ },
-/* 245 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
-	module.exports = __webpack_require__(246);
+	module.exports = __webpack_require__(248);
 	
 	/**
 	 * Exports parser
@@ -29404,23 +29059,23 @@
 	 * @api public
 	 *
 	 */
-	module.exports.parser = __webpack_require__(253);
+	module.exports.parser = __webpack_require__(255);
 
 
 /***/ },
-/* 246 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var transports = __webpack_require__(247);
-	var Emitter = __webpack_require__(262);
-	var debug = __webpack_require__(232)('engine.io-client:socket');
+	var transports = __webpack_require__(249);
+	var Emitter = __webpack_require__(242);
+	var debug = __webpack_require__(234)('engine.io-client:socket');
 	var index = __webpack_require__(269);
-	var parser = __webpack_require__(253);
-	var parseuri = __webpack_require__(231);
+	var parser = __webpack_require__(255);
+	var parseuri = __webpack_require__(233);
 	var parsejson = __webpack_require__(270);
 	var parseqs = __webpack_require__(263);
 	
@@ -29546,9 +29201,9 @@
 	 */
 	
 	Socket.Socket = Socket;
-	Socket.Transport = __webpack_require__(252);
-	Socket.transports = __webpack_require__(247);
-	Socket.parser = __webpack_require__(253);
+	Socket.Transport = __webpack_require__(254);
+	Socket.transports = __webpack_require__(249);
+	Socket.parser = __webpack_require__(255);
 	
 	/**
 	 * Creates transport of the given type.
@@ -30143,15 +29798,15 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 247 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(248);
-	var XHR = __webpack_require__(250);
+	var XMLHttpRequest = __webpack_require__(250);
+	var XHR = __webpack_require__(252);
 	var JSONP = __webpack_require__(266);
 	var websocket = __webpack_require__(267);
 	
@@ -30203,11 +29858,11 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 248 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// browser shim for xmlhttprequest module
-	var hasCORS = __webpack_require__(249);
+	var hasCORS = __webpack_require__(251);
 	
 	module.exports = function(opts) {
 	  var xdomain = opts.xdomain;
@@ -30245,7 +29900,7 @@
 
 
 /***/ },
-/* 249 */
+/* 251 */
 /***/ function(module, exports) {
 
 	
@@ -30268,18 +29923,18 @@
 
 
 /***/ },
-/* 250 */
+/* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module requirements.
 	 */
 	
-	var XMLHttpRequest = __webpack_require__(248);
-	var Polling = __webpack_require__(251);
-	var Emitter = __webpack_require__(262);
+	var XMLHttpRequest = __webpack_require__(250);
+	var Polling = __webpack_require__(253);
+	var Emitter = __webpack_require__(242);
 	var inherit = __webpack_require__(264);
-	var debug = __webpack_require__(232)('engine.io-client:polling-xhr');
+	var debug = __webpack_require__(234)('engine.io-client:polling-xhr');
 	
 	/**
 	 * Module exports.
@@ -30687,19 +30342,19 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 251 */
+/* 253 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(252);
+	var Transport = __webpack_require__(254);
 	var parseqs = __webpack_require__(263);
-	var parser = __webpack_require__(253);
+	var parser = __webpack_require__(255);
 	var inherit = __webpack_require__(264);
 	var yeast = __webpack_require__(265);
-	var debug = __webpack_require__(232)('engine.io-client:polling');
+	var debug = __webpack_require__(234)('engine.io-client:polling');
 	
 	/**
 	 * Module exports.
@@ -30712,7 +30367,7 @@
 	 */
 	
 	var hasXHR2 = (function() {
-	  var XMLHttpRequest = __webpack_require__(248);
+	  var XMLHttpRequest = __webpack_require__(250);
 	  var xhr = new XMLHttpRequest({ xdomain: false });
 	  return null != xhr.responseType;
 	})();
@@ -30940,15 +30595,15 @@
 
 
 /***/ },
-/* 252 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(253);
-	var Emitter = __webpack_require__(262);
+	var parser = __webpack_require__(255);
+	var Emitter = __webpack_require__(242);
 	
 	/**
 	 * Module exports.
@@ -31101,19 +30756,19 @@
 
 
 /***/ },
-/* 253 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
 	 * Module dependencies.
 	 */
 	
-	var keys = __webpack_require__(254);
-	var hasBinary = __webpack_require__(255);
-	var sliceBuffer = __webpack_require__(257);
-	var base64encoder = __webpack_require__(258);
-	var after = __webpack_require__(259);
-	var utf8 = __webpack_require__(260);
+	var keys = __webpack_require__(256);
+	var hasBinary = __webpack_require__(257);
+	var sliceBuffer = __webpack_require__(258);
+	var base64encoder = __webpack_require__(259);
+	var after = __webpack_require__(260);
+	var utf8 = __webpack_require__(261);
 	
 	/**
 	 * Check if we are running an android browser. That requires us to use
@@ -31170,7 +30825,7 @@
 	 * Create a blob api even for blob builder when vendor prefixes exist
 	 */
 	
-	var Blob = __webpack_require__(261);
+	var Blob = __webpack_require__(262);
 	
 	/**
 	 * Encodes a packet.
@@ -31702,7 +31357,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 254 */
+/* 256 */
 /***/ function(module, exports) {
 
 	
@@ -31727,7 +31382,7 @@
 
 
 /***/ },
-/* 255 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -31735,7 +31390,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(256);
+	var isArray = __webpack_require__(241);
 	
 	/**
 	 * Module exports.
@@ -31792,16 +31447,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 256 */
-/***/ function(module, exports) {
-
-	module.exports = Array.isArray || function (arr) {
-	  return Object.prototype.toString.call(arr) == '[object Array]';
-	};
-
-
-/***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports) {
 
 	/**
@@ -31836,7 +31482,7 @@
 
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports) {
 
 	/*
@@ -31901,7 +31547,7 @@
 
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports) {
 
 	module.exports = after
@@ -31935,7 +31581,7 @@
 
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/utf8js v2.0.0 by @mathias */
@@ -32181,10 +31827,10 @@
 	
 	}(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(237)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(239)(module), (function() { return this; }())))
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -32285,176 +31931,6 @@
 	})();
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 262 */
-/***/ function(module, exports) {
-
-	
-	/**
-	 * Expose `Emitter`.
-	 */
-	
-	module.exports = Emitter;
-	
-	/**
-	 * Initialize a new `Emitter`.
-	 *
-	 * @api public
-	 */
-	
-	function Emitter(obj) {
-	  if (obj) return mixin(obj);
-	};
-	
-	/**
-	 * Mixin the emitter properties.
-	 *
-	 * @param {Object} obj
-	 * @return {Object}
-	 * @api private
-	 */
-	
-	function mixin(obj) {
-	  for (var key in Emitter.prototype) {
-	    obj[key] = Emitter.prototype[key];
-	  }
-	  return obj;
-	}
-	
-	/**
-	 * Listen on the given `event` with `fn`.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-	
-	Emitter.prototype.on =
-	Emitter.prototype.addEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-	  (this._callbacks[event] = this._callbacks[event] || [])
-	    .push(fn);
-	  return this;
-	};
-	
-	/**
-	 * Adds an `event` listener that will be invoked a single
-	 * time then automatically removed.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-	
-	Emitter.prototype.once = function(event, fn){
-	  var self = this;
-	  this._callbacks = this._callbacks || {};
-	
-	  function on() {
-	    self.off(event, on);
-	    fn.apply(this, arguments);
-	  }
-	
-	  on.fn = fn;
-	  this.on(event, on);
-	  return this;
-	};
-	
-	/**
-	 * Remove the given callback for `event` or all
-	 * registered callbacks.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-	
-	Emitter.prototype.off =
-	Emitter.prototype.removeListener =
-	Emitter.prototype.removeAllListeners =
-	Emitter.prototype.removeEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-	
-	  // all
-	  if (0 == arguments.length) {
-	    this._callbacks = {};
-	    return this;
-	  }
-	
-	  // specific event
-	  var callbacks = this._callbacks[event];
-	  if (!callbacks) return this;
-	
-	  // remove all handlers
-	  if (1 == arguments.length) {
-	    delete this._callbacks[event];
-	    return this;
-	  }
-	
-	  // remove specific handler
-	  var cb;
-	  for (var i = 0; i < callbacks.length; i++) {
-	    cb = callbacks[i];
-	    if (cb === fn || cb.fn === fn) {
-	      callbacks.splice(i, 1);
-	      break;
-	    }
-	  }
-	  return this;
-	};
-	
-	/**
-	 * Emit `event` with the given args.
-	 *
-	 * @param {String} event
-	 * @param {Mixed} ...
-	 * @return {Emitter}
-	 */
-	
-	Emitter.prototype.emit = function(event){
-	  this._callbacks = this._callbacks || {};
-	  var args = [].slice.call(arguments, 1)
-	    , callbacks = this._callbacks[event];
-	
-	  if (callbacks) {
-	    callbacks = callbacks.slice(0);
-	    for (var i = 0, len = callbacks.length; i < len; ++i) {
-	      callbacks[i].apply(this, args);
-	    }
-	  }
-	
-	  return this;
-	};
-	
-	/**
-	 * Return array of callbacks for `event`.
-	 *
-	 * @param {String} event
-	 * @return {Array}
-	 * @api public
-	 */
-	
-	Emitter.prototype.listeners = function(event){
-	  this._callbacks = this._callbacks || {};
-	  return this._callbacks[event] || [];
-	};
-	
-	/**
-	 * Check if this emitter has `event` handlers.
-	 *
-	 * @param {String} event
-	 * @return {Boolean}
-	 * @api public
-	 */
-	
-	Emitter.prototype.hasListeners = function(event){
-	  return !! this.listeners(event).length;
-	};
-
 
 /***/ },
 /* 263 */
@@ -32594,7 +32070,7 @@
 	 * Module requirements.
 	 */
 	
-	var Polling = __webpack_require__(251);
+	var Polling = __webpack_require__(253);
 	var inherit = __webpack_require__(264);
 	
 	/**
@@ -32838,12 +32314,12 @@
 	 * Module dependencies.
 	 */
 	
-	var Transport = __webpack_require__(252);
-	var parser = __webpack_require__(253);
+	var Transport = __webpack_require__(254);
+	var parser = __webpack_require__(255);
 	var parseqs = __webpack_require__(263);
 	var inherit = __webpack_require__(264);
 	var yeast = __webpack_require__(265);
-	var debug = __webpack_require__(232)('engine.io-client:websocket');
+	var debug = __webpack_require__(234)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	
 	/**
@@ -33193,12 +32669,12 @@
 	 * Module dependencies.
 	 */
 	
-	var parser = __webpack_require__(235);
+	var parser = __webpack_require__(237);
 	var Emitter = __webpack_require__(272);
 	var toArray = __webpack_require__(273);
 	var on = __webpack_require__(274);
 	var bind = __webpack_require__(275);
-	var debug = __webpack_require__(232)('socket.io-client:socket');
+	var debug = __webpack_require__(234)('socket.io-client:socket');
 	var hasBin = __webpack_require__(276);
 	
 	/**
@@ -33856,7 +33332,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(277);
+	var isArray = __webpack_require__(241);
 	
 	/**
 	 * Module exports.
@@ -33915,15 +33391,6 @@
 
 /***/ },
 /* 277 */
-/***/ function(module, exports) {
-
-	module.exports = Array.isArray || function (arr) {
-	  return Object.prototype.toString.call(arr) == '[object Array]';
-	};
-
-
-/***/ },
-/* 278 */
 /***/ function(module, exports) {
 
 	
@@ -34014,80 +33481,7 @@
 
 
 /***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Player = function (_React$Component) {
-	  _inherits(Player, _React$Component);
-	
-	  function Player(props) {
-	    _classCallCheck(this, Player);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Player).call(this, props));
-	
-	    _this.handleSubmit = _this.handleSubmit.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Player, [{
-	    key: 'handleSubmit',
-	    value: function handleSubmit(event) {
-	      event.preventDefault();
-	      this.props.onAddPlayer(this.refs.userName.value.toUpperCase());
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      console.log(this.props.allPlayers, 'THERE SHOULD BE ALLPLAYERS');
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'enterScreen' },
-	        Object.keys(this.props.allPlayers).length <= 6 ? _react2.default.createElement(
-	          'form',
-	          { className: 'enterForm', onSubmit: this.handleSubmit },
-	          _react2.default.createElement('input', { className: 'formInput', type: 'text', ref: 'userName', placeholder: 'Enter your Name' }),
-	          _react2.default.createElement(
-	            'button',
-	            { className: 'enterButton', type: 'submit' },
-	            'Enter the GAME!'
-	          )
-	        ) : this.props.onGameFull(),
-	        this.props.nameTaken ? _react2.default.createElement(
-	          'div',
-	          null,
-	          'EAT Kabab'
-	        ) : ""
-	      );
-	    }
-	  }]);
-	
-	  return Player;
-	}(_react2.default.Component);
-	
-	exports.default = Player;
-
-/***/ },
-/* 280 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34098,9 +33492,13 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHowler = __webpack_require__(281);
+	var _reactHowler = __webpack_require__(279);
 	
 	var _reactHowler2 = _interopRequireDefault(_reactHowler);
+	
+	var _socket = __webpack_require__(230);
+	
+	var _socket2 = _interopRequireDefault(_socket);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -34118,10 +33516,6 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Admin).call(this, props));
 	
-	    _this.state = {
-	      socket: _this.props.socket,
-	      playing: false
-	    };
 	    _this.clearPlayers = _this.clearPlayers.bind(_this);
 	    _this.startGame = _this.startGame.bind(_this);
 	    _this.handleSound = _this.handleSound.bind(_this);
@@ -34136,7 +33530,7 @@
 	  }, {
 	    key: 'startGame',
 	    value: function startGame() {
-	      this.state.socket.emit('start_game', 'server received!');
+	      _socket2.default.emit('start_game');
 	    }
 	  }, {
 	    key: 'handleSound',
@@ -34157,10 +33551,6 @@
 	          { className: 'admin-h1' },
 	          'Admin page'
 	        ),
-	        _react2.default.createElement(_reactHowler2.default, {
-	          src: '../sound/videoplayback.m4a',
-	          playing: this.state.playing
-	        }),
 	        _react2.default.createElement(
 	          'button',
 	          { className: 'arcade-button', type: 'button', onClick: this.clearPlayers },
@@ -34186,15 +33576,15 @@
 	module.exports = Admin;
 
 /***/ },
-/* 281 */
+/* 279 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(282).default;
+	module.exports = __webpack_require__(280).default;
 
 /***/ },
-/* 282 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34209,9 +33599,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _howler3 = __webpack_require__(283);
+	var _howler3 = __webpack_require__(281);
 	
-	var _utils = __webpack_require__(285);
+	var _utils = __webpack_require__(283);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -34449,7 +33839,7 @@
 	exports.default = ReactHowler;
 
 /***/ },
-/* 283 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34457,23 +33847,23 @@
 	var Howler = void 0;
 	
 	if (typeof window !== 'undefined') {
-	  Howler = __webpack_require__(284);
+	  Howler = __webpack_require__(282);
 	}
 	
 	module.exports = Howler;
 
 /***/ },
-/* 284 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*! howler.js v2.0.0-beta10 | (c) 2013-2016, James Simpson of GoldFire Studios | MIT License | howlerjs.com */
-	!function(){"use strict";function e(){try{"undefined"!=typeof AudioContext?o=new AudioContext:"undefined"!=typeof webkitAudioContext?o=new webkitAudioContext:t=!1}catch(e){t=!1}if(!t)if("undefined"!=typeof Audio)try{var a=new Audio;"undefined"==typeof a.oncanplaythrough&&(d="canplay")}catch(e){r=!0}else r=!0;try{var a=new Audio;a.muted&&(r=!0)}catch(e){}var i=/iP(hone|od|ad)/.test(n&&n.platform),_=n&&n.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/),s=_?parseInt(_[1],10):null;if(i&&s&&9>s){var l=/safari/.test(n&&n.userAgent.toLowerCase());(n&&n.standalone&&!l||n&&!n.standalone&&!l)&&(t=!1)}t&&(u="undefined"==typeof o.createGain?o.createGainNode():o.createGain(),u.gain.value=1,u.connect(o.destination))}var n=window&&window.navigator?window.navigator:null,o=null,t=!0,r=!1,u=null,d="canplaythrough";e();var a=function(){this.init()};a.prototype={init:function(){var e=this||i;return e._codecs={},e._howls=[],e._muted=!1,e._volume=1,e.state=o?o.state||"running":"running",e.autoSuspend=!0,e._autoSuspend(),e.mobileAutoEnable=!0,e.noAudio=r,e.usingWebAudio=t,e.ctx=o,e.masterGain=u,r||e._setupCodecs(),e},volume:function(e){var n=this||i;if(e=parseFloat(e),"undefined"!=typeof e&&e>=0&&1>=e){n._volume=e,t&&(u.gain.value=e);for(var o=0;o<n._howls.length;o++)if(!n._howls[o]._webAudio)for(var r=n._howls[o]._getSoundIds(),d=0;d<r.length;d++){var a=n._howls[o]._soundById(r[d]);a&&a._node&&(a._node.volume=a._volume*e)}return n}return n._volume},mute:function(e){var n=this||i;n._muted=e,t&&(u.gain.value=e?0:n._volume);for(var o=0;o<n._howls.length;o++)if(!n._howls[o]._webAudio)for(var r=n._howls[o]._getSoundIds(),d=0;d<r.length;d++){var a=n._howls[o]._soundById(r[d]);a&&a._node&&(a._node.muted=e?!0:a._muted)}return n},unload:function(){for(var n=this||i,t=n._howls.length-1;t>=0;t--)n._howls[t].unload();return n.usingWebAudio&&"undefined"!=typeof o.close&&(n.ctx=null,o.close(),e(),n.ctx=o),n},codecs:function(e){return(this||i)._codecs[e]},_setupCodecs:function(){var e=this||i,o=new Audio,t=o.canPlayType("audio/mpeg;").replace(/^no$/,""),r=n&&n.userAgent.match(/OPR\/([0-6].)/g),u=r&&parseInt(r[0].split("/")[1],10)<33;return e._codecs={mp3:!(u||!t&&!o.canPlayType("audio/mp3;").replace(/^no$/,"")),mpeg:!!t,opus:!!o.canPlayType('audio/ogg; codecs="opus"').replace(/^no$/,""),ogg:!!o.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),oga:!!o.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),wav:!!o.canPlayType('audio/wav; codecs="1"').replace(/^no$/,""),aac:!!o.canPlayType("audio/aac;").replace(/^no$/,""),caf:!!o.canPlayType("audio/x-caf;").replace(/^no$/,""),m4a:!!(o.canPlayType("audio/x-m4a;")||o.canPlayType("audio/m4a;")||o.canPlayType("audio/aac;")).replace(/^no$/,""),mp4:!!(o.canPlayType("audio/x-mp4;")||o.canPlayType("audio/mp4;")||o.canPlayType("audio/aac;")).replace(/^no$/,""),weba:!!o.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/,""),webm:!!o.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/,""),dolby:!!o.canPlayType('audio/mp4; codecs="ec-3"').replace(/^no$/,"")},e},_enableMobileAudio:function(){var e=this||i,t=/iPhone|iPad|iPod|Android|BlackBerry|BB10|Silk|Mobi/i.test(n&&n.userAgent),r=!!("ontouchend"in window||n&&n.maxTouchPoints>0||n&&n.msMaxTouchPoints>0);if(!o||!e._mobileEnabled&&t&&r){e._mobileEnabled=!1,i.unload(),e._scratchBuffer=o.createBuffer(1,1,22050);var u=function(){var n=o.createBufferSource();n.buffer=e._scratchBuffer,n.connect(o.destination),"undefined"==typeof n.start?n.noteOn(0):n.start(0),n.onended=function(){n.disconnect(0),e._mobileEnabled=!0,e.mobileAutoEnable=!1,document.removeEventListener("touchend",u,!0)}};return document.addEventListener("touchend",u,!0),e}},_autoSuspend:function(){var e=this;if(e.autoSuspend&&o&&"undefined"!=typeof o.suspend&&t){for(var n=0;n<e._howls.length;n++)if(e._howls[n]._webAudio)for(var r=0;r<e._howls[n]._sounds.length;r++)if(!e._howls[n]._sounds[r]._paused)return e;return e._suspendTimer=setTimeout(function(){e.autoSuspend&&(e._suspendTimer=null,e.state="suspending",o.suspend().then(function(){e.state="suspended",e._resumeAfterSuspend&&(delete e._resumeAfterSuspend,e._autoResume())}))},3e4),e}},_autoResume:function(){var e=this;if(o&&"undefined"!=typeof o.resume&&t)return"running"===e.state&&e._suspendTimer?(clearTimeout(e._suspendTimer),e._suspendTimer=null):"suspended"===e.state?(e.state="resuming",o.resume().then(function(){e.state="running"}),e._suspendTimer&&(clearTimeout(e._suspendTimer),e._suspendTimer=null)):"suspending"===e.state&&(e._resumeAfterSuspend=!0),e}};var i=new a,_=function(e){var n=this;return e.src&&0!==e.src.length?void n.init(e):void console.error("An array of source files must be passed with any new Howl.")};_.prototype={init:function(e){var n=this;return n._autoplay=e.autoplay||!1,n._format="string"!=typeof e.format?e.format:[e.format],n._html5=e.html5||!1,n._muted=e.mute||!1,n._loop=e.loop||!1,n._pool=e.pool||5,n._preload="boolean"==typeof e.preload?e.preload:!0,n._rate=e.rate||1,n._sprite=e.sprite||{},n._src="string"!=typeof e.src?e.src:[e.src],n._volume=void 0!==e.volume?e.volume:1,n._duration=0,n._state="unloaded",n._sounds=[],n._endTimers={},n._queue=[],n._onend=e.onend?[{fn:e.onend}]:[],n._onfade=e.onfade?[{fn:e.onfade}]:[],n._onload=e.onload?[{fn:e.onload}]:[],n._onloaderror=e.onloaderror?[{fn:e.onloaderror}]:[],n._onpause=e.onpause?[{fn:e.onpause}]:[],n._onplay=e.onplay?[{fn:e.onplay}]:[],n._onstop=e.onstop?[{fn:e.onstop}]:[],n._onmute=e.onmute?[{fn:e.onmute}]:[],n._onvolume=e.onvolume?[{fn:e.onvolume}]:[],n._onrate=e.onrate?[{fn:e.onrate}]:[],n._onseek=e.onseek?[{fn:e.onseek}]:[],n._webAudio=t&&!n._html5,"undefined"!=typeof o&&o&&i.mobileAutoEnable&&i._enableMobileAudio(),i._howls.push(n),n._preload&&n.load(),n},load:function(){var e=this,n=null;if(r)return void e._emit("loaderror",null,"No audio support.");"string"==typeof e._src&&(e._src=[e._src]);for(var o=0;o<e._src.length;o++){var t,u;if(e._format&&e._format[o]?t=e._format[o]:(u=e._src[o],t=/^data:audio\/([^;,]+);/i.exec(u),t||(t=/\.([^.]+)$/.exec(u.split("?",1)[0])),t&&(t=t[1].toLowerCase())),i.codecs(t)){n=e._src[o];break}}return n?(e._src=n,e._state="loading","https:"===window.location.protocol&&"http:"===n.slice(0,5)&&(e._html5=!0,e._webAudio=!1),new s(e),e._webAudio&&f(e),e):void e._emit("loaderror",null,"No codec support for selected audio sources.")},play:function(e){var t=this,r=arguments,u=null;if("number"==typeof e)u=e,e=null;else if("undefined"==typeof e){e="__default";for(var a=0,_=0;_<t._sounds.length;_++)t._sounds[_]._paused&&!t._sounds[_]._ended&&(a++,u=t._sounds[_]._id);1===a?e=null:u=null}var s=u?t._soundById(u):t._inactiveSound();if(!s)return null;if(u&&!e&&(e=s._sprite||"__default"),"loaded"!==t._state&&!t._sprite[e])return t._queue.push({event:"play",action:function(){t.play(t._soundById(s._id)?s._id:void 0)}}),s._id;if(u&&!s._paused)return r[1]||setTimeout(function(){t._emit("play",s._id)},0),s._id;t._webAudio&&i._autoResume();var l=s._seek>0?s._seek:t._sprite[e][0]/1e3,f=(t._sprite[e][0]+t._sprite[e][1])/1e3-l,c=1e3*f/Math.abs(s._rate);c!==1/0&&(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),s._paused=!1,s._ended=!1,s._sprite=e,s._seek=l,s._start=t._sprite[e][0]/1e3,s._stop=(t._sprite[e][0]+t._sprite[e][1])/1e3,s._loop=!(!s._loop&&!t._sprite[e][2]);var p=s._node;if(t._webAudio){var m=function(){t._refreshBuffer(s);var e=s._muted||t._muted?0:s._volume*i.volume();p.gain.setValueAtTime(e,o.currentTime),s._playStart=o.currentTime,"undefined"==typeof p.bufferSource.start?s._loop?p.bufferSource.noteGrainOn(0,l,86400):p.bufferSource.noteGrainOn(0,l,f):s._loop?p.bufferSource.start(0,l,86400):p.bufferSource.start(0,l,f),t._endTimers[s._id]||c===1/0||(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),r[1]||setTimeout(function(){t._emit("play",s._id)},0)};"loaded"===t._state?m():(t.once("load",m,s._id),t._clearTimer(s._id))}else{var v=function(){p.currentTime=l,p.muted=s._muted||t._muted||i._muted||p.muted,p.volume=s._volume*i.volume(),p.playbackRate=s._rate,setTimeout(function(){p.play(),r[1]||t._emit("play",s._id)},0)},h="loaded"===t._state&&(window&&window.ejecta||!p.readyState&&n.isCocoonJS);if(4===p.readyState||h)v();else{var y=function(){c!==1/0&&(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),v(),p.removeEventListener(d,y,!1)};p.addEventListener(d,y,!1),t._clearTimer(s._id)}}return s._id},pause:function(e){var n=this;if("loaded"!==n._state)return n._queue.push({event:"pause",action:function(){n.pause(e)}}),n;for(var o=n._getSoundIds(e),t=0;t<o.length;t++){n._clearTimer(o[t]);var r=n._soundById(o[t]);if(r&&!r._paused){if(r._seek=n.seek(o[t]),r._paused=!0,n._stopFade(o[t]),r._node)if(n._webAudio){if(!r._node.bufferSource)return n;"undefined"==typeof r._node.bufferSource.stop?r._node.bufferSource.noteOff(0):r._node.bufferSource.stop(0),n._cleanBuffer(r._node)}else isNaN(r._node.duration)&&r._node.duration!==1/0||r._node.pause();arguments[1]||n._emit("pause",r._id)}}return n},stop:function(e){var n=this;if("loaded"!==n._state)return n._queue.push({event:"stop",action:function(){n.stop(e)}}),n;for(var o=n._getSoundIds(e),t=0;t<o.length;t++){n._clearTimer(o[t]);var r=n._soundById(o[t]);if(r&&!r._paused&&(r._seek=r._start||0,r._paused=!0,r._ended=!0,n._stopFade(o[t]),r._node))if(n._webAudio){if(!r._node.bufferSource)return n;"undefined"==typeof r._node.bufferSource.stop?r._node.bufferSource.noteOff(0):r._node.bufferSource.stop(0),n._cleanBuffer(r._node)}else isNaN(r._node.duration)&&r._node.duration!==1/0||(r._node.pause(),r._node.currentTime=r._start||0);r&&n._emit("stop",r._id)}return n},mute:function(e,n){var t=this;if("loaded"!==t._state)return t._queue.push({event:"mute",action:function(){t.mute(e,n)}}),t;if("undefined"==typeof n){if("boolean"!=typeof e)return t._muted;t._muted=e}for(var r=t._getSoundIds(n),u=0;u<r.length;u++){var d=t._soundById(r[u]);d&&(d._muted=e,t._webAudio&&d._node?d._node.gain.setValueAtTime(e?0:d._volume*i.volume(),o.currentTime):d._node&&(d._node.muted=i._muted?!0:e),t._emit("mute",d._id))}return t},volume:function(){var e,n,t=this,r=arguments;if(0===r.length)return t._volume;if(1===r.length){var u=t._getSoundIds(),d=u.indexOf(r[0]);d>=0?n=parseInt(r[0],10):e=parseFloat(r[0])}else r.length>=2&&(e=parseFloat(r[0]),n=parseInt(r[1],10));var a;if(!("undefined"!=typeof e&&e>=0&&1>=e))return a=n?t._soundById(n):t._sounds[0],a?a._volume:0;if("loaded"!==t._state)return t._queue.push({event:"volume",action:function(){t.volume.apply(t,r)}}),t;"undefined"==typeof n&&(t._volume=e),n=t._getSoundIds(n);for(var _=0;_<n.length;_++)a=t._soundById(n[_]),a&&(a._volume=e,r[2]||t._stopFade(n[_]),t._webAudio&&a._node&&!a._muted?a._node.gain.setValueAtTime(e*i.volume(),o.currentTime):a._node&&!a._muted&&(a._node.volume=e*i.volume()),t._emit("volume",a._id));return t},fade:function(e,n,t,r){var u=this;if("loaded"!==u._state)return u._queue.push({event:"fade",action:function(){u.fade(e,n,t,r)}}),u;u.volume(e,r);for(var d=u._getSoundIds(r),a=0;a<d.length;a++){var i=u._soundById(d[a]);if(i)if(r||u._stopFade(d[a]),u._webAudio&&!i._muted){var _=o.currentTime,s=_+t/1e3;i._volume=e,i._node.gain.setValueAtTime(e,_),i._node.gain.linearRampToValueAtTime(n,s),i._timeout=setTimeout(function(e,t){delete t._timeout,setTimeout(function(){t._volume=n,u._emit("fade",e)},s-o.currentTime>0?Math.ceil(1e3*(s-o.currentTime)):0)}.bind(u,d[a],i),t)}else{var l=Math.abs(e-n),f=e>n?"out":"in",c=l/.01,p=t/c;!function(){var o=e;i._interval=setInterval(function(e,t){o+="in"===f?.01:-.01,o=Math.max(0,o),o=Math.min(1,o),o=Math.round(100*o)/100,u.volume(o,e,!0),o===n&&(clearInterval(t._interval),delete t._interval,u._emit("fade",e))}.bind(u,d[a],i),p)}()}}return u},_stopFade:function(e){var n=this,t=n._soundById(e);return t._interval?(clearInterval(t._interval),delete t._interval,n._emit("fade",e)):t._timeout&&(clearTimeout(t._timeout),delete t._timeout,t._node.gain.cancelScheduledValues(o.currentTime),n._emit("fade",e)),n},loop:function(){var e,n,o,t=this,r=arguments;if(0===r.length)return t._loop;if(1===r.length){if("boolean"!=typeof r[0])return o=t._soundById(parseInt(r[0],10)),o?o._loop:!1;e=r[0],t._loop=e}else 2===r.length&&(e=r[0],n=parseInt(r[1],10));for(var u=t._getSoundIds(n),d=0;d<u.length;d++)o=t._soundById(u[d]),o&&(o._loop=e,t._webAudio&&o._node&&o._node.bufferSource&&(o._node.bufferSource.loop=e));return t},rate:function(){var e,n,o=this,t=arguments;if(0===t.length)n=o._sounds[0]._id;else if(1===t.length){var r=o._getSoundIds(),u=r.indexOf(t[0]);u>=0?n=parseInt(t[0],10):e=parseFloat(t[0])}else 2===t.length&&(e=parseFloat(t[0]),n=parseInt(t[1],10));var d;if("number"!=typeof e)return d=o._soundById(n),d?d._rate:o._rate;if("loaded"!==o._state)return o._queue.push({event:"rate",action:function(){o.rate.apply(o,t)}}),o;"undefined"==typeof n&&(o._rate=e),n=o._getSoundIds(n);for(var a=0;a<n.length;a++)if(d=o._soundById(n[a])){d._rate=e,o._webAudio&&d._node&&d._node.bufferSource?d._node.bufferSource.playbackRate.value=e:d._node&&(d._node.playbackRate=e);var i=o.seek(n[a]),_=(o._sprite[d._sprite][0]+o._sprite[d._sprite][1])/1e3-i,s=1e3*_/Math.abs(d._rate);o._clearTimer(n[a]),o._endTimers[n[a]]=setTimeout(o._ended.bind(o,d),s),o._emit("rate",d._id)}return o},seek:function(){var e,n,t=this,r=arguments;if(0===r.length)n=t._sounds[0]._id;else if(1===r.length){var u=t._getSoundIds(),d=u.indexOf(r[0]);d>=0?n=parseInt(r[0],10):(n=t._sounds[0]._id,e=parseFloat(r[0]))}else 2===r.length&&(e=parseFloat(r[0]),n=parseInt(r[1],10));if("undefined"==typeof n)return t;if("loaded"!==t._state)return t._queue.push({event:"seek",action:function(){t.seek.apply(t,r)}}),t;var a=t._soundById(n);if(a){if(!(e>=0))return t._webAudio?a._seek+(t.playing(n)?o.currentTime-a._playStart:0):a._node.currentTime;var i=t.playing(n);i&&t.pause(n,!0),a._seek=e,t._clearTimer(n),i&&t.play(n,!0),t._emit("seek",n)}return t},playing:function(e){var n=this,o=n._soundById(e)||n._sounds[0];return o?!o._paused:!1},duration:function(e){var n=this,o=n._soundById(e)||n._sounds[0];return n._duration/o._rate},state:function(){return this._state},unload:function(){for(var e=this,n=e._sounds,o=0;o<n.length;o++){n[o]._paused||(e.stop(n[o]._id),e._emit("end",n[o]._id)),e._webAudio||(n[o]._node.src="",n[o]._node.removeEventListener("error",n[o]._errorFn,!1),n[o]._node.removeEventListener(d,n[o]._loadFn,!1)),delete n[o]._node,e._clearTimer(n[o]._id);var t=i._howls.indexOf(e);t>=0&&i._howls.splice(t,1)}return l&&delete l[e._src],e._state="unloaded",e._sounds=[],e=null,null},on:function(e,n,o,t){var r=this,u=r["_on"+e];return"function"==typeof n&&u.push(t?{id:o,fn:n,once:t}:{id:o,fn:n}),r},off:function(e,n,o){var t=this,r=t["_on"+e];if(n){for(var u=0;u<r.length;u++)if(n===r[u].fn&&o===r[u].id){r.splice(u,1);break}}else if(e)t["_on"+e]=[];else for(var d=Object.keys(t),u=0;u<d.length;u++)0===d[u].indexOf("_on")&&Array.isArray(t[d[u]])&&(t[d[u]]=[]);return t},once:function(e,n,o){var t=this;return t.on(e,n,o,1),t},_emit:function(e,n,o){for(var t=this,r=t["_on"+e],u=r.length-1;u>=0;u--)r[u].id&&r[u].id!==n&&"load"!==e||(setTimeout(function(e){e.call(this,n,o)}.bind(t,r[u].fn),0),r[u].once&&t.off(e,r[u].fn,r[u].id));return t},_loadQueue:function(){var e=this;if(e._queue.length>0){var n=e._queue[0];e.once(n.event,function(){e._queue.shift(),e._loadQueue()}),n.action()}return e},_ended:function(e){var n=this,t=e._sprite,r=!(!e._loop&&!n._sprite[t][2]);if(n._emit("end",e._id),!n._webAudio&&r&&n.stop(e._id).play(e._id),n._webAudio&&r){n._emit("play",e._id),e._seek=e._start||0,e._playStart=o.currentTime;var u=1e3*(e._stop-e._start)/Math.abs(e._rate);n._endTimers[e._id]=setTimeout(n._ended.bind(n,e),u)}return n._webAudio&&!r&&(e._paused=!0,e._ended=!0,e._seek=e._start||0,n._clearTimer(e._id),n._cleanBuffer(e._node),i._autoSuspend()),n._webAudio||r||n.stop(e._id),n},_clearTimer:function(e){var n=this;return n._endTimers[e]&&(clearTimeout(n._endTimers[e]),delete n._endTimers[e]),n},_soundById:function(e){for(var n=this,o=0;o<n._sounds.length;o++)if(e===n._sounds[o]._id)return n._sounds[o];return null},_inactiveSound:function(){var e=this;e._drain();for(var n=0;n<e._sounds.length;n++)if(e._sounds[n]._ended)return e._sounds[n].reset();return new s(e)},_drain:function(){var e=this,n=e._pool,o=0,t=0;if(!(e._sounds.length<n)){for(t=0;t<e._sounds.length;t++)e._sounds[t]._ended&&o++;for(t=e._sounds.length-1;t>=0;t--){if(n>=o)return;e._sounds[t]._ended&&(e._webAudio&&e._sounds[t]._node&&e._sounds[t]._node.disconnect(0),e._sounds.splice(t,1),o--)}}},_getSoundIds:function(e){var n=this;if("undefined"==typeof e){for(var o=[],t=0;t<n._sounds.length;t++)o.push(n._sounds[t]._id);return o}return[e]},_refreshBuffer:function(e){var n=this;return e._node.bufferSource=o.createBufferSource(),e._node.bufferSource.buffer=l[n._src],e._panner?e._node.bufferSource.connect(e._panner):e._node.bufferSource.connect(e._node),e._node.bufferSource.loop=e._loop,e._loop&&(e._node.bufferSource.loopStart=e._start||0,e._node.bufferSource.loopEnd=e._stop),e._node.bufferSource.playbackRate.value=n._rate,n},_cleanBuffer:function(e){var n=this;if(n._scratchBuffer){e.bufferSource.onended=null,e.bufferSource.disconnect(0);try{e.bufferSource.buffer=n._scratchBuffer}catch(o){}}return e.bufferSource=null,n}};var s=function(e){this._parent=e,this.init()};if(s.prototype={init:function(){var e=this,n=e._parent;return e._muted=n._muted,e._loop=n._loop,e._volume=n._volume,e._muted=n._muted,e._rate=n._rate,e._seek=0,e._paused=!0,e._ended=!0,e._sprite="__default",e._id=Math.round(Date.now()*Math.random()),n._sounds.push(e),e.create(),e},create:function(){var e=this,n=e._parent,t=i._muted||e._muted||e._parent._muted?0:e._volume*i.volume();return n._webAudio?(e._node="undefined"==typeof o.createGain?o.createGainNode():o.createGain(),e._node.gain.setValueAtTime(t,o.currentTime),e._node.paused=!0,e._node.connect(u)):(e._node=new Audio,e._errorFn=e._errorListener.bind(e),e._node.addEventListener("error",e._errorFn,!1),e._loadFn=e._loadListener.bind(e),e._node.addEventListener(d,e._loadFn,!1),e._node.src=n._src,e._node.preload="auto",e._node.volume=t,e._node.load()),e},reset:function(){var e=this,n=e._parent;return e._muted=n._muted,e._loop=n._loop,e._volume=n._volume,e._muted=n._muted,e._rate=n._rate,e._seek=0,e._paused=!0,e._ended=!0,e._sprite="__default",e._id=Math.round(Date.now()*Math.random()),e},_errorListener:function(){var e=this;e._node.error&&4===e._node.error.code&&(i.noAudio=!0),e._parent._emit("loaderror",e._id,e._node.error?e._node.error.code:0),e._node.removeEventListener("error",e._errorListener,!1)},_loadListener:function(){var e=this,n=e._parent;n._duration=Math.ceil(10*e._node.duration)/10,0===Object.keys(n._sprite).length&&(n._sprite={__default:[0,1e3*n._duration]}),"loaded"!==n._state&&(n._state="loaded",n._emit("load"),n._loadQueue()),n._autoplay&&n.play(),e._node.removeEventListener(d,e._loadFn,!1)}},t)var l={},f=function(e){var n=e._src;if(l[n])return e._duration=l[n].duration,void m(e);if(/^data:[^;]+;base64,/.test(n)){window.atob=window.atob||function(e){for(var n,o,t="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",r=String(e).replace(/=+$/,""),u=0,d=0,a="";o=r.charAt(d++);~o&&(n=u%4?64*n+o:o,u++%4)?a+=String.fromCharCode(255&n>>(-2*u&6)):0)o=t.indexOf(o);return a};for(var o=atob(n.split(",")[1]),t=new Uint8Array(o.length),r=0;r<o.length;++r)t[r]=o.charCodeAt(r);p(t.buffer,e)}else{var u=new XMLHttpRequest;u.open("GET",n,!0),u.responseType="arraybuffer",u.onload=function(){var n=(u.status+"")[0];return"0"!==n&&"2"!==n&&"3"!==n?void e._emit("loaderror",null,"Failed loading audio file with status: "+u.status+"."):void p(u.response,e)},u.onerror=function(){e._webAudio&&(e._html5=!0,e._webAudio=!1,e._sounds=[],delete l[n],e.load())},c(u)}},c=function(e){try{e.send()}catch(n){e.onerror()}},p=function(e,n){o.decodeAudioData(e,function(e){e&&n._sounds.length>0&&(l[n._src]=e,m(n,e))},function(){n._emit("loaderror",null,"Decoding audio data failed.")})},m=function(e,n){n&&!e._duration&&(e._duration=n.duration),0===Object.keys(e._sprite).length&&(e._sprite={__default:[0,1e3*e._duration]}),"loaded"!==e._state&&(e._state="loaded",e._emit("load"),e._loadQueue()),e._autoplay&&e.play()};"function"=="function"&&__webpack_require__(238)&&!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function(){return{Howler:i,Howl:_}}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)),"undefined"!=typeof exports&&(exports.Howler=i,exports.Howl=_),"undefined"!=typeof window?(window.HowlerGlobal=a,window.Howler=i,window.Howl=_,window.Sound=s):"undefined"!=typeof global&&(global.HowlerGlobal=a,global.Howler=i,global.Howl=_,global.Sound=s)}();
+	!function(){"use strict";function e(){try{"undefined"!=typeof AudioContext?o=new AudioContext:"undefined"!=typeof webkitAudioContext?o=new webkitAudioContext:t=!1}catch(e){t=!1}if(!t)if("undefined"!=typeof Audio)try{var a=new Audio;"undefined"==typeof a.oncanplaythrough&&(d="canplay")}catch(e){r=!0}else r=!0;try{var a=new Audio;a.muted&&(r=!0)}catch(e){}var i=/iP(hone|od|ad)/.test(n&&n.platform),_=n&&n.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/),s=_?parseInt(_[1],10):null;if(i&&s&&9>s){var l=/safari/.test(n&&n.userAgent.toLowerCase());(n&&n.standalone&&!l||n&&!n.standalone&&!l)&&(t=!1)}t&&(u="undefined"==typeof o.createGain?o.createGainNode():o.createGain(),u.gain.value=1,u.connect(o.destination))}var n=window&&window.navigator?window.navigator:null,o=null,t=!0,r=!1,u=null,d="canplaythrough";e();var a=function(){this.init()};a.prototype={init:function(){var e=this||i;return e._codecs={},e._howls=[],e._muted=!1,e._volume=1,e.state=o?o.state||"running":"running",e.autoSuspend=!0,e._autoSuspend(),e.mobileAutoEnable=!0,e.noAudio=r,e.usingWebAudio=t,e.ctx=o,e.masterGain=u,r||e._setupCodecs(),e},volume:function(e){var n=this||i;if(e=parseFloat(e),"undefined"!=typeof e&&e>=0&&1>=e){n._volume=e,t&&(u.gain.value=e);for(var o=0;o<n._howls.length;o++)if(!n._howls[o]._webAudio)for(var r=n._howls[o]._getSoundIds(),d=0;d<r.length;d++){var a=n._howls[o]._soundById(r[d]);a&&a._node&&(a._node.volume=a._volume*e)}return n}return n._volume},mute:function(e){var n=this||i;n._muted=e,t&&(u.gain.value=e?0:n._volume);for(var o=0;o<n._howls.length;o++)if(!n._howls[o]._webAudio)for(var r=n._howls[o]._getSoundIds(),d=0;d<r.length;d++){var a=n._howls[o]._soundById(r[d]);a&&a._node&&(a._node.muted=e?!0:a._muted)}return n},unload:function(){for(var n=this||i,t=n._howls.length-1;t>=0;t--)n._howls[t].unload();return n.usingWebAudio&&"undefined"!=typeof o.close&&(n.ctx=null,o.close(),e(),n.ctx=o),n},codecs:function(e){return(this||i)._codecs[e]},_setupCodecs:function(){var e=this||i,o=new Audio,t=o.canPlayType("audio/mpeg;").replace(/^no$/,""),r=n&&n.userAgent.match(/OPR\/([0-6].)/g),u=r&&parseInt(r[0].split("/")[1],10)<33;return e._codecs={mp3:!(u||!t&&!o.canPlayType("audio/mp3;").replace(/^no$/,"")),mpeg:!!t,opus:!!o.canPlayType('audio/ogg; codecs="opus"').replace(/^no$/,""),ogg:!!o.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),oga:!!o.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),wav:!!o.canPlayType('audio/wav; codecs="1"').replace(/^no$/,""),aac:!!o.canPlayType("audio/aac;").replace(/^no$/,""),caf:!!o.canPlayType("audio/x-caf;").replace(/^no$/,""),m4a:!!(o.canPlayType("audio/x-m4a;")||o.canPlayType("audio/m4a;")||o.canPlayType("audio/aac;")).replace(/^no$/,""),mp4:!!(o.canPlayType("audio/x-mp4;")||o.canPlayType("audio/mp4;")||o.canPlayType("audio/aac;")).replace(/^no$/,""),weba:!!o.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/,""),webm:!!o.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/,""),dolby:!!o.canPlayType('audio/mp4; codecs="ec-3"').replace(/^no$/,"")},e},_enableMobileAudio:function(){var e=this||i,t=/iPhone|iPad|iPod|Android|BlackBerry|BB10|Silk|Mobi/i.test(n&&n.userAgent),r=!!("ontouchend"in window||n&&n.maxTouchPoints>0||n&&n.msMaxTouchPoints>0);if(!o||!e._mobileEnabled&&t&&r){e._mobileEnabled=!1,i.unload(),e._scratchBuffer=o.createBuffer(1,1,22050);var u=function(){var n=o.createBufferSource();n.buffer=e._scratchBuffer,n.connect(o.destination),"undefined"==typeof n.start?n.noteOn(0):n.start(0),n.onended=function(){n.disconnect(0),e._mobileEnabled=!0,e.mobileAutoEnable=!1,document.removeEventListener("touchend",u,!0)}};return document.addEventListener("touchend",u,!0),e}},_autoSuspend:function(){var e=this;if(e.autoSuspend&&o&&"undefined"!=typeof o.suspend&&t){for(var n=0;n<e._howls.length;n++)if(e._howls[n]._webAudio)for(var r=0;r<e._howls[n]._sounds.length;r++)if(!e._howls[n]._sounds[r]._paused)return e;return e._suspendTimer=setTimeout(function(){e.autoSuspend&&(e._suspendTimer=null,e.state="suspending",o.suspend().then(function(){e.state="suspended",e._resumeAfterSuspend&&(delete e._resumeAfterSuspend,e._autoResume())}))},3e4),e}},_autoResume:function(){var e=this;if(o&&"undefined"!=typeof o.resume&&t)return"running"===e.state&&e._suspendTimer?(clearTimeout(e._suspendTimer),e._suspendTimer=null):"suspended"===e.state?(e.state="resuming",o.resume().then(function(){e.state="running"}),e._suspendTimer&&(clearTimeout(e._suspendTimer),e._suspendTimer=null)):"suspending"===e.state&&(e._resumeAfterSuspend=!0),e}};var i=new a,_=function(e){var n=this;return e.src&&0!==e.src.length?void n.init(e):void console.error("An array of source files must be passed with any new Howl.")};_.prototype={init:function(e){var n=this;return n._autoplay=e.autoplay||!1,n._format="string"!=typeof e.format?e.format:[e.format],n._html5=e.html5||!1,n._muted=e.mute||!1,n._loop=e.loop||!1,n._pool=e.pool||5,n._preload="boolean"==typeof e.preload?e.preload:!0,n._rate=e.rate||1,n._sprite=e.sprite||{},n._src="string"!=typeof e.src?e.src:[e.src],n._volume=void 0!==e.volume?e.volume:1,n._duration=0,n._state="unloaded",n._sounds=[],n._endTimers={},n._queue=[],n._onend=e.onend?[{fn:e.onend}]:[],n._onfade=e.onfade?[{fn:e.onfade}]:[],n._onload=e.onload?[{fn:e.onload}]:[],n._onloaderror=e.onloaderror?[{fn:e.onloaderror}]:[],n._onpause=e.onpause?[{fn:e.onpause}]:[],n._onplay=e.onplay?[{fn:e.onplay}]:[],n._onstop=e.onstop?[{fn:e.onstop}]:[],n._onmute=e.onmute?[{fn:e.onmute}]:[],n._onvolume=e.onvolume?[{fn:e.onvolume}]:[],n._onrate=e.onrate?[{fn:e.onrate}]:[],n._onseek=e.onseek?[{fn:e.onseek}]:[],n._webAudio=t&&!n._html5,"undefined"!=typeof o&&o&&i.mobileAutoEnable&&i._enableMobileAudio(),i._howls.push(n),n._preload&&n.load(),n},load:function(){var e=this,n=null;if(r)return void e._emit("loaderror",null,"No audio support.");"string"==typeof e._src&&(e._src=[e._src]);for(var o=0;o<e._src.length;o++){var t,u;if(e._format&&e._format[o]?t=e._format[o]:(u=e._src[o],t=/^data:audio\/([^;,]+);/i.exec(u),t||(t=/\.([^.]+)$/.exec(u.split("?",1)[0])),t&&(t=t[1].toLowerCase())),i.codecs(t)){n=e._src[o];break}}return n?(e._src=n,e._state="loading","https:"===window.location.protocol&&"http:"===n.slice(0,5)&&(e._html5=!0,e._webAudio=!1),new s(e),e._webAudio&&f(e),e):void e._emit("loaderror",null,"No codec support for selected audio sources.")},play:function(e){var t=this,r=arguments,u=null;if("number"==typeof e)u=e,e=null;else if("undefined"==typeof e){e="__default";for(var a=0,_=0;_<t._sounds.length;_++)t._sounds[_]._paused&&!t._sounds[_]._ended&&(a++,u=t._sounds[_]._id);1===a?e=null:u=null}var s=u?t._soundById(u):t._inactiveSound();if(!s)return null;if(u&&!e&&(e=s._sprite||"__default"),"loaded"!==t._state&&!t._sprite[e])return t._queue.push({event:"play",action:function(){t.play(t._soundById(s._id)?s._id:void 0)}}),s._id;if(u&&!s._paused)return r[1]||setTimeout(function(){t._emit("play",s._id)},0),s._id;t._webAudio&&i._autoResume();var l=s._seek>0?s._seek:t._sprite[e][0]/1e3,f=(t._sprite[e][0]+t._sprite[e][1])/1e3-l,c=1e3*f/Math.abs(s._rate);c!==1/0&&(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),s._paused=!1,s._ended=!1,s._sprite=e,s._seek=l,s._start=t._sprite[e][0]/1e3,s._stop=(t._sprite[e][0]+t._sprite[e][1])/1e3,s._loop=!(!s._loop&&!t._sprite[e][2]);var p=s._node;if(t._webAudio){var m=function(){t._refreshBuffer(s);var e=s._muted||t._muted?0:s._volume*i.volume();p.gain.setValueAtTime(e,o.currentTime),s._playStart=o.currentTime,"undefined"==typeof p.bufferSource.start?s._loop?p.bufferSource.noteGrainOn(0,l,86400):p.bufferSource.noteGrainOn(0,l,f):s._loop?p.bufferSource.start(0,l,86400):p.bufferSource.start(0,l,f),t._endTimers[s._id]||c===1/0||(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),r[1]||setTimeout(function(){t._emit("play",s._id)},0)};"loaded"===t._state?m():(t.once("load",m,s._id),t._clearTimer(s._id))}else{var v=function(){p.currentTime=l,p.muted=s._muted||t._muted||i._muted||p.muted,p.volume=s._volume*i.volume(),p.playbackRate=s._rate,setTimeout(function(){p.play(),r[1]||t._emit("play",s._id)},0)},h="loaded"===t._state&&(window&&window.ejecta||!p.readyState&&n.isCocoonJS);if(4===p.readyState||h)v();else{var y=function(){c!==1/0&&(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),v(),p.removeEventListener(d,y,!1)};p.addEventListener(d,y,!1),t._clearTimer(s._id)}}return s._id},pause:function(e){var n=this;if("loaded"!==n._state)return n._queue.push({event:"pause",action:function(){n.pause(e)}}),n;for(var o=n._getSoundIds(e),t=0;t<o.length;t++){n._clearTimer(o[t]);var r=n._soundById(o[t]);if(r&&!r._paused){if(r._seek=n.seek(o[t]),r._paused=!0,n._stopFade(o[t]),r._node)if(n._webAudio){if(!r._node.bufferSource)return n;"undefined"==typeof r._node.bufferSource.stop?r._node.bufferSource.noteOff(0):r._node.bufferSource.stop(0),n._cleanBuffer(r._node)}else isNaN(r._node.duration)&&r._node.duration!==1/0||r._node.pause();arguments[1]||n._emit("pause",r._id)}}return n},stop:function(e){var n=this;if("loaded"!==n._state)return n._queue.push({event:"stop",action:function(){n.stop(e)}}),n;for(var o=n._getSoundIds(e),t=0;t<o.length;t++){n._clearTimer(o[t]);var r=n._soundById(o[t]);if(r&&!r._paused&&(r._seek=r._start||0,r._paused=!0,r._ended=!0,n._stopFade(o[t]),r._node))if(n._webAudio){if(!r._node.bufferSource)return n;"undefined"==typeof r._node.bufferSource.stop?r._node.bufferSource.noteOff(0):r._node.bufferSource.stop(0),n._cleanBuffer(r._node)}else isNaN(r._node.duration)&&r._node.duration!==1/0||(r._node.pause(),r._node.currentTime=r._start||0);r&&n._emit("stop",r._id)}return n},mute:function(e,n){var t=this;if("loaded"!==t._state)return t._queue.push({event:"mute",action:function(){t.mute(e,n)}}),t;if("undefined"==typeof n){if("boolean"!=typeof e)return t._muted;t._muted=e}for(var r=t._getSoundIds(n),u=0;u<r.length;u++){var d=t._soundById(r[u]);d&&(d._muted=e,t._webAudio&&d._node?d._node.gain.setValueAtTime(e?0:d._volume*i.volume(),o.currentTime):d._node&&(d._node.muted=i._muted?!0:e),t._emit("mute",d._id))}return t},volume:function(){var e,n,t=this,r=arguments;if(0===r.length)return t._volume;if(1===r.length){var u=t._getSoundIds(),d=u.indexOf(r[0]);d>=0?n=parseInt(r[0],10):e=parseFloat(r[0])}else r.length>=2&&(e=parseFloat(r[0]),n=parseInt(r[1],10));var a;if(!("undefined"!=typeof e&&e>=0&&1>=e))return a=n?t._soundById(n):t._sounds[0],a?a._volume:0;if("loaded"!==t._state)return t._queue.push({event:"volume",action:function(){t.volume.apply(t,r)}}),t;"undefined"==typeof n&&(t._volume=e),n=t._getSoundIds(n);for(var _=0;_<n.length;_++)a=t._soundById(n[_]),a&&(a._volume=e,r[2]||t._stopFade(n[_]),t._webAudio&&a._node&&!a._muted?a._node.gain.setValueAtTime(e*i.volume(),o.currentTime):a._node&&!a._muted&&(a._node.volume=e*i.volume()),t._emit("volume",a._id));return t},fade:function(e,n,t,r){var u=this;if("loaded"!==u._state)return u._queue.push({event:"fade",action:function(){u.fade(e,n,t,r)}}),u;u.volume(e,r);for(var d=u._getSoundIds(r),a=0;a<d.length;a++){var i=u._soundById(d[a]);if(i)if(r||u._stopFade(d[a]),u._webAudio&&!i._muted){var _=o.currentTime,s=_+t/1e3;i._volume=e,i._node.gain.setValueAtTime(e,_),i._node.gain.linearRampToValueAtTime(n,s),i._timeout=setTimeout(function(e,t){delete t._timeout,setTimeout(function(){t._volume=n,u._emit("fade",e)},s-o.currentTime>0?Math.ceil(1e3*(s-o.currentTime)):0)}.bind(u,d[a],i),t)}else{var l=Math.abs(e-n),f=e>n?"out":"in",c=l/.01,p=t/c;!function(){var o=e;i._interval=setInterval(function(e,t){o+="in"===f?.01:-.01,o=Math.max(0,o),o=Math.min(1,o),o=Math.round(100*o)/100,u.volume(o,e,!0),o===n&&(clearInterval(t._interval),delete t._interval,u._emit("fade",e))}.bind(u,d[a],i),p)}()}}return u},_stopFade:function(e){var n=this,t=n._soundById(e);return t._interval?(clearInterval(t._interval),delete t._interval,n._emit("fade",e)):t._timeout&&(clearTimeout(t._timeout),delete t._timeout,t._node.gain.cancelScheduledValues(o.currentTime),n._emit("fade",e)),n},loop:function(){var e,n,o,t=this,r=arguments;if(0===r.length)return t._loop;if(1===r.length){if("boolean"!=typeof r[0])return o=t._soundById(parseInt(r[0],10)),o?o._loop:!1;e=r[0],t._loop=e}else 2===r.length&&(e=r[0],n=parseInt(r[1],10));for(var u=t._getSoundIds(n),d=0;d<u.length;d++)o=t._soundById(u[d]),o&&(o._loop=e,t._webAudio&&o._node&&o._node.bufferSource&&(o._node.bufferSource.loop=e));return t},rate:function(){var e,n,o=this,t=arguments;if(0===t.length)n=o._sounds[0]._id;else if(1===t.length){var r=o._getSoundIds(),u=r.indexOf(t[0]);u>=0?n=parseInt(t[0],10):e=parseFloat(t[0])}else 2===t.length&&(e=parseFloat(t[0]),n=parseInt(t[1],10));var d;if("number"!=typeof e)return d=o._soundById(n),d?d._rate:o._rate;if("loaded"!==o._state)return o._queue.push({event:"rate",action:function(){o.rate.apply(o,t)}}),o;"undefined"==typeof n&&(o._rate=e),n=o._getSoundIds(n);for(var a=0;a<n.length;a++)if(d=o._soundById(n[a])){d._rate=e,o._webAudio&&d._node&&d._node.bufferSource?d._node.bufferSource.playbackRate.value=e:d._node&&(d._node.playbackRate=e);var i=o.seek(n[a]),_=(o._sprite[d._sprite][0]+o._sprite[d._sprite][1])/1e3-i,s=1e3*_/Math.abs(d._rate);o._clearTimer(n[a]),o._endTimers[n[a]]=setTimeout(o._ended.bind(o,d),s),o._emit("rate",d._id)}return o},seek:function(){var e,n,t=this,r=arguments;if(0===r.length)n=t._sounds[0]._id;else if(1===r.length){var u=t._getSoundIds(),d=u.indexOf(r[0]);d>=0?n=parseInt(r[0],10):(n=t._sounds[0]._id,e=parseFloat(r[0]))}else 2===r.length&&(e=parseFloat(r[0]),n=parseInt(r[1],10));if("undefined"==typeof n)return t;if("loaded"!==t._state)return t._queue.push({event:"seek",action:function(){t.seek.apply(t,r)}}),t;var a=t._soundById(n);if(a){if(!(e>=0))return t._webAudio?a._seek+(t.playing(n)?o.currentTime-a._playStart:0):a._node.currentTime;var i=t.playing(n);i&&t.pause(n,!0),a._seek=e,t._clearTimer(n),i&&t.play(n,!0),t._emit("seek",n)}return t},playing:function(e){var n=this,o=n._soundById(e)||n._sounds[0];return o?!o._paused:!1},duration:function(e){var n=this,o=n._soundById(e)||n._sounds[0];return n._duration/o._rate},state:function(){return this._state},unload:function(){for(var e=this,n=e._sounds,o=0;o<n.length;o++){n[o]._paused||(e.stop(n[o]._id),e._emit("end",n[o]._id)),e._webAudio||(n[o]._node.src="",n[o]._node.removeEventListener("error",n[o]._errorFn,!1),n[o]._node.removeEventListener(d,n[o]._loadFn,!1)),delete n[o]._node,e._clearTimer(n[o]._id);var t=i._howls.indexOf(e);t>=0&&i._howls.splice(t,1)}return l&&delete l[e._src],e._state="unloaded",e._sounds=[],e=null,null},on:function(e,n,o,t){var r=this,u=r["_on"+e];return"function"==typeof n&&u.push(t?{id:o,fn:n,once:t}:{id:o,fn:n}),r},off:function(e,n,o){var t=this,r=t["_on"+e];if(n){for(var u=0;u<r.length;u++)if(n===r[u].fn&&o===r[u].id){r.splice(u,1);break}}else if(e)t["_on"+e]=[];else for(var d=Object.keys(t),u=0;u<d.length;u++)0===d[u].indexOf("_on")&&Array.isArray(t[d[u]])&&(t[d[u]]=[]);return t},once:function(e,n,o){var t=this;return t.on(e,n,o,1),t},_emit:function(e,n,o){for(var t=this,r=t["_on"+e],u=r.length-1;u>=0;u--)r[u].id&&r[u].id!==n&&"load"!==e||(setTimeout(function(e){e.call(this,n,o)}.bind(t,r[u].fn),0),r[u].once&&t.off(e,r[u].fn,r[u].id));return t},_loadQueue:function(){var e=this;if(e._queue.length>0){var n=e._queue[0];e.once(n.event,function(){e._queue.shift(),e._loadQueue()}),n.action()}return e},_ended:function(e){var n=this,t=e._sprite,r=!(!e._loop&&!n._sprite[t][2]);if(n._emit("end",e._id),!n._webAudio&&r&&n.stop(e._id).play(e._id),n._webAudio&&r){n._emit("play",e._id),e._seek=e._start||0,e._playStart=o.currentTime;var u=1e3*(e._stop-e._start)/Math.abs(e._rate);n._endTimers[e._id]=setTimeout(n._ended.bind(n,e),u)}return n._webAudio&&!r&&(e._paused=!0,e._ended=!0,e._seek=e._start||0,n._clearTimer(e._id),n._cleanBuffer(e._node),i._autoSuspend()),n._webAudio||r||n.stop(e._id),n},_clearTimer:function(e){var n=this;return n._endTimers[e]&&(clearTimeout(n._endTimers[e]),delete n._endTimers[e]),n},_soundById:function(e){for(var n=this,o=0;o<n._sounds.length;o++)if(e===n._sounds[o]._id)return n._sounds[o];return null},_inactiveSound:function(){var e=this;e._drain();for(var n=0;n<e._sounds.length;n++)if(e._sounds[n]._ended)return e._sounds[n].reset();return new s(e)},_drain:function(){var e=this,n=e._pool,o=0,t=0;if(!(e._sounds.length<n)){for(t=0;t<e._sounds.length;t++)e._sounds[t]._ended&&o++;for(t=e._sounds.length-1;t>=0;t--){if(n>=o)return;e._sounds[t]._ended&&(e._webAudio&&e._sounds[t]._node&&e._sounds[t]._node.disconnect(0),e._sounds.splice(t,1),o--)}}},_getSoundIds:function(e){var n=this;if("undefined"==typeof e){for(var o=[],t=0;t<n._sounds.length;t++)o.push(n._sounds[t]._id);return o}return[e]},_refreshBuffer:function(e){var n=this;return e._node.bufferSource=o.createBufferSource(),e._node.bufferSource.buffer=l[n._src],e._panner?e._node.bufferSource.connect(e._panner):e._node.bufferSource.connect(e._node),e._node.bufferSource.loop=e._loop,e._loop&&(e._node.bufferSource.loopStart=e._start||0,e._node.bufferSource.loopEnd=e._stop),e._node.bufferSource.playbackRate.value=n._rate,n},_cleanBuffer:function(e){var n=this;if(n._scratchBuffer){e.bufferSource.onended=null,e.bufferSource.disconnect(0);try{e.bufferSource.buffer=n._scratchBuffer}catch(o){}}return e.bufferSource=null,n}};var s=function(e){this._parent=e,this.init()};if(s.prototype={init:function(){var e=this,n=e._parent;return e._muted=n._muted,e._loop=n._loop,e._volume=n._volume,e._muted=n._muted,e._rate=n._rate,e._seek=0,e._paused=!0,e._ended=!0,e._sprite="__default",e._id=Math.round(Date.now()*Math.random()),n._sounds.push(e),e.create(),e},create:function(){var e=this,n=e._parent,t=i._muted||e._muted||e._parent._muted?0:e._volume*i.volume();return n._webAudio?(e._node="undefined"==typeof o.createGain?o.createGainNode():o.createGain(),e._node.gain.setValueAtTime(t,o.currentTime),e._node.paused=!0,e._node.connect(u)):(e._node=new Audio,e._errorFn=e._errorListener.bind(e),e._node.addEventListener("error",e._errorFn,!1),e._loadFn=e._loadListener.bind(e),e._node.addEventListener(d,e._loadFn,!1),e._node.src=n._src,e._node.preload="auto",e._node.volume=t,e._node.load()),e},reset:function(){var e=this,n=e._parent;return e._muted=n._muted,e._loop=n._loop,e._volume=n._volume,e._muted=n._muted,e._rate=n._rate,e._seek=0,e._paused=!0,e._ended=!0,e._sprite="__default",e._id=Math.round(Date.now()*Math.random()),e},_errorListener:function(){var e=this;e._node.error&&4===e._node.error.code&&(i.noAudio=!0),e._parent._emit("loaderror",e._id,e._node.error?e._node.error.code:0),e._node.removeEventListener("error",e._errorListener,!1)},_loadListener:function(){var e=this,n=e._parent;n._duration=Math.ceil(10*e._node.duration)/10,0===Object.keys(n._sprite).length&&(n._sprite={__default:[0,1e3*n._duration]}),"loaded"!==n._state&&(n._state="loaded",n._emit("load"),n._loadQueue()),n._autoplay&&n.play(),e._node.removeEventListener(d,e._loadFn,!1)}},t)var l={},f=function(e){var n=e._src;if(l[n])return e._duration=l[n].duration,void m(e);if(/^data:[^;]+;base64,/.test(n)){window.atob=window.atob||function(e){for(var n,o,t="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",r=String(e).replace(/=+$/,""),u=0,d=0,a="";o=r.charAt(d++);~o&&(n=u%4?64*n+o:o,u++%4)?a+=String.fromCharCode(255&n>>(-2*u&6)):0)o=t.indexOf(o);return a};for(var o=atob(n.split(",")[1]),t=new Uint8Array(o.length),r=0;r<o.length;++r)t[r]=o.charCodeAt(r);p(t.buffer,e)}else{var u=new XMLHttpRequest;u.open("GET",n,!0),u.responseType="arraybuffer",u.onload=function(){var n=(u.status+"")[0];return"0"!==n&&"2"!==n&&"3"!==n?void e._emit("loaderror",null,"Failed loading audio file with status: "+u.status+"."):void p(u.response,e)},u.onerror=function(){e._webAudio&&(e._html5=!0,e._webAudio=!1,e._sounds=[],delete l[n],e.load())},c(u)}},c=function(e){try{e.send()}catch(n){e.onerror()}},p=function(e,n){o.decodeAudioData(e,function(e){e&&n._sounds.length>0&&(l[n._src]=e,m(n,e))},function(){n._emit("loaderror",null,"Decoding audio data failed.")})},m=function(e,n){n&&!e._duration&&(e._duration=n.duration),0===Object.keys(e._sprite).length&&(e._sprite={__default:[0,1e3*e._duration]}),"loaded"!==e._state&&(e._state="loaded",e._emit("load"),e._loadQueue()),e._autoplay&&e.play()};"function"=="function"&&__webpack_require__(240)&&!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function(){return{Howler:i,Howl:_}}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)),"undefined"!=typeof exports&&(exports.Howler=i,exports.Howl=_),"undefined"!=typeof window?(window.HowlerGlobal=a,window.Howler=i,window.Howl=_,window.Sound=s):"undefined"!=typeof global&&(global.HowlerGlobal=a,global.Howler=i,global.Howl=_,global.Sound=s)}();
 	/*! Effects Plugin */
 	!function(){"use strict";HowlerGlobal.prototype._pos=[0,0,0],HowlerGlobal.prototype._orientation=[0,0,-1,0,1,0],HowlerGlobal.prototype._velocity=[0,0,0],HowlerGlobal.prototype._listenerAttr={dopplerFactor:1,speedOfSound:343.3},HowlerGlobal.prototype.pos=function(e,n,t){var o=this;return o.ctx&&o.ctx.listener?(n="number"!=typeof n?o._pos[1]:n,t="number"!=typeof t?o._pos[2]:t,"number"!=typeof e?o._pos:(o._pos=[e,n,t],o.ctx.listener.setPosition(o._pos[0],o._pos[1],o._pos[2]),o)):o},HowlerGlobal.prototype.orientation=function(e,n,t,o,r,i){var a=this;if(!a.ctx||!a.ctx.listener)return a;var p=a._orientation;return n="number"!=typeof n?p[1]:n,t="number"!=typeof t?p[2]:t,o="number"!=typeof o?p[3]:o,r="number"!=typeof r?p[4]:r,i="number"!=typeof i?p[5]:i,"number"!=typeof e?p:(a._orientation=[e,n,t,o,r,i],a.ctx.listener.setOrientation(e,n,t,o,r,i),a)},HowlerGlobal.prototype.velocity=function(e,n,t){var o=this;return o.ctx&&o.ctx.listener?(n="number"!=typeof n?o._velocity[1]:n,t="number"!=typeof t?o._velocity[2]:t,"number"!=typeof e?o._velocity:(o._velocity=[e,n,t],o.ctx.listener.setVelocity(o._velocity[0],o._velocity[1],o._velocity[2]),o)):o},HowlerGlobal.prototype.listenerAttr=function(e){var n=this;if(!n.ctx||!n.ctx.listener)return n;var t=n._listenerAttr;return e?(n._listenerAttr={dopplerFactor:"undefined"!=typeof e.dopplerFactor?e.dopplerFactor:t.dopplerFactor,speedOfSound:"undefined"!=typeof e.speedOfSound?e.speedOfSound:t.speedOfSound},n.ctx.listener.dopplerFactor=t.dopplerFactor,n.ctx.listener.speedOfSound=t.speedOfSound,n):t},Howl.prototype.init=function(e){return function(n){var t=this;return t._orientation=n.orientation||[1,0,0],t._pos=n.pos||null,t._velocity=n.velocity||[0,0,0],t._pannerAttr={coneInnerAngle:"undefined"!=typeof n.coneInnerAngle?n.coneInnerAngle:360,coneOuterAngle:"undefined"!=typeof n.coneOuterAngle?n.coneOuterAngle:360,coneOuterGain:"undefined"!=typeof n.coneOuterGain?n.coneOuterGain:0,distanceModel:"undefined"!=typeof n.distanceModel?n.distanceModel:"inverse",maxDistance:"undefined"!=typeof n.maxDistance?n.maxDistance:1e4,panningModel:"undefined"!=typeof n.panningModel?n.panningModel:"HRTF",refDistance:"undefined"!=typeof n.refDistance?n.refDistance:1,rolloffFactor:"undefined"!=typeof n.rolloffFactor?n.rolloffFactor:1},t._onpos=n.onpos?[{fn:n.onpos}]:[],t._onorientation=n.onorientation?[{fn:n.onorientation}]:[],t._onvelocity=n.onvelocity?[{fn:n.onvelocity}]:[],e.call(this,n)}}(Howl.prototype.init),Howl.prototype.pos=function(n,t,o,r){var i=this;if(!i._webAudio)return i;if("loaded"!==i._state)return i._queue.push({event:"pos",action:function(){i.pos(n,t,o,r)}}),i;if(t="number"!=typeof t?0:t,o="number"!=typeof o?-.5:o,"undefined"==typeof r){if("number"!=typeof n)return i._pos;i._pos=[n,t,o]}for(var a=i._getSoundIds(r),p=0;p<a.length;p++){var l=i._soundById(a[p]);if(l){if("number"!=typeof n)return l._pos;l._pos=[n,t,o],l._node&&(l._panner||e(l),l._panner.setPosition(n,t,o)),i._emit("pos",l._id)}}return i},Howl.prototype.orientation=function(n,t,o,r){var i=this;if(!i._webAudio)return i;if("loaded"!==i._state)return i._queue.push({event:"orientation",action:function(){i.orientation(n,t,o,r)}}),i;if(t="number"!=typeof t?i._orientation[1]:t,o="number"!=typeof o?i._orientation[2]:o,"undefined"==typeof r){if("number"!=typeof n)return i._orientation;i._orientation=[n,t,o]}for(var a=i._getSoundIds(r),p=0;p<a.length;p++){var l=i._soundById(a[p]);if(l){if("number"!=typeof n)return l._orientation;l._orientation=[n,t,o],l._node&&(l._panner||(l._pos||(l._pos=i._pos||[0,0,-.5]),e(l)),l._panner.setOrientation(n,t,o)),i._emit("orientation",l._id)}}return i},Howl.prototype.velocity=function(n,t,o,r){var i=this;if(!i._webAudio)return i;if("loaded"!==i._state)return i._queue.push({event:"velocity",action:function(){i.velocity(n,t,o,r)}}),i;if(t="number"!=typeof t?i._velocity[1]:t,o="number"!=typeof o?i._velocity[2]:o,"undefined"==typeof r){if("number"!=typeof n)return i._velocity;i._velocity=[n,t,o]}for(var a=i._getSoundIds(r),p=0;p<a.length;p++){var l=i._soundById(a[p]);if(l){if("number"!=typeof n)return l._velocity;l._velocity=[n,t,o],l._node&&(l._pos||(l._pos=i._pos||[0,0,-.5]),l._panner||e(l),l._panner.setVelocity(n,t,o)),i._emit("velocity",l._id)}}return i},Howl.prototype.pannerAttr=function(){var n,t,o,r=this,i=arguments;if(!r._webAudio)return r;if(0===i.length)return r._pannerAttr;if(1===i.length){if("object"!=typeof i[0])return o=r._soundById(parseInt(i[0],10)),o?o._pannerAttr:r._pannerAttr;n=i[0],"undefined"==typeof t&&(r._pannerAttr={coneInnerAngle:"undefined"!=typeof n.coneInnerAngle?n.coneInnerAngle:r._coneInnerAngle,coneOuterAngle:"undefined"!=typeof n.coneOuterAngle?n.coneOuterAngle:r._coneOuterAngle,coneOuterGain:"undefined"!=typeof n.coneOuterGain?n.coneOuterGain:r._coneOuterGain,distanceModel:"undefined"!=typeof n.distanceModel?n.distanceModel:r._distanceModel,maxDistance:"undefined"!=typeof n.maxDistance?n.maxDistance:r._maxDistance,panningModel:"undefined"!=typeof n.panningModel?n.panningModel:r._panningModel,refDistance:"undefined"!=typeof n.refDistance?n.refDistance:r._refDistance,rolloffFactor:"undefined"!=typeof n.rolloffFactor?n.rolloffFactor:r._rolloffFactor})}else 2===i.length&&(n=i[0],t=parseInt(i[1],10));for(var a=r._getSoundIds(t),p=0;p<a.length;p++)if(o=r._soundById(a[p])){var l=o._pannerAttr;l={coneInnerAngle:"undefined"!=typeof n.coneInnerAngle?n.coneInnerAngle:l.coneInnerAngle,coneOuterAngle:"undefined"!=typeof n.coneOuterAngle?n.coneOuterAngle:l.coneOuterAngle,coneOuterGain:"undefined"!=typeof n.coneOuterGain?n.coneOuterGain:l.coneOuterGain,distanceModel:"undefined"!=typeof n.distanceModel?n.distanceModel:l.distanceModel,maxDistance:"undefined"!=typeof n.maxDistance?n.maxDistance:l.maxDistance,panningModel:"undefined"!=typeof n.panningModel?n.panningModel:l.panningModel,refDistance:"undefined"!=typeof n.refDistance?n.refDistance:l.refDistance,rolloffFactor:"undefined"!=typeof n.rolloffFactor?n.rolloffFactor:l.rolloffFactor};var c=o._panner;c?(c.coneInnerAngle=l.coneInnerAngle,c.coneOuterAngle=l.coneOuterAngle,c.coneOuterGain=l.coneOuterGain,c.distanceModel=l.distanceModel,c.maxDistance=l.maxDistance,c.panningModel=l.panningModel,c.refDistance=l.refDistance,c.rolloffFactor=l.rolloffFactor):(o._pos||(o._pos=r._pos||[0,0,-.5]),e(o))}return r},Sound.prototype.init=function(e){return function(){var n=this,t=n._parent;n._orientation=t._orientation,n._pos=t._pos,n._velocity=t._velocity,n._pannerAttr=t._pannerAttr,e.call(this),n._pos&&t.pos(n._pos[0],n._pos[1],n._pos[2],n._id)}}(Sound.prototype.init),Sound.prototype.reset=function(e){return function(){var n=this,t=n._parent;return n._orientation=t._orientation,n._pos=t._pos,n._velocity=t._velocity,n._pannerAttr=t._pannerAttr,e.call(this)}}(Sound.prototype.reset);var e=function(e){e._panner=Howler.ctx.createPanner(),e._panner.coneInnerAngle=e._pannerAttr.coneInnerAngle,e._panner.coneOuterAngle=e._pannerAttr.coneOuterAngle,e._panner.coneOuterGain=e._pannerAttr.coneOuterGain,e._panner.distanceModel=e._pannerAttr.distanceModel,e._panner.maxDistance=e._pannerAttr.maxDistance,e._panner.panningModel=e._pannerAttr.panningModel,e._panner.refDistance=e._pannerAttr.refDistance,e._panner.rolloffFactor=e._pannerAttr.rolloffFactor,e._panner.setPosition(e._pos[0],e._pos[1],e._pos[2]),e._panner.setOrientation(e._orientation[0],e._orientation[1],e._orientation[2]),e._panner.setVelocity(e._velocity[0],e._velocity[1],e._velocity[2]),e._panner.connect(e._node),e._paused||e._parent.pause(e._id,!0).play(e._id)}}();
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 285 */
+/* 283 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -34498,7 +33888,7 @@
 	};
 
 /***/ },
-/* 286 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34509,17 +33899,21 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _grid = __webpack_require__(287);
+	var _grid = __webpack_require__(285);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
-	var _game_play = __webpack_require__(289);
+	var _game_play = __webpack_require__(287);
 	
 	var _game_play2 = _interopRequireDefault(_game_play);
 	
-	var _reactHowler = __webpack_require__(281);
+	var _reactHowler = __webpack_require__(279);
 	
 	var _reactHowler2 = _interopRequireDefault(_reactHowler);
+	
+	var _socket = __webpack_require__(230);
+	
+	var _socket2 = _interopRequireDefault(_socket);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -34557,9 +33951,7 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Megatron).call(this, props));
 	
 	        _this.state = {
-	            socket: _this.props.socket,
-	            activePlayers: {},
-	            playing: false
+	            activePlayers: {}
 	        };
 	
 	        // this.handleSound = this.handleSound.bind(this)
@@ -34570,14 +33962,9 @@
 	        key: 'componentDidMount',
 	        value: function componentDidMount() {
 	            var that = this;
-	            this.state.socket.emit('megatron_activated');
-	            this.state.socket.on('update_megatron', function (data) {
-	                console.log(data, 'joeys data');
+	            _socket2.default.emit('megatron_activated');
+	            _socket2.default.on('update_megatron', function (data) {
 	                that.state.activePlayers[data.playerName] = data;
-	                // that.setState({
-	                //     activePlayers: that.state.activePlayers,
-	                //     playing: true
-	                // })
 	            });
 	            this.timer = setInterval(function () {
 	                that.forceUpdate();
@@ -34587,6 +33974,7 @@
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
 	            this.state.socket.emit('megatron_deactivated');
+	            clearInterval(this.timer);
 	        }
 	    }, {
 	        key: 'render',
@@ -34644,7 +34032,7 @@
 	module.exports = Megatron;
 
 /***/ },
-/* 287 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34653,7 +34041,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _constants = __webpack_require__(288);
+	var _constants = __webpack_require__(286);
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
@@ -34688,13 +34076,14 @@
 	            case 7:
 	                theClass = "Z";
 	                break;
+	            case 8:
+	                theClass = "addedLines";
+	                break;
 	        }
 	        if (props.shadow) {
 	            theClass += " shadow";
 	        }
-	        // if (props.hardDrop){
-	        //     theClass += " hardDrop";           
-	        // }
+	
 	        return theClass;
 	    }
 	
@@ -34708,36 +34097,51 @@
 	}
 	
 	function Grid(props) {
-	
-	    var currentX = props.activePiece.activePiecePosition.x / _constants2.default.GRID_COLS * 100;
+	    // var currentPieceLength = props.activePiece.length;
+	    // var currentPieceWidth = currentPieceLength/constants.GRID_COLS * 100;
+	    // var currentPieceHeight = currentPieceLength/constants.GRID_ROWS * 100;
+	    // var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
+	    var currentX = props.activePiece.activePiecePosition.x * 4;
 	    var currentY;
-	    // if (props.hardDrop) {
-	    //     currentY = props.hardDrop / constants.GRID_ROWS * 100;
-	    // }
-	    // else {
-	    currentY = Math.floor(props.activePiece.activePiecePosition.y) / _constants2.default.GRID_ROWS * 100;
-	    // }
-	    var shadowY = props.shadowY / _constants2.default.GRID_ROWS * 100;
+	    //currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
+	    currentY = Math.floor(props.activePiece.activePiecePosition.y) * 4;
+	    //var shadowY = props.shadowY / constants.GRID_ROWS * 100;
+	    var shadowY = props.shadowY * 4;
 	    return _react2.default.createElement(
 	        'div',
-	        { className: 'container' },
+	        { className: props.handicap === 'shake' ? 'shake container' : props.handicap === 'blur' ? 'blur container' : props.handicap === 'flip' ? 'flipdiv container' : 'container' },
+	        props.handicap === 'troll' ? _react2.default.createElement(
+	            'div',
+	            { className: 'troll' },
+	            _react2.default.createElement('img', { src: 'http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' })
+	        ) : '',
+	        props.message ? _react2.default.createElement(
+	            'h1',
+	            { className: 'message' },
+	            props.message
+	        ) : '',
+	        props.handicap === 'reverse' ? _react2.default.createElement(
+	            'h1',
+	            { className: 'message' },
+	            'REVERSE'
+	        ) : '',
 	        _react2.default.createElement(
 	            'div',
-	            { className: 'grid' },
+	            { className: 'grid', id: 'grid' },
 	            props.grid.map(function (row, index) {
 	                return _react2.default.createElement(Row, { row: row, key: "r" + index });
 	            })
 	        ),
 	        _react2.default.createElement(
 	            'div',
-	            { className: 'currentPiece', style: { position: 'absolute', top: currentY + '%', left: currentX + '%' } },
+	            { className: 'currentPiece', style: { position: 'absolute', top: currentY + 'vh', left: currentX + 'vh' } },
 	            props.activePiece.activePiece.map(function (row, index) {
-	                return _react2.default.createElement(Row, { row: row, hardDrop: props.hardDrop, key: "pr" + index });
+	                return _react2.default.createElement(Row, { row: row, key: "pr" + index });
 	            })
 	        ),
 	        _react2.default.createElement(
 	            'div',
-	            { className: 'shadowPiece', style: { position: 'absolute', top: shadowY + '%', left: currentX + '%' } },
+	            { className: 'shadowPiece', style: { position: 'absolute', top: shadowY + 'vh', left: currentX + 'vh' } },
 	            props.activePiece.activePiece.map(function (row, index) {
 	                return _react2.default.createElement(Row, { row: row, shadow: true, key: "sr" + index });
 	            })
@@ -34746,7 +34150,7 @@
 	}
 	
 	//get initial grid of 0s for any given height/width
-	function GetInitialGrid(rows, cols) {
+	function getInitialGrid(rows, cols) {
 	    var grid = [];
 	    for (var row = 0; row < rows; row++) {
 	        grid[row] = [];
@@ -34758,13 +34162,13 @@
 	}
 	
 	module.exports = {
-	    GetInitialGrid: GetInitialGrid,
+	    getInitialGrid: getInitialGrid,
 	    Grid: Grid,
 	    Row: Row
 	};
 
 /***/ },
-/* 288 */
+/* 286 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -34792,11 +34196,12 @@
 	    GRID_COLS: 10,
 	    Y_START: -1,
 	    X_START: 3,
-	    HARD_DROP: 60
+	    HARD_DROP: 60,
+	    DEFAULT_YSPEED: 8
 	};
 
 /***/ },
-/* 289 */
+/* 287 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -35009,31 +34414,6 @@
 		return rotated;
 	}
 	
-	function shuffleBag() {
-		var array = ['I', 'J', 'Z', 'S', 'O', 'L', 'T'];
-		var arrLength = array.length;
-	
-		while (arrLength > 0) {
-			var index = Math.floor(Math.random() * arrLength);
-			arrLength--;
-			var temp = array[arrLength];
-			array[arrLength] = array[index];
-			array[index] = temp;
-		}
-		return array;
-	}
-	
-	function getGamePieces() {
-		var array = [];
-		var i = 0;
-		while (i < 150) {
-			array.push(shuffleBag());
-			i++;
-		}
-		var gamePieces = [].concat.apply([], array);
-		return gamePieces;
-	}
-	
 	function getPoints(clearedLines) {
 		var points;
 		switch (clearedLines) {
@@ -35063,6 +34443,18 @@
 		return getPoints(currLines) * 1.5;
 	}
 	
+	function getRandomBomb(handicapArr, clearedLines) {
+		var bombs = [{ name: 'extraLines' }, { name: 'speedUp', maxTime: 8000 }, { name: 'shake', maxTime: 2000 }, { name: 'reverse', maxTime: 5000 }, { name: 'blur', maxTime: 5000 }, { name: 'flip', maxTime: 8000 }, { name: 'troll', maxTime: 5000 }];
+	
+		// {name: 'cat', maxTime: 5000}
+		var randomBomb = bombs[Math.floor(Math.random() * bombs.length)];
+	
+		if (clearedLines > 0) {
+			handicapArr.push(randomBomb);
+		}
+		return handicapArr;
+	}
+	
 	module.exports = {
 		getTetLength: getTetLength,
 		checkGameOver: checkGameOver,
@@ -35074,10 +34466,3471 @@
 		canRotate: canRotate,
 		clearLines: clearLines,
 		rotateRight: rotateRight,
-		shuffleBag: shuffleBag,
-		getGamePieces: getGamePieces,
 		getPoints: getPoints,
-		combos: combos
+		combos: combos,
+		getRandomBomb: getRandomBomb
+	};
+
+/***/ },
+/* 288 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _socket = __webpack_require__(230);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Player = function (_React$Component) {
+	  _inherits(Player, _React$Component);
+	
+	  function Player(props) {
+	    _classCallCheck(this, Player);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Player).call(this, props));
+	
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Player, [{
+	    key: 'handleSubmit',
+	    value: function handleSubmit(event) {
+	      event.preventDefault();
+	      _socket2.default.emit('new_player', this.refs.userName.value.toUpperCase());
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'enterScreen' },
+	        _react2.default.createElement(
+	          'form',
+	          { className: 'enterForm', onSubmit: this.handleSubmit },
+	          _react2.default.createElement('input', { className: 'formInput', type: 'text', ref: 'userName', placeholder: 'Enter your Name' }),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'enterButton', type: 'submit' },
+	            'Enter the GAME!'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Player;
+	}(_react2.default.Component);
+	
+	exports.default = Player;
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Queued = function (_React$Component) {
+	  _inherits(Queued, _React$Component);
+	
+	  function Queued() {
+	    _classCallCheck(this, Queued);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Queued).apply(this, arguments));
+	  }
+	
+	  _createClass(Queued, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'allPage' },
+	        _react2.default.createElement(
+	          'h1',
+	          { className: 'waiting-h1' },
+	          'Waiting for all players'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement('img', { src: '/img/loading.gif' })
+	        ),
+	        _react2.default.createElement(
+	          'h2',
+	          { className: 'connected-title' },
+	          'Connected players'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          null,
+	          Object.keys(this.props.players).map(function (player, i) {
+	            return _react2.default.createElement(
+	              'li',
+	              { className: 'player-list-waiting', key: _this2.props.players[player].socketId },
+	              _this2.props.players[player].playerName
+	            );
+	          })
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Queued;
+	}(_react2.default.Component);
+	
+	exports.default = Queued;
+
+/***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(38);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _reactHammerjs = __webpack_require__(291);
+	
+	var _reactHammerjs2 = _interopRequireDefault(_reactHammerjs);
+	
+	var _constants = __webpack_require__(286);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	var _grid = __webpack_require__(285);
+	
+	var _grid2 = _interopRequireDefault(_grid);
+	
+	var _game_play = __webpack_require__(287);
+	
+	var _game_play2 = _interopRequireDefault(_game_play);
+	
+	var _handicaps = __webpack_require__(293);
+	
+	var _handicaps2 = _interopRequireDefault(_handicaps);
+	
+	var _socket = __webpack_require__(230);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Game = function (_React$Component) {
+		_inherits(Game, _React$Component);
+	
+		function Game(props) {
+			_classCallCheck(this, Game);
+	
+			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Game).call(this, props));
+	
+			_this.state = {
+				grid: _grid2.default.getInitialGrid(_constants2.default.GRID_ROWS, _constants2.default.GRID_COLS),
+				gameBag: _this.props.gameBag,
+				activePiece: _constants2.default.SHAPES[_this.props.gameBag[0]],
+				activePiecePosition: {
+					x: _constants2.default.X_START,
+					y: _constants2.default.Y_START
+				},
+				nextPiece: _constants2.default.SHAPES[_this.props.gameBag[1]],
+				ySpeed: _constants2.default.DEFAULT_YSPEED,
+				lines: 0,
+				totalLines: 0,
+				score: 0,
+				handicapsAcc: [],
+				handicapBombs: [],
+				gameMessage: 1
+			};
+			_this.serverTimer = 0;
+			_this.updateGameState = _this.updateGameState.bind(_this);
+			_this.handleKeydown = _this.handleKeydown.bind(_this);
+			_this.handleKeyup = _this.handleKeyup.bind(_this);
+			_this.handleRightMove = _this.handleRightMove.bind(_this);
+			_this.handleLeftMove = _this.handleLeftMove.bind(_this);
+			_this.handleHardDrop = _this.handleHardDrop.bind(_this);
+			_this.handleRotate = _this.handleRotate.bind(_this);
+			_this.beforeGame = _this.beforeGame.bind(_this);
+			_this.handleBombClick = _this.handleBombClick.bind(_this);
+	
+			_this.handleSwipe = _this.handleSwipe.bind(_this);
+			_this.goFS = _this.goFS.bind(_this);
+			return _this;
+		}
+	
+		_createClass(Game, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				var that = this;
+				document.addEventListener('keydown', this.handleKeydown);
+				document.addEventListener('keyup', this.handleKeyup);
+				this.pieceCounter = 1;
+				this.gameStartTime = new Date();
+				this.beforeGame();
+				//this.updateGameState();
+				// setTimeout(function(){
+				// 	that.state.handicapBombs.push({name: 'speedUp', maxTime: 2000})
+				// }, 2000)
+				// setTimeout(function(){
+				// 	that.state.handicapBombs.push({name: 'extraLines'})
+				// }, 4000);
+				setTimeout(function () {
+					that.state.handicapBombs.push({ name: 'blur', maxTime: 5000 });
+				}, 6000);
+				// setTimeout(function(){
+				// 	that.state.handicapBombs.push({name: 'cat', maxTime: 5000})
+				// }, 2000)
+				// setTimeout(function(){
+				// 	that.state.handicapBombs.push({name: 'troll', maxTime: 5000})
+				// setTimeout(function(){
+				// 	that.state.handicapBombs.push({name: 'shake', maxTime: 2500})
+				// }, 5000)
+				// setTimeout(function(){
+				// 	that.state.handicapBombs.push({name: 'reverse', maxTime: 5000});
+				// }, 5000)
+				// setTimeout(function(){
+				// 	that.state.handicapBombs.push({name: 'flip', maxTime: 5000});
+				// }, 5000)
+			}
+		}, {
+			key: 'componentWillUnmount',
+			value: function componentWillUnmount() {
+				document.removeEventListener('keydown', this.handleKeydown);
+				document.removeEventListener('keyup', this.handleKeyup);
+			}
+	
+			//display 3, 2, 1 countdown before starting game
+			//display GO! when game has started
+			//reusable state value for any game message
+	
+		}, {
+			key: 'beforeGame',
+			value: function beforeGame() {
+				var that = this;
+				if (new Date() - this.gameStartTime < 3000) {
+					this.state.gameMessage = Math.floor((new Date() - this.gameStartTime) / 1000) + 1;
+					this.setState({ gameMessage: this.state.gameMessage });
+					requestAnimationFrame(this.beforeGame);
+				} else {
+					this.setState({ gameMessage: "GO!" });
+					setTimeout(function () {
+						that.setState({ gameMessage: null });
+					}, 1000);
+					this.updateGameState();
+				}
+			}
+		}, {
+			key: 'goFS',
+			value: function goFS() {
+				document.requestFullScreen();
+			}
+		}, {
+			key: 'handleSwipe',
+			value: function handleSwipe(e) {
+				e.preventDefault();
+				console.log(e);
+				if (e.direction === 16) {
+					this.handleHardDrop();
+				}
+			}
+	
+			//right 39
+			//left 37
+			//up 38
+			//down 40
+			//space 32
+	
+		}, {
+			key: 'handleKeydown',
+			value: function handleKeydown(e) {
+				//only handle key events if piece is not in hard drop mode
+				if (!this.hardDrop) {
+					//if reverse handicap is active, switch left and right key handle events
+					if (this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse') {
+						switch (e.which) {
+							case 37:
+								this.handleRightMove();
+								return;
+							case 39:
+								this.handleLeftMove();
+								return;
+							case 38:
+								this.handleRotate();
+								return;
+							case 40:
+								this.fastDrop = true;
+								return;
+							case 32:
+								this.handleHardDrop();
+						}
+					} else {
+						switch (e.which) {
+							case 39:
+								this.handleRightMove();
+								return;
+							case 37:
+								this.handleLeftMove();
+								return;
+							case 38:
+								this.handleRotate();
+								return;
+							case 40:
+								this.fastDrop = true;
+								return;
+							case 32:
+								this.handleHardDrop();
+						}
+					}
+				}
+			}
+		}, {
+			key: 'handleKeyup',
+			value: function handleKeyup(e) {
+				if (e.which === 40) {
+					this.fastDrop = false;
+				}
+			}
+		}, {
+			key: 'handleRightMove',
+			value: function handleRightMove() {
+				if (_game_play2.default.canMoveRight(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x)) {
+					var x = this.state.activePiecePosition.x;
+					var newX = x + 1;
+					this.state.activePiecePosition.x = newX;
+					this.setState({ activePiecePosition: this.state.activePiecePosition });
+				}
+			}
+		}, {
+			key: 'handleHardDrop',
+			value: function handleHardDrop() {
+				var yPositionDiff = 20 - Math.floor(this.state.activePiecePosition.y);
+				var newScore = this.state.score + 2 * yPositionDiff;
+				this.setState({ score: newScore });
+				this.hardDrop = true;
+			}
+		}, {
+			key: 'handleLeftMove',
+			value: function handleLeftMove() {
+				if (_game_play2.default.canMoveLeft(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x)) {
+					var x = this.state.activePiecePosition.x;
+					var newX = x - 1;
+					this.state.activePiecePosition.x = newX;
+					this.setState({ activePiecePosition: this.state.activePiecePosition });
+				}
+			}
+		}, {
+			key: 'handleRotate',
+			value: function handleRotate() {
+				if (_game_play2.default.canRotate(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x)) {
+					this.setState({ activePiece: _game_play2.default.rotateRight(this.state.activePiece) });
+				}
+			}
+		}, {
+			key: 'handleBombClick',
+			value: function handleBombClick(e) {
+				e.preventDefault();
+				var bomb = this.state.handicapsAcc[0];
+				this.state.handicapBombs.push(bomb);
+				this.state.handicapsAcc.splice(0, 1);
+			}
+		}, {
+			key: 'updateGameState',
+			value: function updateGameState() {
+	
+				if (this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'extraLines') {
+					this.state.handicapBombs.splice(0, 1);
+					this.setState({ grid: _handicaps2.default.extraLines(this.state.grid) });
+				}
+	
+				if (this.state.handicapBombs[0] && !this.handicapStartTime) {
+					this.handicapStartTime = new Date();
+				} else if (this.state.handicapBombs[0] && new Date() - this.handicapStartTime > this.state.handicapBombs[0].maxTime) {
+					if (this.state.handicapBombs[0].name === 'shake') {
+						this.state.grid = _handicaps2.default.shake(this.state.grid);
+						//setState??
+					}
+					this.state.handicapBombs.splice(0, 1);
+					this.handicapStartTime = null;
+					//this.setState?
+				}
+	
+				var speed = this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'speedUp' ? 40 : this.fastDrop ? 25 : this.state.ySpeed;
+				var currentState = this.state;
+				var y = currentState.activePiecePosition.y;
+	
+				if (_game_play2.default.canMoveDown(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) && !this.hardDrop) {
+					this.time = null;
+					var newY = this.state.activePiecePosition.y + 1 / 60 * speed;
+					this.state.activePiecePosition.y = newY;
+					this.setState({
+						activePiecePosition: this.state.activePiecePosition
+					});
+				} else {
+					if (this.time || this.hardDrop) {
+						if (new Date() - this.time > 500 || this.hardDrop) {
+							this.time = null;
+							var finalY = this.state.activePiecePosition.y;
+							if (this.hardDrop) {
+								finalY = _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x);
+							}
+							var mergedGrid = _game_play2.default.mergeGrid(this.state.grid, this.state.activePiece, this.state.activePiecePosition.x, finalY);
+							var gridStatus = _game_play2.default.clearLines(mergedGrid);
+							var clearedGrid = gridStatus.clearedGrid;
+							var gameOver = gridStatus.gameOver;
+							var newLines = gridStatus.clearedLines + this.state.totalLines;
+							var newScore = _game_play2.default.combos(this.previousClearedLines, gridStatus.clearedLines) + this.state.score;
+							var newHandicapArr = _game_play2.default.getRandomBomb(this.state.handicapsAcc, gridStatus.clearedLines);
+							if (gameOver) {
+								this.setState({
+									grid: clearedGrid,
+									gameMessage: "GAME OVER!"
+								});
+								return;
+							} else {
+								this.setState({
+									grid: clearedGrid,
+									nextPiece: _constants2.default.SHAPES[this.state.gameBag[this.pieceCounter + 1]],
+									activePiece: _constants2.default.SHAPES[this.state.gameBag[this.pieceCounter]],
+									activePiecePosition: {
+										x: _constants2.default.X_START,
+										y: _constants2.default.Y_START
+									},
+									totalLines: newLines,
+									score: newScore,
+									ySpeed: _constants2.default.DEFAULT_YSPEED,
+									handicapsAcc: newHandicapArr
+								});
+								this.deltaX = 0;
+								this.pieceCounter++;
+								this.hardDrop = false;
+								this.previousClearedLines = gridStatus.clearedLines;
+							}
+						}
+					} else {
+						this.time = new Date();
+					}
+				}
+	
+				if (new Date() - this.serverTimer > 250) {
+					var playerInfo = {
+						grid: this.state.grid,
+						nextPiece: this.state.nextPiece,
+						activePiece: this.state.activePiece,
+						activePiecePosition: this.state.activePiecePosition,
+						totalLines: this.state.totalLines,
+						score: this.state.score,
+						hardDrop: this.hardDrop,
+						playerName: this.props.playerName
+					};
+	
+					_socket2.default.emit('megatron_screen', playerInfo);
+	
+					this.serverTimer = new Date();
+				}
+	
+				requestAnimationFrame(this.updateGameState);
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				// TODO: this.props.rank
+	
+				var disabled = this.state.handicapsAcc.length === 0;
+				var options = { preventDefault: true, swipe: { threshold: 0.5, velocity: 0, dragBlockHorizontal: true } };
+	
+				return _react2.default.createElement(
+					_reactHammerjs2.default,
+					{ onTap: this.goFS },
+					_react2.default.createElement(
+						'div',
+						{ className: 'page' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'main' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'leftSideBar' },
+								_react2.default.createElement(
+									_reactHammerjs2.default,
+									{ onTap: this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleRightMove : this.handleLeftMove },
+									_react2.default.createElement('div', { className: 'controlButton leftButton' })
+								)
+							),
+							_react2.default.createElement(
+								_reactHammerjs2.default,
+								{ onSwipe: this.handleSwipe, onTap: this.handleRotate, vertical: true, options: options },
+								_react2.default.createElement(_grid2.default.Grid, { message: this.state.gameMessage ? typeof this.state.gameMessage === "number" ? 4 - this.state.gameMessage : this.state.gameMessage : null, handicap: this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null, grid: this.state.grid, hardDrop: this.hardDrop ? _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null, activePiece: { activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) })
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'rightSideBar' },
+								_react2.default.createElement(
+									_reactHammerjs2.default,
+									{ onTap: this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleLeftMove : this.handleRightMove },
+									_react2.default.createElement('div', { className: 'controlButton rightButton' })
+								)
+							)
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'footer' },
+							_react2.default.createElement(
+								'div',
+								{ className: 'nextPiece' },
+								_react2.default.createElement(
+									'h2',
+									{ className: 'nextTitle' },
+									'NEXT'
+								),
+								this.state.nextPiece.map(function (row, index) {
+									return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+								})
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'sidebarElement' },
+								_react2.default.createElement(
+									'div',
+									{ className: 'lines' },
+									_react2.default.createElement(
+										'h2',
+										null,
+										'LINES'
+									),
+									_react2.default.createElement(
+										'h3',
+										null,
+										this.state.totalLines
+									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'score' },
+									_react2.default.createElement(
+										'h2',
+										null,
+										'SCORE'
+									),
+									_react2.default.createElement(
+										'h3',
+										null,
+										this.state.score,
+										' (',
+										this.props.rank,
+										')'
+									)
+								)
+							),
+							_react2.default.createElement(
+								'div',
+								{ className: 'handicaps' },
+								_react2.default.createElement(
+									'h2',
+									null,
+									'BOMBS'
+								),
+								_react2.default.createElement(
+									_reactHammerjs2.default,
+									{ onTap: this.handleBombClick },
+									_react2.default.createElement(
+										'h3',
+										{ className: 'bombsButton', type: 'button', disabled: disabled, ref: 'the_bomb' },
+										this.state.handicapsAcc.length
+									)
+								)
+							)
+						)
+					)
+				);
+			}
+		}]);
+	
+		return Game;
+	}(_react2.default.Component);
+	
+	exports.default = Game;
+
+/***/ },
+/* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(1);
+	var ReactDOM = __webpack_require__(38);
+	
+	// require('hammerjs') when in a browser. This is safe because Hammer is only
+	// invoked in componentDidMount, which is not executed on the server.
+	var Hammer = (typeof window !== 'undefined') ? __webpack_require__(292) : undefined;
+	
+	var privateProps = {
+		children: true,
+		action: true,
+		onTap: true,
+		onDoubleTap: true,
+		onPan: true,
+		onPanStart: true,
+		onPanEnd: true,
+		onPanCancel: true,
+		onSwipe: true,
+		onPress: true,
+		onPressUp: true,
+		onPinch: true,
+		onPinchIn: true,
+		onPinchOut: true,
+		onPinchStart: true,
+		onPinchEnd: true,
+		onPinchCancel: true,
+		onRotate: true,
+	};
+	
+	/**
+	 * Hammer Component
+	 * ================
+	 */
+	
+	var handlerToEvent = {
+		action: 'tap press',
+		onTap: 'tap',
+		onDoubleTap: 'doubletap',
+		onPanStart: 'panstart',
+		onPan: 'pan',
+		onPanEnd: 'panend',
+		onPanCancel: 'pancancel',
+		onSwipe: 'swipe',
+		onPress: 'press',
+		onPressUp: 'pressup',
+		onPinch: 'pinch',
+		onPinchIn: 'pinchin',
+		onPinchOut: 'pinchout',
+		onPinchStart: 'pinchstart',
+		onPinchEnd: 'pinchend',
+		onRotate: 'rotate',
+	};
+	function updateHammer (hammer, props) {
+		if (props.vertical) {
+			hammer.get('pan').set({direction: Hammer.DIRECTION_ALL});
+			hammer.get('swipe').set({direction: Hammer.DIRECTION_ALL});
+		} else {
+			hammer.get('pan').set({direction: Hammer.DIRECTION_HORIZONTAL});
+			hammer.get('swipe').set({direction: Hammer.DIRECTION_HORIZONTAL});
+		}
+	
+		if (props.options) {
+			Object.keys(props.options).forEach(function (option) {
+				if (option === 'recognizers') {
+					Object.keys(props.options.recognizers).forEach(function (gesture) {
+						var recognizer = hammer.get(gesture);
+						recognizer.set(props.options.recognizers[gesture]);
+					}, this);
+				} else {
+					var key = option;
+					var optionObj = {};
+					optionObj[key] = props.options[option];
+					hammer.set(optionObj);
+				}
+			}, this);
+		}
+	
+		if (props.recognizeWith) {
+			Object.keys(props.recognizeWith).forEach(function (gesture) {
+				var recognizer = hammer.get(gesture);
+				recognizer.recognizeWith(props.recognizeWith[gesture]);
+			}, this);
+		}
+	
+		Object.keys(props).forEach(function (p) {
+			var e = handlerToEvent[p];
+			if (e) {
+				hammer.off(e);
+				hammer.on(e, props[p]);
+			}
+		});
+	}
+	
+	var HammerComponent = React.createClass({
+	
+		displayName: 'Hammer',
+	
+		propTypes: {
+			className: React.PropTypes.string,
+		},
+	
+		componentDidMount: function () {
+			this.hammer = new Hammer(ReactDOM.findDOMNode(this));
+			updateHammer(this.hammer, this.props);
+		},
+	
+		componentDidUpdate: function () {
+			if (this.hammer) {
+				updateHammer(this.hammer, this.props);
+			}
+		},
+	
+		componentWillUnmount: function () {
+			if (this.hammer) {
+				this.hammer.stop();
+				this.hammer.destroy();
+			}
+			this.hammer = null;
+		},
+	
+		render: function () {
+			var props = {};
+	
+			Object.keys(this.props).forEach(function (i) {
+				if (!privateProps[i]) {
+					props[i] = this.props[i];
+				}
+			}, this);
+	
+			// Reuse the child provided
+			// This makes it flexible to use whatever element is wanted (div, ul, etc)
+			return React.cloneElement(React.Children.only(this.props.children), props);
+		}
+	});
+	
+	module.exports = HammerComponent;
+
+
+/***/ },
+/* 292 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_RESULT__;/*! Hammer.JS - v2.0.7 - 2016-04-22
+	 * http://hammerjs.github.io/
+	 *
+	 * Copyright (c) 2016 Jorik Tangelder;
+	 * Licensed under the MIT license */
+	(function(window, document, exportName, undefined) {
+	  'use strict';
+	
+	var VENDOR_PREFIXES = ['', 'webkit', 'Moz', 'MS', 'ms', 'o'];
+	var TEST_ELEMENT = document.createElement('div');
+	
+	var TYPE_FUNCTION = 'function';
+	
+	var round = Math.round;
+	var abs = Math.abs;
+	var now = Date.now;
+	
+	/**
+	 * set a timeout with a given scope
+	 * @param {Function} fn
+	 * @param {Number} timeout
+	 * @param {Object} context
+	 * @returns {number}
+	 */
+	function setTimeoutContext(fn, timeout, context) {
+	    return setTimeout(bindFn(fn, context), timeout);
+	}
+	
+	/**
+	 * if the argument is an array, we want to execute the fn on each entry
+	 * if it aint an array we don't want to do a thing.
+	 * this is used by all the methods that accept a single and array argument.
+	 * @param {*|Array} arg
+	 * @param {String} fn
+	 * @param {Object} [context]
+	 * @returns {Boolean}
+	 */
+	function invokeArrayArg(arg, fn, context) {
+	    if (Array.isArray(arg)) {
+	        each(arg, context[fn], context);
+	        return true;
+	    }
+	    return false;
+	}
+	
+	/**
+	 * walk objects and arrays
+	 * @param {Object} obj
+	 * @param {Function} iterator
+	 * @param {Object} context
+	 */
+	function each(obj, iterator, context) {
+	    var i;
+	
+	    if (!obj) {
+	        return;
+	    }
+	
+	    if (obj.forEach) {
+	        obj.forEach(iterator, context);
+	    } else if (obj.length !== undefined) {
+	        i = 0;
+	        while (i < obj.length) {
+	            iterator.call(context, obj[i], i, obj);
+	            i++;
+	        }
+	    } else {
+	        for (i in obj) {
+	            obj.hasOwnProperty(i) && iterator.call(context, obj[i], i, obj);
+	        }
+	    }
+	}
+	
+	/**
+	 * wrap a method with a deprecation warning and stack trace
+	 * @param {Function} method
+	 * @param {String} name
+	 * @param {String} message
+	 * @returns {Function} A new function wrapping the supplied method.
+	 */
+	function deprecate(method, name, message) {
+	    var deprecationMessage = 'DEPRECATED METHOD: ' + name + '\n' + message + ' AT \n';
+	    return function() {
+	        var e = new Error('get-stack-trace');
+	        var stack = e && e.stack ? e.stack.replace(/^[^\(]+?[\n$]/gm, '')
+	            .replace(/^\s+at\s+/gm, '')
+	            .replace(/^Object.<anonymous>\s*\(/gm, '{anonymous}()@') : 'Unknown Stack Trace';
+	
+	        var log = window.console && (window.console.warn || window.console.log);
+	        if (log) {
+	            log.call(window.console, deprecationMessage, stack);
+	        }
+	        return method.apply(this, arguments);
+	    };
+	}
+	
+	/**
+	 * extend object.
+	 * means that properties in dest will be overwritten by the ones in src.
+	 * @param {Object} target
+	 * @param {...Object} objects_to_assign
+	 * @returns {Object} target
+	 */
+	var assign;
+	if (typeof Object.assign !== 'function') {
+	    assign = function assign(target) {
+	        if (target === undefined || target === null) {
+	            throw new TypeError('Cannot convert undefined or null to object');
+	        }
+	
+	        var output = Object(target);
+	        for (var index = 1; index < arguments.length; index++) {
+	            var source = arguments[index];
+	            if (source !== undefined && source !== null) {
+	                for (var nextKey in source) {
+	                    if (source.hasOwnProperty(nextKey)) {
+	                        output[nextKey] = source[nextKey];
+	                    }
+	                }
+	            }
+	        }
+	        return output;
+	    };
+	} else {
+	    assign = Object.assign;
+	}
+	
+	/**
+	 * extend object.
+	 * means that properties in dest will be overwritten by the ones in src.
+	 * @param {Object} dest
+	 * @param {Object} src
+	 * @param {Boolean} [merge=false]
+	 * @returns {Object} dest
+	 */
+	var extend = deprecate(function extend(dest, src, merge) {
+	    var keys = Object.keys(src);
+	    var i = 0;
+	    while (i < keys.length) {
+	        if (!merge || (merge && dest[keys[i]] === undefined)) {
+	            dest[keys[i]] = src[keys[i]];
+	        }
+	        i++;
+	    }
+	    return dest;
+	}, 'extend', 'Use `assign`.');
+	
+	/**
+	 * merge the values from src in the dest.
+	 * means that properties that exist in dest will not be overwritten by src
+	 * @param {Object} dest
+	 * @param {Object} src
+	 * @returns {Object} dest
+	 */
+	var merge = deprecate(function merge(dest, src) {
+	    return extend(dest, src, true);
+	}, 'merge', 'Use `assign`.');
+	
+	/**
+	 * simple class inheritance
+	 * @param {Function} child
+	 * @param {Function} base
+	 * @param {Object} [properties]
+	 */
+	function inherit(child, base, properties) {
+	    var baseP = base.prototype,
+	        childP;
+	
+	    childP = child.prototype = Object.create(baseP);
+	    childP.constructor = child;
+	    childP._super = baseP;
+	
+	    if (properties) {
+	        assign(childP, properties);
+	    }
+	}
+	
+	/**
+	 * simple function bind
+	 * @param {Function} fn
+	 * @param {Object} context
+	 * @returns {Function}
+	 */
+	function bindFn(fn, context) {
+	    return function boundFn() {
+	        return fn.apply(context, arguments);
+	    };
+	}
+	
+	/**
+	 * let a boolean value also be a function that must return a boolean
+	 * this first item in args will be used as the context
+	 * @param {Boolean|Function} val
+	 * @param {Array} [args]
+	 * @returns {Boolean}
+	 */
+	function boolOrFn(val, args) {
+	    if (typeof val == TYPE_FUNCTION) {
+	        return val.apply(args ? args[0] || undefined : undefined, args);
+	    }
+	    return val;
+	}
+	
+	/**
+	 * use the val2 when val1 is undefined
+	 * @param {*} val1
+	 * @param {*} val2
+	 * @returns {*}
+	 */
+	function ifUndefined(val1, val2) {
+	    return (val1 === undefined) ? val2 : val1;
+	}
+	
+	/**
+	 * addEventListener with multiple events at once
+	 * @param {EventTarget} target
+	 * @param {String} types
+	 * @param {Function} handler
+	 */
+	function addEventListeners(target, types, handler) {
+	    each(splitStr(types), function(type) {
+	        target.addEventListener(type, handler, false);
+	    });
+	}
+	
+	/**
+	 * removeEventListener with multiple events at once
+	 * @param {EventTarget} target
+	 * @param {String} types
+	 * @param {Function} handler
+	 */
+	function removeEventListeners(target, types, handler) {
+	    each(splitStr(types), function(type) {
+	        target.removeEventListener(type, handler, false);
+	    });
+	}
+	
+	/**
+	 * find if a node is in the given parent
+	 * @method hasParent
+	 * @param {HTMLElement} node
+	 * @param {HTMLElement} parent
+	 * @return {Boolean} found
+	 */
+	function hasParent(node, parent) {
+	    while (node) {
+	        if (node == parent) {
+	            return true;
+	        }
+	        node = node.parentNode;
+	    }
+	    return false;
+	}
+	
+	/**
+	 * small indexOf wrapper
+	 * @param {String} str
+	 * @param {String} find
+	 * @returns {Boolean} found
+	 */
+	function inStr(str, find) {
+	    return str.indexOf(find) > -1;
+	}
+	
+	/**
+	 * split string on whitespace
+	 * @param {String} str
+	 * @returns {Array} words
+	 */
+	function splitStr(str) {
+	    return str.trim().split(/\s+/g);
+	}
+	
+	/**
+	 * find if a array contains the object using indexOf or a simple polyFill
+	 * @param {Array} src
+	 * @param {String} find
+	 * @param {String} [findByKey]
+	 * @return {Boolean|Number} false when not found, or the index
+	 */
+	function inArray(src, find, findByKey) {
+	    if (src.indexOf && !findByKey) {
+	        return src.indexOf(find);
+	    } else {
+	        var i = 0;
+	        while (i < src.length) {
+	            if ((findByKey && src[i][findByKey] == find) || (!findByKey && src[i] === find)) {
+	                return i;
+	            }
+	            i++;
+	        }
+	        return -1;
+	    }
+	}
+	
+	/**
+	 * convert array-like objects to real arrays
+	 * @param {Object} obj
+	 * @returns {Array}
+	 */
+	function toArray(obj) {
+	    return Array.prototype.slice.call(obj, 0);
+	}
+	
+	/**
+	 * unique array with objects based on a key (like 'id') or just by the array's value
+	 * @param {Array} src [{id:1},{id:2},{id:1}]
+	 * @param {String} [key]
+	 * @param {Boolean} [sort=False]
+	 * @returns {Array} [{id:1},{id:2}]
+	 */
+	function uniqueArray(src, key, sort) {
+	    var results = [];
+	    var values = [];
+	    var i = 0;
+	
+	    while (i < src.length) {
+	        var val = key ? src[i][key] : src[i];
+	        if (inArray(values, val) < 0) {
+	            results.push(src[i]);
+	        }
+	        values[i] = val;
+	        i++;
+	    }
+	
+	    if (sort) {
+	        if (!key) {
+	            results = results.sort();
+	        } else {
+	            results = results.sort(function sortUniqueArray(a, b) {
+	                return a[key] > b[key];
+	            });
+	        }
+	    }
+	
+	    return results;
+	}
+	
+	/**
+	 * get the prefixed property
+	 * @param {Object} obj
+	 * @param {String} property
+	 * @returns {String|Undefined} prefixed
+	 */
+	function prefixed(obj, property) {
+	    var prefix, prop;
+	    var camelProp = property[0].toUpperCase() + property.slice(1);
+	
+	    var i = 0;
+	    while (i < VENDOR_PREFIXES.length) {
+	        prefix = VENDOR_PREFIXES[i];
+	        prop = (prefix) ? prefix + camelProp : property;
+	
+	        if (prop in obj) {
+	            return prop;
+	        }
+	        i++;
+	    }
+	    return undefined;
+	}
+	
+	/**
+	 * get a unique id
+	 * @returns {number} uniqueId
+	 */
+	var _uniqueId = 1;
+	function uniqueId() {
+	    return _uniqueId++;
+	}
+	
+	/**
+	 * get the window object of an element
+	 * @param {HTMLElement} element
+	 * @returns {DocumentView|Window}
+	 */
+	function getWindowForElement(element) {
+	    var doc = element.ownerDocument || element;
+	    return (doc.defaultView || doc.parentWindow || window);
+	}
+	
+	var MOBILE_REGEX = /mobile|tablet|ip(ad|hone|od)|android/i;
+	
+	var SUPPORT_TOUCH = ('ontouchstart' in window);
+	var SUPPORT_POINTER_EVENTS = prefixed(window, 'PointerEvent') !== undefined;
+	var SUPPORT_ONLY_TOUCH = SUPPORT_TOUCH && MOBILE_REGEX.test(navigator.userAgent);
+	
+	var INPUT_TYPE_TOUCH = 'touch';
+	var INPUT_TYPE_PEN = 'pen';
+	var INPUT_TYPE_MOUSE = 'mouse';
+	var INPUT_TYPE_KINECT = 'kinect';
+	
+	var COMPUTE_INTERVAL = 25;
+	
+	var INPUT_START = 1;
+	var INPUT_MOVE = 2;
+	var INPUT_END = 4;
+	var INPUT_CANCEL = 8;
+	
+	var DIRECTION_NONE = 1;
+	var DIRECTION_LEFT = 2;
+	var DIRECTION_RIGHT = 4;
+	var DIRECTION_UP = 8;
+	var DIRECTION_DOWN = 16;
+	
+	var DIRECTION_HORIZONTAL = DIRECTION_LEFT | DIRECTION_RIGHT;
+	var DIRECTION_VERTICAL = DIRECTION_UP | DIRECTION_DOWN;
+	var DIRECTION_ALL = DIRECTION_HORIZONTAL | DIRECTION_VERTICAL;
+	
+	var PROPS_XY = ['x', 'y'];
+	var PROPS_CLIENT_XY = ['clientX', 'clientY'];
+	
+	/**
+	 * create new input type manager
+	 * @param {Manager} manager
+	 * @param {Function} callback
+	 * @returns {Input}
+	 * @constructor
+	 */
+	function Input(manager, callback) {
+	    var self = this;
+	    this.manager = manager;
+	    this.callback = callback;
+	    this.element = manager.element;
+	    this.target = manager.options.inputTarget;
+	
+	    // smaller wrapper around the handler, for the scope and the enabled state of the manager,
+	    // so when disabled the input events are completely bypassed.
+	    this.domHandler = function(ev) {
+	        if (boolOrFn(manager.options.enable, [manager])) {
+	            self.handler(ev);
+	        }
+	    };
+	
+	    this.init();
+	
+	}
+	
+	Input.prototype = {
+	    /**
+	     * should handle the inputEvent data and trigger the callback
+	     * @virtual
+	     */
+	    handler: function() { },
+	
+	    /**
+	     * bind the events
+	     */
+	    init: function() {
+	        this.evEl && addEventListeners(this.element, this.evEl, this.domHandler);
+	        this.evTarget && addEventListeners(this.target, this.evTarget, this.domHandler);
+	        this.evWin && addEventListeners(getWindowForElement(this.element), this.evWin, this.domHandler);
+	    },
+	
+	    /**
+	     * unbind the events
+	     */
+	    destroy: function() {
+	        this.evEl && removeEventListeners(this.element, this.evEl, this.domHandler);
+	        this.evTarget && removeEventListeners(this.target, this.evTarget, this.domHandler);
+	        this.evWin && removeEventListeners(getWindowForElement(this.element), this.evWin, this.domHandler);
+	    }
+	};
+	
+	/**
+	 * create new input type manager
+	 * called by the Manager constructor
+	 * @param {Hammer} manager
+	 * @returns {Input}
+	 */
+	function createInputInstance(manager) {
+	    var Type;
+	    var inputClass = manager.options.inputClass;
+	
+	    if (inputClass) {
+	        Type = inputClass;
+	    } else if (SUPPORT_POINTER_EVENTS) {
+	        Type = PointerEventInput;
+	    } else if (SUPPORT_ONLY_TOUCH) {
+	        Type = TouchInput;
+	    } else if (!SUPPORT_TOUCH) {
+	        Type = MouseInput;
+	    } else {
+	        Type = TouchMouseInput;
+	    }
+	    return new (Type)(manager, inputHandler);
+	}
+	
+	/**
+	 * handle input events
+	 * @param {Manager} manager
+	 * @param {String} eventType
+	 * @param {Object} input
+	 */
+	function inputHandler(manager, eventType, input) {
+	    var pointersLen = input.pointers.length;
+	    var changedPointersLen = input.changedPointers.length;
+	    var isFirst = (eventType & INPUT_START && (pointersLen - changedPointersLen === 0));
+	    var isFinal = (eventType & (INPUT_END | INPUT_CANCEL) && (pointersLen - changedPointersLen === 0));
+	
+	    input.isFirst = !!isFirst;
+	    input.isFinal = !!isFinal;
+	
+	    if (isFirst) {
+	        manager.session = {};
+	    }
+	
+	    // source event is the normalized value of the domEvents
+	    // like 'touchstart, mouseup, pointerdown'
+	    input.eventType = eventType;
+	
+	    // compute scale, rotation etc
+	    computeInputData(manager, input);
+	
+	    // emit secret event
+	    manager.emit('hammer.input', input);
+	
+	    manager.recognize(input);
+	    manager.session.prevInput = input;
+	}
+	
+	/**
+	 * extend the data with some usable properties like scale, rotate, velocity etc
+	 * @param {Object} manager
+	 * @param {Object} input
+	 */
+	function computeInputData(manager, input) {
+	    var session = manager.session;
+	    var pointers = input.pointers;
+	    var pointersLength = pointers.length;
+	
+	    // store the first input to calculate the distance and direction
+	    if (!session.firstInput) {
+	        session.firstInput = simpleCloneInputData(input);
+	    }
+	
+	    // to compute scale and rotation we need to store the multiple touches
+	    if (pointersLength > 1 && !session.firstMultiple) {
+	        session.firstMultiple = simpleCloneInputData(input);
+	    } else if (pointersLength === 1) {
+	        session.firstMultiple = false;
+	    }
+	
+	    var firstInput = session.firstInput;
+	    var firstMultiple = session.firstMultiple;
+	    var offsetCenter = firstMultiple ? firstMultiple.center : firstInput.center;
+	
+	    var center = input.center = getCenter(pointers);
+	    input.timeStamp = now();
+	    input.deltaTime = input.timeStamp - firstInput.timeStamp;
+	
+	    input.angle = getAngle(offsetCenter, center);
+	    input.distance = getDistance(offsetCenter, center);
+	
+	    computeDeltaXY(session, input);
+	    input.offsetDirection = getDirection(input.deltaX, input.deltaY);
+	
+	    var overallVelocity = getVelocity(input.deltaTime, input.deltaX, input.deltaY);
+	    input.overallVelocityX = overallVelocity.x;
+	    input.overallVelocityY = overallVelocity.y;
+	    input.overallVelocity = (abs(overallVelocity.x) > abs(overallVelocity.y)) ? overallVelocity.x : overallVelocity.y;
+	
+	    input.scale = firstMultiple ? getScale(firstMultiple.pointers, pointers) : 1;
+	    input.rotation = firstMultiple ? getRotation(firstMultiple.pointers, pointers) : 0;
+	
+	    input.maxPointers = !session.prevInput ? input.pointers.length : ((input.pointers.length >
+	        session.prevInput.maxPointers) ? input.pointers.length : session.prevInput.maxPointers);
+	
+	    computeIntervalInputData(session, input);
+	
+	    // find the correct target
+	    var target = manager.element;
+	    if (hasParent(input.srcEvent.target, target)) {
+	        target = input.srcEvent.target;
+	    }
+	    input.target = target;
+	}
+	
+	function computeDeltaXY(session, input) {
+	    var center = input.center;
+	    var offset = session.offsetDelta || {};
+	    var prevDelta = session.prevDelta || {};
+	    var prevInput = session.prevInput || {};
+	
+	    if (input.eventType === INPUT_START || prevInput.eventType === INPUT_END) {
+	        prevDelta = session.prevDelta = {
+	            x: prevInput.deltaX || 0,
+	            y: prevInput.deltaY || 0
+	        };
+	
+	        offset = session.offsetDelta = {
+	            x: center.x,
+	            y: center.y
+	        };
+	    }
+	
+	    input.deltaX = prevDelta.x + (center.x - offset.x);
+	    input.deltaY = prevDelta.y + (center.y - offset.y);
+	}
+	
+	/**
+	 * velocity is calculated every x ms
+	 * @param {Object} session
+	 * @param {Object} input
+	 */
+	function computeIntervalInputData(session, input) {
+	    var last = session.lastInterval || input,
+	        deltaTime = input.timeStamp - last.timeStamp,
+	        velocity, velocityX, velocityY, direction;
+	
+	    if (input.eventType != INPUT_CANCEL && (deltaTime > COMPUTE_INTERVAL || last.velocity === undefined)) {
+	        var deltaX = input.deltaX - last.deltaX;
+	        var deltaY = input.deltaY - last.deltaY;
+	
+	        var v = getVelocity(deltaTime, deltaX, deltaY);
+	        velocityX = v.x;
+	        velocityY = v.y;
+	        velocity = (abs(v.x) > abs(v.y)) ? v.x : v.y;
+	        direction = getDirection(deltaX, deltaY);
+	
+	        session.lastInterval = input;
+	    } else {
+	        // use latest velocity info if it doesn't overtake a minimum period
+	        velocity = last.velocity;
+	        velocityX = last.velocityX;
+	        velocityY = last.velocityY;
+	        direction = last.direction;
+	    }
+	
+	    input.velocity = velocity;
+	    input.velocityX = velocityX;
+	    input.velocityY = velocityY;
+	    input.direction = direction;
+	}
+	
+	/**
+	 * create a simple clone from the input used for storage of firstInput and firstMultiple
+	 * @param {Object} input
+	 * @returns {Object} clonedInputData
+	 */
+	function simpleCloneInputData(input) {
+	    // make a simple copy of the pointers because we will get a reference if we don't
+	    // we only need clientXY for the calculations
+	    var pointers = [];
+	    var i = 0;
+	    while (i < input.pointers.length) {
+	        pointers[i] = {
+	            clientX: round(input.pointers[i].clientX),
+	            clientY: round(input.pointers[i].clientY)
+	        };
+	        i++;
+	    }
+	
+	    return {
+	        timeStamp: now(),
+	        pointers: pointers,
+	        center: getCenter(pointers),
+	        deltaX: input.deltaX,
+	        deltaY: input.deltaY
+	    };
+	}
+	
+	/**
+	 * get the center of all the pointers
+	 * @param {Array} pointers
+	 * @return {Object} center contains `x` and `y` properties
+	 */
+	function getCenter(pointers) {
+	    var pointersLength = pointers.length;
+	
+	    // no need to loop when only one touch
+	    if (pointersLength === 1) {
+	        return {
+	            x: round(pointers[0].clientX),
+	            y: round(pointers[0].clientY)
+	        };
+	    }
+	
+	    var x = 0, y = 0, i = 0;
+	    while (i < pointersLength) {
+	        x += pointers[i].clientX;
+	        y += pointers[i].clientY;
+	        i++;
+	    }
+	
+	    return {
+	        x: round(x / pointersLength),
+	        y: round(y / pointersLength)
+	    };
+	}
+	
+	/**
+	 * calculate the velocity between two points. unit is in px per ms.
+	 * @param {Number} deltaTime
+	 * @param {Number} x
+	 * @param {Number} y
+	 * @return {Object} velocity `x` and `y`
+	 */
+	function getVelocity(deltaTime, x, y) {
+	    return {
+	        x: x / deltaTime || 0,
+	        y: y / deltaTime || 0
+	    };
+	}
+	
+	/**
+	 * get the direction between two points
+	 * @param {Number} x
+	 * @param {Number} y
+	 * @return {Number} direction
+	 */
+	function getDirection(x, y) {
+	    if (x === y) {
+	        return DIRECTION_NONE;
+	    }
+	
+	    if (abs(x) >= abs(y)) {
+	        return x < 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
+	    }
+	    return y < 0 ? DIRECTION_UP : DIRECTION_DOWN;
+	}
+	
+	/**
+	 * calculate the absolute distance between two points
+	 * @param {Object} p1 {x, y}
+	 * @param {Object} p2 {x, y}
+	 * @param {Array} [props] containing x and y keys
+	 * @return {Number} distance
+	 */
+	function getDistance(p1, p2, props) {
+	    if (!props) {
+	        props = PROPS_XY;
+	    }
+	    var x = p2[props[0]] - p1[props[0]],
+	        y = p2[props[1]] - p1[props[1]];
+	
+	    return Math.sqrt((x * x) + (y * y));
+	}
+	
+	/**
+	 * calculate the angle between two coordinates
+	 * @param {Object} p1
+	 * @param {Object} p2
+	 * @param {Array} [props] containing x and y keys
+	 * @return {Number} angle
+	 */
+	function getAngle(p1, p2, props) {
+	    if (!props) {
+	        props = PROPS_XY;
+	    }
+	    var x = p2[props[0]] - p1[props[0]],
+	        y = p2[props[1]] - p1[props[1]];
+	    return Math.atan2(y, x) * 180 / Math.PI;
+	}
+	
+	/**
+	 * calculate the rotation degrees between two pointersets
+	 * @param {Array} start array of pointers
+	 * @param {Array} end array of pointers
+	 * @return {Number} rotation
+	 */
+	function getRotation(start, end) {
+	    return getAngle(end[1], end[0], PROPS_CLIENT_XY) + getAngle(start[1], start[0], PROPS_CLIENT_XY);
+	}
+	
+	/**
+	 * calculate the scale factor between two pointersets
+	 * no scale is 1, and goes down to 0 when pinched together, and bigger when pinched out
+	 * @param {Array} start array of pointers
+	 * @param {Array} end array of pointers
+	 * @return {Number} scale
+	 */
+	function getScale(start, end) {
+	    return getDistance(end[0], end[1], PROPS_CLIENT_XY) / getDistance(start[0], start[1], PROPS_CLIENT_XY);
+	}
+	
+	var MOUSE_INPUT_MAP = {
+	    mousedown: INPUT_START,
+	    mousemove: INPUT_MOVE,
+	    mouseup: INPUT_END
+	};
+	
+	var MOUSE_ELEMENT_EVENTS = 'mousedown';
+	var MOUSE_WINDOW_EVENTS = 'mousemove mouseup';
+	
+	/**
+	 * Mouse events input
+	 * @constructor
+	 * @extends Input
+	 */
+	function MouseInput() {
+	    this.evEl = MOUSE_ELEMENT_EVENTS;
+	    this.evWin = MOUSE_WINDOW_EVENTS;
+	
+	    this.pressed = false; // mousedown state
+	
+	    Input.apply(this, arguments);
+	}
+	
+	inherit(MouseInput, Input, {
+	    /**
+	     * handle mouse events
+	     * @param {Object} ev
+	     */
+	    handler: function MEhandler(ev) {
+	        var eventType = MOUSE_INPUT_MAP[ev.type];
+	
+	        // on start we want to have the left mouse button down
+	        if (eventType & INPUT_START && ev.button === 0) {
+	            this.pressed = true;
+	        }
+	
+	        if (eventType & INPUT_MOVE && ev.which !== 1) {
+	            eventType = INPUT_END;
+	        }
+	
+	        // mouse must be down
+	        if (!this.pressed) {
+	            return;
+	        }
+	
+	        if (eventType & INPUT_END) {
+	            this.pressed = false;
+	        }
+	
+	        this.callback(this.manager, eventType, {
+	            pointers: [ev],
+	            changedPointers: [ev],
+	            pointerType: INPUT_TYPE_MOUSE,
+	            srcEvent: ev
+	        });
+	    }
+	});
+	
+	var POINTER_INPUT_MAP = {
+	    pointerdown: INPUT_START,
+	    pointermove: INPUT_MOVE,
+	    pointerup: INPUT_END,
+	    pointercancel: INPUT_CANCEL,
+	    pointerout: INPUT_CANCEL
+	};
+	
+	// in IE10 the pointer types is defined as an enum
+	var IE10_POINTER_TYPE_ENUM = {
+	    2: INPUT_TYPE_TOUCH,
+	    3: INPUT_TYPE_PEN,
+	    4: INPUT_TYPE_MOUSE,
+	    5: INPUT_TYPE_KINECT // see https://twitter.com/jacobrossi/status/480596438489890816
+	};
+	
+	var POINTER_ELEMENT_EVENTS = 'pointerdown';
+	var POINTER_WINDOW_EVENTS = 'pointermove pointerup pointercancel';
+	
+	// IE10 has prefixed support, and case-sensitive
+	if (window.MSPointerEvent && !window.PointerEvent) {
+	    POINTER_ELEMENT_EVENTS = 'MSPointerDown';
+	    POINTER_WINDOW_EVENTS = 'MSPointerMove MSPointerUp MSPointerCancel';
+	}
+	
+	/**
+	 * Pointer events input
+	 * @constructor
+	 * @extends Input
+	 */
+	function PointerEventInput() {
+	    this.evEl = POINTER_ELEMENT_EVENTS;
+	    this.evWin = POINTER_WINDOW_EVENTS;
+	
+	    Input.apply(this, arguments);
+	
+	    this.store = (this.manager.session.pointerEvents = []);
+	}
+	
+	inherit(PointerEventInput, Input, {
+	    /**
+	     * handle mouse events
+	     * @param {Object} ev
+	     */
+	    handler: function PEhandler(ev) {
+	        var store = this.store;
+	        var removePointer = false;
+	
+	        var eventTypeNormalized = ev.type.toLowerCase().replace('ms', '');
+	        var eventType = POINTER_INPUT_MAP[eventTypeNormalized];
+	        var pointerType = IE10_POINTER_TYPE_ENUM[ev.pointerType] || ev.pointerType;
+	
+	        var isTouch = (pointerType == INPUT_TYPE_TOUCH);
+	
+	        // get index of the event in the store
+	        var storeIndex = inArray(store, ev.pointerId, 'pointerId');
+	
+	        // start and mouse must be down
+	        if (eventType & INPUT_START && (ev.button === 0 || isTouch)) {
+	            if (storeIndex < 0) {
+	                store.push(ev);
+	                storeIndex = store.length - 1;
+	            }
+	        } else if (eventType & (INPUT_END | INPUT_CANCEL)) {
+	            removePointer = true;
+	        }
+	
+	        // it not found, so the pointer hasn't been down (so it's probably a hover)
+	        if (storeIndex < 0) {
+	            return;
+	        }
+	
+	        // update the event in the store
+	        store[storeIndex] = ev;
+	
+	        this.callback(this.manager, eventType, {
+	            pointers: store,
+	            changedPointers: [ev],
+	            pointerType: pointerType,
+	            srcEvent: ev
+	        });
+	
+	        if (removePointer) {
+	            // remove from the store
+	            store.splice(storeIndex, 1);
+	        }
+	    }
+	});
+	
+	var SINGLE_TOUCH_INPUT_MAP = {
+	    touchstart: INPUT_START,
+	    touchmove: INPUT_MOVE,
+	    touchend: INPUT_END,
+	    touchcancel: INPUT_CANCEL
+	};
+	
+	var SINGLE_TOUCH_TARGET_EVENTS = 'touchstart';
+	var SINGLE_TOUCH_WINDOW_EVENTS = 'touchstart touchmove touchend touchcancel';
+	
+	/**
+	 * Touch events input
+	 * @constructor
+	 * @extends Input
+	 */
+	function SingleTouchInput() {
+	    this.evTarget = SINGLE_TOUCH_TARGET_EVENTS;
+	    this.evWin = SINGLE_TOUCH_WINDOW_EVENTS;
+	    this.started = false;
+	
+	    Input.apply(this, arguments);
+	}
+	
+	inherit(SingleTouchInput, Input, {
+	    handler: function TEhandler(ev) {
+	        var type = SINGLE_TOUCH_INPUT_MAP[ev.type];
+	
+	        // should we handle the touch events?
+	        if (type === INPUT_START) {
+	            this.started = true;
+	        }
+	
+	        if (!this.started) {
+	            return;
+	        }
+	
+	        var touches = normalizeSingleTouches.call(this, ev, type);
+	
+	        // when done, reset the started state
+	        if (type & (INPUT_END | INPUT_CANCEL) && touches[0].length - touches[1].length === 0) {
+	            this.started = false;
+	        }
+	
+	        this.callback(this.manager, type, {
+	            pointers: touches[0],
+	            changedPointers: touches[1],
+	            pointerType: INPUT_TYPE_TOUCH,
+	            srcEvent: ev
+	        });
+	    }
+	});
+	
+	/**
+	 * @this {TouchInput}
+	 * @param {Object} ev
+	 * @param {Number} type flag
+	 * @returns {undefined|Array} [all, changed]
+	 */
+	function normalizeSingleTouches(ev, type) {
+	    var all = toArray(ev.touches);
+	    var changed = toArray(ev.changedTouches);
+	
+	    if (type & (INPUT_END | INPUT_CANCEL)) {
+	        all = uniqueArray(all.concat(changed), 'identifier', true);
+	    }
+	
+	    return [all, changed];
+	}
+	
+	var TOUCH_INPUT_MAP = {
+	    touchstart: INPUT_START,
+	    touchmove: INPUT_MOVE,
+	    touchend: INPUT_END,
+	    touchcancel: INPUT_CANCEL
+	};
+	
+	var TOUCH_TARGET_EVENTS = 'touchstart touchmove touchend touchcancel';
+	
+	/**
+	 * Multi-user touch events input
+	 * @constructor
+	 * @extends Input
+	 */
+	function TouchInput() {
+	    this.evTarget = TOUCH_TARGET_EVENTS;
+	    this.targetIds = {};
+	
+	    Input.apply(this, arguments);
+	}
+	
+	inherit(TouchInput, Input, {
+	    handler: function MTEhandler(ev) {
+	        var type = TOUCH_INPUT_MAP[ev.type];
+	        var touches = getTouches.call(this, ev, type);
+	        if (!touches) {
+	            return;
+	        }
+	
+	        this.callback(this.manager, type, {
+	            pointers: touches[0],
+	            changedPointers: touches[1],
+	            pointerType: INPUT_TYPE_TOUCH,
+	            srcEvent: ev
+	        });
+	    }
+	});
+	
+	/**
+	 * @this {TouchInput}
+	 * @param {Object} ev
+	 * @param {Number} type flag
+	 * @returns {undefined|Array} [all, changed]
+	 */
+	function getTouches(ev, type) {
+	    var allTouches = toArray(ev.touches);
+	    var targetIds = this.targetIds;
+	
+	    // when there is only one touch, the process can be simplified
+	    if (type & (INPUT_START | INPUT_MOVE) && allTouches.length === 1) {
+	        targetIds[allTouches[0].identifier] = true;
+	        return [allTouches, allTouches];
+	    }
+	
+	    var i,
+	        targetTouches,
+	        changedTouches = toArray(ev.changedTouches),
+	        changedTargetTouches = [],
+	        target = this.target;
+	
+	    // get target touches from touches
+	    targetTouches = allTouches.filter(function(touch) {
+	        return hasParent(touch.target, target);
+	    });
+	
+	    // collect touches
+	    if (type === INPUT_START) {
+	        i = 0;
+	        while (i < targetTouches.length) {
+	            targetIds[targetTouches[i].identifier] = true;
+	            i++;
+	        }
+	    }
+	
+	    // filter changed touches to only contain touches that exist in the collected target ids
+	    i = 0;
+	    while (i < changedTouches.length) {
+	        if (targetIds[changedTouches[i].identifier]) {
+	            changedTargetTouches.push(changedTouches[i]);
+	        }
+	
+	        // cleanup removed touches
+	        if (type & (INPUT_END | INPUT_CANCEL)) {
+	            delete targetIds[changedTouches[i].identifier];
+	        }
+	        i++;
+	    }
+	
+	    if (!changedTargetTouches.length) {
+	        return;
+	    }
+	
+	    return [
+	        // merge targetTouches with changedTargetTouches so it contains ALL touches, including 'end' and 'cancel'
+	        uniqueArray(targetTouches.concat(changedTargetTouches), 'identifier', true),
+	        changedTargetTouches
+	    ];
+	}
+	
+	/**
+	 * Combined touch and mouse input
+	 *
+	 * Touch has a higher priority then mouse, and while touching no mouse events are allowed.
+	 * This because touch devices also emit mouse events while doing a touch.
+	 *
+	 * @constructor
+	 * @extends Input
+	 */
+	
+	var DEDUP_TIMEOUT = 2500;
+	var DEDUP_DISTANCE = 25;
+	
+	function TouchMouseInput() {
+	    Input.apply(this, arguments);
+	
+	    var handler = bindFn(this.handler, this);
+	    this.touch = new TouchInput(this.manager, handler);
+	    this.mouse = new MouseInput(this.manager, handler);
+	
+	    this.primaryTouch = null;
+	    this.lastTouches = [];
+	}
+	
+	inherit(TouchMouseInput, Input, {
+	    /**
+	     * handle mouse and touch events
+	     * @param {Hammer} manager
+	     * @param {String} inputEvent
+	     * @param {Object} inputData
+	     */
+	    handler: function TMEhandler(manager, inputEvent, inputData) {
+	        var isTouch = (inputData.pointerType == INPUT_TYPE_TOUCH),
+	            isMouse = (inputData.pointerType == INPUT_TYPE_MOUSE);
+	
+	        if (isMouse && inputData.sourceCapabilities && inputData.sourceCapabilities.firesTouchEvents) {
+	            return;
+	        }
+	
+	        // when we're in a touch event, record touches to  de-dupe synthetic mouse event
+	        if (isTouch) {
+	            recordTouches.call(this, inputEvent, inputData);
+	        } else if (isMouse && isSyntheticEvent.call(this, inputData)) {
+	            return;
+	        }
+	
+	        this.callback(manager, inputEvent, inputData);
+	    },
+	
+	    /**
+	     * remove the event listeners
+	     */
+	    destroy: function destroy() {
+	        this.touch.destroy();
+	        this.mouse.destroy();
+	    }
+	});
+	
+	function recordTouches(eventType, eventData) {
+	    if (eventType & INPUT_START) {
+	        this.primaryTouch = eventData.changedPointers[0].identifier;
+	        setLastTouch.call(this, eventData);
+	    } else if (eventType & (INPUT_END | INPUT_CANCEL)) {
+	        setLastTouch.call(this, eventData);
+	    }
+	}
+	
+	function setLastTouch(eventData) {
+	    var touch = eventData.changedPointers[0];
+	
+	    if (touch.identifier === this.primaryTouch) {
+	        var lastTouch = {x: touch.clientX, y: touch.clientY};
+	        this.lastTouches.push(lastTouch);
+	        var lts = this.lastTouches;
+	        var removeLastTouch = function() {
+	            var i = lts.indexOf(lastTouch);
+	            if (i > -1) {
+	                lts.splice(i, 1);
+	            }
+	        };
+	        setTimeout(removeLastTouch, DEDUP_TIMEOUT);
+	    }
+	}
+	
+	function isSyntheticEvent(eventData) {
+	    var x = eventData.srcEvent.clientX, y = eventData.srcEvent.clientY;
+	    for (var i = 0; i < this.lastTouches.length; i++) {
+	        var t = this.lastTouches[i];
+	        var dx = Math.abs(x - t.x), dy = Math.abs(y - t.y);
+	        if (dx <= DEDUP_DISTANCE && dy <= DEDUP_DISTANCE) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
+	var PREFIXED_TOUCH_ACTION = prefixed(TEST_ELEMENT.style, 'touchAction');
+	var NATIVE_TOUCH_ACTION = PREFIXED_TOUCH_ACTION !== undefined;
+	
+	// magical touchAction value
+	var TOUCH_ACTION_COMPUTE = 'compute';
+	var TOUCH_ACTION_AUTO = 'auto';
+	var TOUCH_ACTION_MANIPULATION = 'manipulation'; // not implemented
+	var TOUCH_ACTION_NONE = 'none';
+	var TOUCH_ACTION_PAN_X = 'pan-x';
+	var TOUCH_ACTION_PAN_Y = 'pan-y';
+	var TOUCH_ACTION_MAP = getTouchActionProps();
+	
+	/**
+	 * Touch Action
+	 * sets the touchAction property or uses the js alternative
+	 * @param {Manager} manager
+	 * @param {String} value
+	 * @constructor
+	 */
+	function TouchAction(manager, value) {
+	    this.manager = manager;
+	    this.set(value);
+	}
+	
+	TouchAction.prototype = {
+	    /**
+	     * set the touchAction value on the element or enable the polyfill
+	     * @param {String} value
+	     */
+	    set: function(value) {
+	        // find out the touch-action by the event handlers
+	        if (value == TOUCH_ACTION_COMPUTE) {
+	            value = this.compute();
+	        }
+	
+	        if (NATIVE_TOUCH_ACTION && this.manager.element.style && TOUCH_ACTION_MAP[value]) {
+	            this.manager.element.style[PREFIXED_TOUCH_ACTION] = value;
+	        }
+	        this.actions = value.toLowerCase().trim();
+	    },
+	
+	    /**
+	     * just re-set the touchAction value
+	     */
+	    update: function() {
+	        this.set(this.manager.options.touchAction);
+	    },
+	
+	    /**
+	     * compute the value for the touchAction property based on the recognizer's settings
+	     * @returns {String} value
+	     */
+	    compute: function() {
+	        var actions = [];
+	        each(this.manager.recognizers, function(recognizer) {
+	            if (boolOrFn(recognizer.options.enable, [recognizer])) {
+	                actions = actions.concat(recognizer.getTouchAction());
+	            }
+	        });
+	        return cleanTouchActions(actions.join(' '));
+	    },
+	
+	    /**
+	     * this method is called on each input cycle and provides the preventing of the browser behavior
+	     * @param {Object} input
+	     */
+	    preventDefaults: function(input) {
+	        var srcEvent = input.srcEvent;
+	        var direction = input.offsetDirection;
+	
+	        // if the touch action did prevented once this session
+	        if (this.manager.session.prevented) {
+	            srcEvent.preventDefault();
+	            return;
+	        }
+	
+	        var actions = this.actions;
+	        var hasNone = inStr(actions, TOUCH_ACTION_NONE) && !TOUCH_ACTION_MAP[TOUCH_ACTION_NONE];
+	        var hasPanY = inStr(actions, TOUCH_ACTION_PAN_Y) && !TOUCH_ACTION_MAP[TOUCH_ACTION_PAN_Y];
+	        var hasPanX = inStr(actions, TOUCH_ACTION_PAN_X) && !TOUCH_ACTION_MAP[TOUCH_ACTION_PAN_X];
+	
+	        if (hasNone) {
+	            //do not prevent defaults if this is a tap gesture
+	
+	            var isTapPointer = input.pointers.length === 1;
+	            var isTapMovement = input.distance < 2;
+	            var isTapTouchTime = input.deltaTime < 250;
+	
+	            if (isTapPointer && isTapMovement && isTapTouchTime) {
+	                return;
+	            }
+	        }
+	
+	        if (hasPanX && hasPanY) {
+	            // `pan-x pan-y` means browser handles all scrolling/panning, do not prevent
+	            return;
+	        }
+	
+	        if (hasNone ||
+	            (hasPanY && direction & DIRECTION_HORIZONTAL) ||
+	            (hasPanX && direction & DIRECTION_VERTICAL)) {
+	            return this.preventSrc(srcEvent);
+	        }
+	    },
+	
+	    /**
+	     * call preventDefault to prevent the browser's default behavior (scrolling in most cases)
+	     * @param {Object} srcEvent
+	     */
+	    preventSrc: function(srcEvent) {
+	        this.manager.session.prevented = true;
+	        srcEvent.preventDefault();
+	    }
+	};
+	
+	/**
+	 * when the touchActions are collected they are not a valid value, so we need to clean things up. *
+	 * @param {String} actions
+	 * @returns {*}
+	 */
+	function cleanTouchActions(actions) {
+	    // none
+	    if (inStr(actions, TOUCH_ACTION_NONE)) {
+	        return TOUCH_ACTION_NONE;
+	    }
+	
+	    var hasPanX = inStr(actions, TOUCH_ACTION_PAN_X);
+	    var hasPanY = inStr(actions, TOUCH_ACTION_PAN_Y);
+	
+	    // if both pan-x and pan-y are set (different recognizers
+	    // for different directions, e.g. horizontal pan but vertical swipe?)
+	    // we need none (as otherwise with pan-x pan-y combined none of these
+	    // recognizers will work, since the browser would handle all panning
+	    if (hasPanX && hasPanY) {
+	        return TOUCH_ACTION_NONE;
+	    }
+	
+	    // pan-x OR pan-y
+	    if (hasPanX || hasPanY) {
+	        return hasPanX ? TOUCH_ACTION_PAN_X : TOUCH_ACTION_PAN_Y;
+	    }
+	
+	    // manipulation
+	    if (inStr(actions, TOUCH_ACTION_MANIPULATION)) {
+	        return TOUCH_ACTION_MANIPULATION;
+	    }
+	
+	    return TOUCH_ACTION_AUTO;
+	}
+	
+	function getTouchActionProps() {
+	    if (!NATIVE_TOUCH_ACTION) {
+	        return false;
+	    }
+	    var touchMap = {};
+	    var cssSupports = window.CSS && window.CSS.supports;
+	    ['auto', 'manipulation', 'pan-y', 'pan-x', 'pan-x pan-y', 'none'].forEach(function(val) {
+	
+	        // If css.supports is not supported but there is native touch-action assume it supports
+	        // all values. This is the case for IE 10 and 11.
+	        touchMap[val] = cssSupports ? window.CSS.supports('touch-action', val) : true;
+	    });
+	    return touchMap;
+	}
+	
+	/**
+	 * Recognizer flow explained; *
+	 * All recognizers have the initial state of POSSIBLE when a input session starts.
+	 * The definition of a input session is from the first input until the last input, with all it's movement in it. *
+	 * Example session for mouse-input: mousedown -> mousemove -> mouseup
+	 *
+	 * On each recognizing cycle (see Manager.recognize) the .recognize() method is executed
+	 * which determines with state it should be.
+	 *
+	 * If the recognizer has the state FAILED, CANCELLED or RECOGNIZED (equals ENDED), it is reset to
+	 * POSSIBLE to give it another change on the next cycle.
+	 *
+	 *               Possible
+	 *                  |
+	 *            +-----+---------------+
+	 *            |                     |
+	 *      +-----+-----+               |
+	 *      |           |               |
+	 *   Failed      Cancelled          |
+	 *                          +-------+------+
+	 *                          |              |
+	 *                      Recognized       Began
+	 *                                         |
+	 *                                      Changed
+	 *                                         |
+	 *                                  Ended/Recognized
+	 */
+	var STATE_POSSIBLE = 1;
+	var STATE_BEGAN = 2;
+	var STATE_CHANGED = 4;
+	var STATE_ENDED = 8;
+	var STATE_RECOGNIZED = STATE_ENDED;
+	var STATE_CANCELLED = 16;
+	var STATE_FAILED = 32;
+	
+	/**
+	 * Recognizer
+	 * Every recognizer needs to extend from this class.
+	 * @constructor
+	 * @param {Object} options
+	 */
+	function Recognizer(options) {
+	    this.options = assign({}, this.defaults, options || {});
+	
+	    this.id = uniqueId();
+	
+	    this.manager = null;
+	
+	    // default is enable true
+	    this.options.enable = ifUndefined(this.options.enable, true);
+	
+	    this.state = STATE_POSSIBLE;
+	
+	    this.simultaneous = {};
+	    this.requireFail = [];
+	}
+	
+	Recognizer.prototype = {
+	    /**
+	     * @virtual
+	     * @type {Object}
+	     */
+	    defaults: {},
+	
+	    /**
+	     * set options
+	     * @param {Object} options
+	     * @return {Recognizer}
+	     */
+	    set: function(options) {
+	        assign(this.options, options);
+	
+	        // also update the touchAction, in case something changed about the directions/enabled state
+	        this.manager && this.manager.touchAction.update();
+	        return this;
+	    },
+	
+	    /**
+	     * recognize simultaneous with an other recognizer.
+	     * @param {Recognizer} otherRecognizer
+	     * @returns {Recognizer} this
+	     */
+	    recognizeWith: function(otherRecognizer) {
+	        if (invokeArrayArg(otherRecognizer, 'recognizeWith', this)) {
+	            return this;
+	        }
+	
+	        var simultaneous = this.simultaneous;
+	        otherRecognizer = getRecognizerByNameIfManager(otherRecognizer, this);
+	        if (!simultaneous[otherRecognizer.id]) {
+	            simultaneous[otherRecognizer.id] = otherRecognizer;
+	            otherRecognizer.recognizeWith(this);
+	        }
+	        return this;
+	    },
+	
+	    /**
+	     * drop the simultaneous link. it doesnt remove the link on the other recognizer.
+	     * @param {Recognizer} otherRecognizer
+	     * @returns {Recognizer} this
+	     */
+	    dropRecognizeWith: function(otherRecognizer) {
+	        if (invokeArrayArg(otherRecognizer, 'dropRecognizeWith', this)) {
+	            return this;
+	        }
+	
+	        otherRecognizer = getRecognizerByNameIfManager(otherRecognizer, this);
+	        delete this.simultaneous[otherRecognizer.id];
+	        return this;
+	    },
+	
+	    /**
+	     * recognizer can only run when an other is failing
+	     * @param {Recognizer} otherRecognizer
+	     * @returns {Recognizer} this
+	     */
+	    requireFailure: function(otherRecognizer) {
+	        if (invokeArrayArg(otherRecognizer, 'requireFailure', this)) {
+	            return this;
+	        }
+	
+	        var requireFail = this.requireFail;
+	        otherRecognizer = getRecognizerByNameIfManager(otherRecognizer, this);
+	        if (inArray(requireFail, otherRecognizer) === -1) {
+	            requireFail.push(otherRecognizer);
+	            otherRecognizer.requireFailure(this);
+	        }
+	        return this;
+	    },
+	
+	    /**
+	     * drop the requireFailure link. it does not remove the link on the other recognizer.
+	     * @param {Recognizer} otherRecognizer
+	     * @returns {Recognizer} this
+	     */
+	    dropRequireFailure: function(otherRecognizer) {
+	        if (invokeArrayArg(otherRecognizer, 'dropRequireFailure', this)) {
+	            return this;
+	        }
+	
+	        otherRecognizer = getRecognizerByNameIfManager(otherRecognizer, this);
+	        var index = inArray(this.requireFail, otherRecognizer);
+	        if (index > -1) {
+	            this.requireFail.splice(index, 1);
+	        }
+	        return this;
+	    },
+	
+	    /**
+	     * has require failures boolean
+	     * @returns {boolean}
+	     */
+	    hasRequireFailures: function() {
+	        return this.requireFail.length > 0;
+	    },
+	
+	    /**
+	     * if the recognizer can recognize simultaneous with an other recognizer
+	     * @param {Recognizer} otherRecognizer
+	     * @returns {Boolean}
+	     */
+	    canRecognizeWith: function(otherRecognizer) {
+	        return !!this.simultaneous[otherRecognizer.id];
+	    },
+	
+	    /**
+	     * You should use `tryEmit` instead of `emit` directly to check
+	     * that all the needed recognizers has failed before emitting.
+	     * @param {Object} input
+	     */
+	    emit: function(input) {
+	        var self = this;
+	        var state = this.state;
+	
+	        function emit(event) {
+	            self.manager.emit(event, input);
+	        }
+	
+	        // 'panstart' and 'panmove'
+	        if (state < STATE_ENDED) {
+	            emit(self.options.event + stateStr(state));
+	        }
+	
+	        emit(self.options.event); // simple 'eventName' events
+	
+	        if (input.additionalEvent) { // additional event(panleft, panright, pinchin, pinchout...)
+	            emit(input.additionalEvent);
+	        }
+	
+	        // panend and pancancel
+	        if (state >= STATE_ENDED) {
+	            emit(self.options.event + stateStr(state));
+	        }
+	    },
+	
+	    /**
+	     * Check that all the require failure recognizers has failed,
+	     * if true, it emits a gesture event,
+	     * otherwise, setup the state to FAILED.
+	     * @param {Object} input
+	     */
+	    tryEmit: function(input) {
+	        if (this.canEmit()) {
+	            return this.emit(input);
+	        }
+	        // it's failing anyway
+	        this.state = STATE_FAILED;
+	    },
+	
+	    /**
+	     * can we emit?
+	     * @returns {boolean}
+	     */
+	    canEmit: function() {
+	        var i = 0;
+	        while (i < this.requireFail.length) {
+	            if (!(this.requireFail[i].state & (STATE_FAILED | STATE_POSSIBLE))) {
+	                return false;
+	            }
+	            i++;
+	        }
+	        return true;
+	    },
+	
+	    /**
+	     * update the recognizer
+	     * @param {Object} inputData
+	     */
+	    recognize: function(inputData) {
+	        // make a new copy of the inputData
+	        // so we can change the inputData without messing up the other recognizers
+	        var inputDataClone = assign({}, inputData);
+	
+	        // is is enabled and allow recognizing?
+	        if (!boolOrFn(this.options.enable, [this, inputDataClone])) {
+	            this.reset();
+	            this.state = STATE_FAILED;
+	            return;
+	        }
+	
+	        // reset when we've reached the end
+	        if (this.state & (STATE_RECOGNIZED | STATE_CANCELLED | STATE_FAILED)) {
+	            this.state = STATE_POSSIBLE;
+	        }
+	
+	        this.state = this.process(inputDataClone);
+	
+	        // the recognizer has recognized a gesture
+	        // so trigger an event
+	        if (this.state & (STATE_BEGAN | STATE_CHANGED | STATE_ENDED | STATE_CANCELLED)) {
+	            this.tryEmit(inputDataClone);
+	        }
+	    },
+	
+	    /**
+	     * return the state of the recognizer
+	     * the actual recognizing happens in this method
+	     * @virtual
+	     * @param {Object} inputData
+	     * @returns {Const} STATE
+	     */
+	    process: function(inputData) { }, // jshint ignore:line
+	
+	    /**
+	     * return the preferred touch-action
+	     * @virtual
+	     * @returns {Array}
+	     */
+	    getTouchAction: function() { },
+	
+	    /**
+	     * called when the gesture isn't allowed to recognize
+	     * like when another is being recognized or it is disabled
+	     * @virtual
+	     */
+	    reset: function() { }
+	};
+	
+	/**
+	 * get a usable string, used as event postfix
+	 * @param {Const} state
+	 * @returns {String} state
+	 */
+	function stateStr(state) {
+	    if (state & STATE_CANCELLED) {
+	        return 'cancel';
+	    } else if (state & STATE_ENDED) {
+	        return 'end';
+	    } else if (state & STATE_CHANGED) {
+	        return 'move';
+	    } else if (state & STATE_BEGAN) {
+	        return 'start';
+	    }
+	    return '';
+	}
+	
+	/**
+	 * direction cons to string
+	 * @param {Const} direction
+	 * @returns {String}
+	 */
+	function directionStr(direction) {
+	    if (direction == DIRECTION_DOWN) {
+	        return 'down';
+	    } else if (direction == DIRECTION_UP) {
+	        return 'up';
+	    } else if (direction == DIRECTION_LEFT) {
+	        return 'left';
+	    } else if (direction == DIRECTION_RIGHT) {
+	        return 'right';
+	    }
+	    return '';
+	}
+	
+	/**
+	 * get a recognizer by name if it is bound to a manager
+	 * @param {Recognizer|String} otherRecognizer
+	 * @param {Recognizer} recognizer
+	 * @returns {Recognizer}
+	 */
+	function getRecognizerByNameIfManager(otherRecognizer, recognizer) {
+	    var manager = recognizer.manager;
+	    if (manager) {
+	        return manager.get(otherRecognizer);
+	    }
+	    return otherRecognizer;
+	}
+	
+	/**
+	 * This recognizer is just used as a base for the simple attribute recognizers.
+	 * @constructor
+	 * @extends Recognizer
+	 */
+	function AttrRecognizer() {
+	    Recognizer.apply(this, arguments);
+	}
+	
+	inherit(AttrRecognizer, Recognizer, {
+	    /**
+	     * @namespace
+	     * @memberof AttrRecognizer
+	     */
+	    defaults: {
+	        /**
+	         * @type {Number}
+	         * @default 1
+	         */
+	        pointers: 1
+	    },
+	
+	    /**
+	     * Used to check if it the recognizer receives valid input, like input.distance > 10.
+	     * @memberof AttrRecognizer
+	     * @param {Object} input
+	     * @returns {Boolean} recognized
+	     */
+	    attrTest: function(input) {
+	        var optionPointers = this.options.pointers;
+	        return optionPointers === 0 || input.pointers.length === optionPointers;
+	    },
+	
+	    /**
+	     * Process the input and return the state for the recognizer
+	     * @memberof AttrRecognizer
+	     * @param {Object} input
+	     * @returns {*} State
+	     */
+	    process: function(input) {
+	        var state = this.state;
+	        var eventType = input.eventType;
+	
+	        var isRecognized = state & (STATE_BEGAN | STATE_CHANGED);
+	        var isValid = this.attrTest(input);
+	
+	        // on cancel input and we've recognized before, return STATE_CANCELLED
+	        if (isRecognized && (eventType & INPUT_CANCEL || !isValid)) {
+	            return state | STATE_CANCELLED;
+	        } else if (isRecognized || isValid) {
+	            if (eventType & INPUT_END) {
+	                return state | STATE_ENDED;
+	            } else if (!(state & STATE_BEGAN)) {
+	                return STATE_BEGAN;
+	            }
+	            return state | STATE_CHANGED;
+	        }
+	        return STATE_FAILED;
+	    }
+	});
+	
+	/**
+	 * Pan
+	 * Recognized when the pointer is down and moved in the allowed direction.
+	 * @constructor
+	 * @extends AttrRecognizer
+	 */
+	function PanRecognizer() {
+	    AttrRecognizer.apply(this, arguments);
+	
+	    this.pX = null;
+	    this.pY = null;
+	}
+	
+	inherit(PanRecognizer, AttrRecognizer, {
+	    /**
+	     * @namespace
+	     * @memberof PanRecognizer
+	     */
+	    defaults: {
+	        event: 'pan',
+	        threshold: 10,
+	        pointers: 1,
+	        direction: DIRECTION_ALL
+	    },
+	
+	    getTouchAction: function() {
+	        var direction = this.options.direction;
+	        var actions = [];
+	        if (direction & DIRECTION_HORIZONTAL) {
+	            actions.push(TOUCH_ACTION_PAN_Y);
+	        }
+	        if (direction & DIRECTION_VERTICAL) {
+	            actions.push(TOUCH_ACTION_PAN_X);
+	        }
+	        return actions;
+	    },
+	
+	    directionTest: function(input) {
+	        var options = this.options;
+	        var hasMoved = true;
+	        var distance = input.distance;
+	        var direction = input.direction;
+	        var x = input.deltaX;
+	        var y = input.deltaY;
+	
+	        // lock to axis?
+	        if (!(direction & options.direction)) {
+	            if (options.direction & DIRECTION_HORIZONTAL) {
+	                direction = (x === 0) ? DIRECTION_NONE : (x < 0) ? DIRECTION_LEFT : DIRECTION_RIGHT;
+	                hasMoved = x != this.pX;
+	                distance = Math.abs(input.deltaX);
+	            } else {
+	                direction = (y === 0) ? DIRECTION_NONE : (y < 0) ? DIRECTION_UP : DIRECTION_DOWN;
+	                hasMoved = y != this.pY;
+	                distance = Math.abs(input.deltaY);
+	            }
+	        }
+	        input.direction = direction;
+	        return hasMoved && distance > options.threshold && direction & options.direction;
+	    },
+	
+	    attrTest: function(input) {
+	        return AttrRecognizer.prototype.attrTest.call(this, input) &&
+	            (this.state & STATE_BEGAN || (!(this.state & STATE_BEGAN) && this.directionTest(input)));
+	    },
+	
+	    emit: function(input) {
+	
+	        this.pX = input.deltaX;
+	        this.pY = input.deltaY;
+	
+	        var direction = directionStr(input.direction);
+	
+	        if (direction) {
+	            input.additionalEvent = this.options.event + direction;
+	        }
+	        this._super.emit.call(this, input);
+	    }
+	});
+	
+	/**
+	 * Pinch
+	 * Recognized when two or more pointers are moving toward (zoom-in) or away from each other (zoom-out).
+	 * @constructor
+	 * @extends AttrRecognizer
+	 */
+	function PinchRecognizer() {
+	    AttrRecognizer.apply(this, arguments);
+	}
+	
+	inherit(PinchRecognizer, AttrRecognizer, {
+	    /**
+	     * @namespace
+	     * @memberof PinchRecognizer
+	     */
+	    defaults: {
+	        event: 'pinch',
+	        threshold: 0,
+	        pointers: 2
+	    },
+	
+	    getTouchAction: function() {
+	        return [TOUCH_ACTION_NONE];
+	    },
+	
+	    attrTest: function(input) {
+	        return this._super.attrTest.call(this, input) &&
+	            (Math.abs(input.scale - 1) > this.options.threshold || this.state & STATE_BEGAN);
+	    },
+	
+	    emit: function(input) {
+	        if (input.scale !== 1) {
+	            var inOut = input.scale < 1 ? 'in' : 'out';
+	            input.additionalEvent = this.options.event + inOut;
+	        }
+	        this._super.emit.call(this, input);
+	    }
+	});
+	
+	/**
+	 * Press
+	 * Recognized when the pointer is down for x ms without any movement.
+	 * @constructor
+	 * @extends Recognizer
+	 */
+	function PressRecognizer() {
+	    Recognizer.apply(this, arguments);
+	
+	    this._timer = null;
+	    this._input = null;
+	}
+	
+	inherit(PressRecognizer, Recognizer, {
+	    /**
+	     * @namespace
+	     * @memberof PressRecognizer
+	     */
+	    defaults: {
+	        event: 'press',
+	        pointers: 1,
+	        time: 251, // minimal time of the pointer to be pressed
+	        threshold: 9 // a minimal movement is ok, but keep it low
+	    },
+	
+	    getTouchAction: function() {
+	        return [TOUCH_ACTION_AUTO];
+	    },
+	
+	    process: function(input) {
+	        var options = this.options;
+	        var validPointers = input.pointers.length === options.pointers;
+	        var validMovement = input.distance < options.threshold;
+	        var validTime = input.deltaTime > options.time;
+	
+	        this._input = input;
+	
+	        // we only allow little movement
+	        // and we've reached an end event, so a tap is possible
+	        if (!validMovement || !validPointers || (input.eventType & (INPUT_END | INPUT_CANCEL) && !validTime)) {
+	            this.reset();
+	        } else if (input.eventType & INPUT_START) {
+	            this.reset();
+	            this._timer = setTimeoutContext(function() {
+	                this.state = STATE_RECOGNIZED;
+	                this.tryEmit();
+	            }, options.time, this);
+	        } else if (input.eventType & INPUT_END) {
+	            return STATE_RECOGNIZED;
+	        }
+	        return STATE_FAILED;
+	    },
+	
+	    reset: function() {
+	        clearTimeout(this._timer);
+	    },
+	
+	    emit: function(input) {
+	        if (this.state !== STATE_RECOGNIZED) {
+	            return;
+	        }
+	
+	        if (input && (input.eventType & INPUT_END)) {
+	            this.manager.emit(this.options.event + 'up', input);
+	        } else {
+	            this._input.timeStamp = now();
+	            this.manager.emit(this.options.event, this._input);
+	        }
+	    }
+	});
+	
+	/**
+	 * Rotate
+	 * Recognized when two or more pointer are moving in a circular motion.
+	 * @constructor
+	 * @extends AttrRecognizer
+	 */
+	function RotateRecognizer() {
+	    AttrRecognizer.apply(this, arguments);
+	}
+	
+	inherit(RotateRecognizer, AttrRecognizer, {
+	    /**
+	     * @namespace
+	     * @memberof RotateRecognizer
+	     */
+	    defaults: {
+	        event: 'rotate',
+	        threshold: 0,
+	        pointers: 2
+	    },
+	
+	    getTouchAction: function() {
+	        return [TOUCH_ACTION_NONE];
+	    },
+	
+	    attrTest: function(input) {
+	        return this._super.attrTest.call(this, input) &&
+	            (Math.abs(input.rotation) > this.options.threshold || this.state & STATE_BEGAN);
+	    }
+	});
+	
+	/**
+	 * Swipe
+	 * Recognized when the pointer is moving fast (velocity), with enough distance in the allowed direction.
+	 * @constructor
+	 * @extends AttrRecognizer
+	 */
+	function SwipeRecognizer() {
+	    AttrRecognizer.apply(this, arguments);
+	}
+	
+	inherit(SwipeRecognizer, AttrRecognizer, {
+	    /**
+	     * @namespace
+	     * @memberof SwipeRecognizer
+	     */
+	    defaults: {
+	        event: 'swipe',
+	        threshold: 10,
+	        velocity: 0.3,
+	        direction: DIRECTION_HORIZONTAL | DIRECTION_VERTICAL,
+	        pointers: 1
+	    },
+	
+	    getTouchAction: function() {
+	        return PanRecognizer.prototype.getTouchAction.call(this);
+	    },
+	
+	    attrTest: function(input) {
+	        var direction = this.options.direction;
+	        var velocity;
+	
+	        if (direction & (DIRECTION_HORIZONTAL | DIRECTION_VERTICAL)) {
+	            velocity = input.overallVelocity;
+	        } else if (direction & DIRECTION_HORIZONTAL) {
+	            velocity = input.overallVelocityX;
+	        } else if (direction & DIRECTION_VERTICAL) {
+	            velocity = input.overallVelocityY;
+	        }
+	
+	        return this._super.attrTest.call(this, input) &&
+	            direction & input.offsetDirection &&
+	            input.distance > this.options.threshold &&
+	            input.maxPointers == this.options.pointers &&
+	            abs(velocity) > this.options.velocity && input.eventType & INPUT_END;
+	    },
+	
+	    emit: function(input) {
+	        var direction = directionStr(input.offsetDirection);
+	        if (direction) {
+	            this.manager.emit(this.options.event + direction, input);
+	        }
+	
+	        this.manager.emit(this.options.event, input);
+	    }
+	});
+	
+	/**
+	 * A tap is ecognized when the pointer is doing a small tap/click. Multiple taps are recognized if they occur
+	 * between the given interval and position. The delay option can be used to recognize multi-taps without firing
+	 * a single tap.
+	 *
+	 * The eventData from the emitted event contains the property `tapCount`, which contains the amount of
+	 * multi-taps being recognized.
+	 * @constructor
+	 * @extends Recognizer
+	 */
+	function TapRecognizer() {
+	    Recognizer.apply(this, arguments);
+	
+	    // previous time and center,
+	    // used for tap counting
+	    this.pTime = false;
+	    this.pCenter = false;
+	
+	    this._timer = null;
+	    this._input = null;
+	    this.count = 0;
+	}
+	
+	inherit(TapRecognizer, Recognizer, {
+	    /**
+	     * @namespace
+	     * @memberof PinchRecognizer
+	     */
+	    defaults: {
+	        event: 'tap',
+	        pointers: 1,
+	        taps: 1,
+	        interval: 300, // max time between the multi-tap taps
+	        time: 250, // max time of the pointer to be down (like finger on the screen)
+	        threshold: 9, // a minimal movement is ok, but keep it low
+	        posThreshold: 10 // a multi-tap can be a bit off the initial position
+	    },
+	
+	    getTouchAction: function() {
+	        return [TOUCH_ACTION_MANIPULATION];
+	    },
+	
+	    process: function(input) {
+	        var options = this.options;
+	
+	        var validPointers = input.pointers.length === options.pointers;
+	        var validMovement = input.distance < options.threshold;
+	        var validTouchTime = input.deltaTime < options.time;
+	
+	        this.reset();
+	
+	        if ((input.eventType & INPUT_START) && (this.count === 0)) {
+	            return this.failTimeout();
+	        }
+	
+	        // we only allow little movement
+	        // and we've reached an end event, so a tap is possible
+	        if (validMovement && validTouchTime && validPointers) {
+	            if (input.eventType != INPUT_END) {
+	                return this.failTimeout();
+	            }
+	
+	            var validInterval = this.pTime ? (input.timeStamp - this.pTime < options.interval) : true;
+	            var validMultiTap = !this.pCenter || getDistance(this.pCenter, input.center) < options.posThreshold;
+	
+	            this.pTime = input.timeStamp;
+	            this.pCenter = input.center;
+	
+	            if (!validMultiTap || !validInterval) {
+	                this.count = 1;
+	            } else {
+	                this.count += 1;
+	            }
+	
+	            this._input = input;
+	
+	            // if tap count matches we have recognized it,
+	            // else it has began recognizing...
+	            var tapCount = this.count % options.taps;
+	            if (tapCount === 0) {
+	                // no failing requirements, immediately trigger the tap event
+	                // or wait as long as the multitap interval to trigger
+	                if (!this.hasRequireFailures()) {
+	                    return STATE_RECOGNIZED;
+	                } else {
+	                    this._timer = setTimeoutContext(function() {
+	                        this.state = STATE_RECOGNIZED;
+	                        this.tryEmit();
+	                    }, options.interval, this);
+	                    return STATE_BEGAN;
+	                }
+	            }
+	        }
+	        return STATE_FAILED;
+	    },
+	
+	    failTimeout: function() {
+	        this._timer = setTimeoutContext(function() {
+	            this.state = STATE_FAILED;
+	        }, this.options.interval, this);
+	        return STATE_FAILED;
+	    },
+	
+	    reset: function() {
+	        clearTimeout(this._timer);
+	    },
+	
+	    emit: function() {
+	        if (this.state == STATE_RECOGNIZED) {
+	            this._input.tapCount = this.count;
+	            this.manager.emit(this.options.event, this._input);
+	        }
+	    }
+	});
+	
+	/**
+	 * Simple way to create a manager with a default set of recognizers.
+	 * @param {HTMLElement} element
+	 * @param {Object} [options]
+	 * @constructor
+	 */
+	function Hammer(element, options) {
+	    options = options || {};
+	    options.recognizers = ifUndefined(options.recognizers, Hammer.defaults.preset);
+	    return new Manager(element, options);
+	}
+	
+	/**
+	 * @const {string}
+	 */
+	Hammer.VERSION = '2.0.7';
+	
+	/**
+	 * default settings
+	 * @namespace
+	 */
+	Hammer.defaults = {
+	    /**
+	     * set if DOM events are being triggered.
+	     * But this is slower and unused by simple implementations, so disabled by default.
+	     * @type {Boolean}
+	     * @default false
+	     */
+	    domEvents: false,
+	
+	    /**
+	     * The value for the touchAction property/fallback.
+	     * When set to `compute` it will magically set the correct value based on the added recognizers.
+	     * @type {String}
+	     * @default compute
+	     */
+	    touchAction: TOUCH_ACTION_COMPUTE,
+	
+	    /**
+	     * @type {Boolean}
+	     * @default true
+	     */
+	    enable: true,
+	
+	    /**
+	     * EXPERIMENTAL FEATURE -- can be removed/changed
+	     * Change the parent input target element.
+	     * If Null, then it is being set the to main element.
+	     * @type {Null|EventTarget}
+	     * @default null
+	     */
+	    inputTarget: null,
+	
+	    /**
+	     * force an input class
+	     * @type {Null|Function}
+	     * @default null
+	     */
+	    inputClass: null,
+	
+	    /**
+	     * Default recognizer setup when calling `Hammer()`
+	     * When creating a new Manager these will be skipped.
+	     * @type {Array}
+	     */
+	    preset: [
+	        // RecognizerClass, options, [recognizeWith, ...], [requireFailure, ...]
+	        [RotateRecognizer, {enable: false}],
+	        [PinchRecognizer, {enable: false}, ['rotate']],
+	        [SwipeRecognizer, {direction: DIRECTION_HORIZONTAL}],
+	        [PanRecognizer, {direction: DIRECTION_HORIZONTAL}, ['swipe']],
+	        [TapRecognizer],
+	        [TapRecognizer, {event: 'doubletap', taps: 2}, ['tap']],
+	        [PressRecognizer]
+	    ],
+	
+	    /**
+	     * Some CSS properties can be used to improve the working of Hammer.
+	     * Add them to this method and they will be set when creating a new Manager.
+	     * @namespace
+	     */
+	    cssProps: {
+	        /**
+	         * Disables text selection to improve the dragging gesture. Mainly for desktop browsers.
+	         * @type {String}
+	         * @default 'none'
+	         */
+	        userSelect: 'none',
+	
+	        /**
+	         * Disable the Windows Phone grippers when pressing an element.
+	         * @type {String}
+	         * @default 'none'
+	         */
+	        touchSelect: 'none',
+	
+	        /**
+	         * Disables the default callout shown when you touch and hold a touch target.
+	         * On iOS, when you touch and hold a touch target such as a link, Safari displays
+	         * a callout containing information about the link. This property allows you to disable that callout.
+	         * @type {String}
+	         * @default 'none'
+	         */
+	        touchCallout: 'none',
+	
+	        /**
+	         * Specifies whether zooming is enabled. Used by IE10>
+	         * @type {String}
+	         * @default 'none'
+	         */
+	        contentZooming: 'none',
+	
+	        /**
+	         * Specifies that an entire element should be draggable instead of its contents. Mainly for desktop browsers.
+	         * @type {String}
+	         * @default 'none'
+	         */
+	        userDrag: 'none',
+	
+	        /**
+	         * Overrides the highlight color shown when the user taps a link or a JavaScript
+	         * clickable element in iOS. This property obeys the alpha value, if specified.
+	         * @type {String}
+	         * @default 'rgba(0,0,0,0)'
+	         */
+	        tapHighlightColor: 'rgba(0,0,0,0)'
+	    }
+	};
+	
+	var STOP = 1;
+	var FORCED_STOP = 2;
+	
+	/**
+	 * Manager
+	 * @param {HTMLElement} element
+	 * @param {Object} [options]
+	 * @constructor
+	 */
+	function Manager(element, options) {
+	    this.options = assign({}, Hammer.defaults, options || {});
+	
+	    this.options.inputTarget = this.options.inputTarget || element;
+	
+	    this.handlers = {};
+	    this.session = {};
+	    this.recognizers = [];
+	    this.oldCssProps = {};
+	
+	    this.element = element;
+	    this.input = createInputInstance(this);
+	    this.touchAction = new TouchAction(this, this.options.touchAction);
+	
+	    toggleCssProps(this, true);
+	
+	    each(this.options.recognizers, function(item) {
+	        var recognizer = this.add(new (item[0])(item[1]));
+	        item[2] && recognizer.recognizeWith(item[2]);
+	        item[3] && recognizer.requireFailure(item[3]);
+	    }, this);
+	}
+	
+	Manager.prototype = {
+	    /**
+	     * set options
+	     * @param {Object} options
+	     * @returns {Manager}
+	     */
+	    set: function(options) {
+	        assign(this.options, options);
+	
+	        // Options that need a little more setup
+	        if (options.touchAction) {
+	            this.touchAction.update();
+	        }
+	        if (options.inputTarget) {
+	            // Clean up existing event listeners and reinitialize
+	            this.input.destroy();
+	            this.input.target = options.inputTarget;
+	            this.input.init();
+	        }
+	        return this;
+	    },
+	
+	    /**
+	     * stop recognizing for this session.
+	     * This session will be discarded, when a new [input]start event is fired.
+	     * When forced, the recognizer cycle is stopped immediately.
+	     * @param {Boolean} [force]
+	     */
+	    stop: function(force) {
+	        this.session.stopped = force ? FORCED_STOP : STOP;
+	    },
+	
+	    /**
+	     * run the recognizers!
+	     * called by the inputHandler function on every movement of the pointers (touches)
+	     * it walks through all the recognizers and tries to detect the gesture that is being made
+	     * @param {Object} inputData
+	     */
+	    recognize: function(inputData) {
+	        var session = this.session;
+	        if (session.stopped) {
+	            return;
+	        }
+	
+	        // run the touch-action polyfill
+	        this.touchAction.preventDefaults(inputData);
+	
+	        var recognizer;
+	        var recognizers = this.recognizers;
+	
+	        // this holds the recognizer that is being recognized.
+	        // so the recognizer's state needs to be BEGAN, CHANGED, ENDED or RECOGNIZED
+	        // if no recognizer is detecting a thing, it is set to `null`
+	        var curRecognizer = session.curRecognizer;
+	
+	        // reset when the last recognizer is recognized
+	        // or when we're in a new session
+	        if (!curRecognizer || (curRecognizer && curRecognizer.state & STATE_RECOGNIZED)) {
+	            curRecognizer = session.curRecognizer = null;
+	        }
+	
+	        var i = 0;
+	        while (i < recognizers.length) {
+	            recognizer = recognizers[i];
+	
+	            // find out if we are allowed try to recognize the input for this one.
+	            // 1.   allow if the session is NOT forced stopped (see the .stop() method)
+	            // 2.   allow if we still haven't recognized a gesture in this session, or the this recognizer is the one
+	            //      that is being recognized.
+	            // 3.   allow if the recognizer is allowed to run simultaneous with the current recognized recognizer.
+	            //      this can be setup with the `recognizeWith()` method on the recognizer.
+	            if (session.stopped !== FORCED_STOP && ( // 1
+	                    !curRecognizer || recognizer == curRecognizer || // 2
+	                    recognizer.canRecognizeWith(curRecognizer))) { // 3
+	                recognizer.recognize(inputData);
+	            } else {
+	                recognizer.reset();
+	            }
+	
+	            // if the recognizer has been recognizing the input as a valid gesture, we want to store this one as the
+	            // current active recognizer. but only if we don't already have an active recognizer
+	            if (!curRecognizer && recognizer.state & (STATE_BEGAN | STATE_CHANGED | STATE_ENDED)) {
+	                curRecognizer = session.curRecognizer = recognizer;
+	            }
+	            i++;
+	        }
+	    },
+	
+	    /**
+	     * get a recognizer by its event name.
+	     * @param {Recognizer|String} recognizer
+	     * @returns {Recognizer|Null}
+	     */
+	    get: function(recognizer) {
+	        if (recognizer instanceof Recognizer) {
+	            return recognizer;
+	        }
+	
+	        var recognizers = this.recognizers;
+	        for (var i = 0; i < recognizers.length; i++) {
+	            if (recognizers[i].options.event == recognizer) {
+	                return recognizers[i];
+	            }
+	        }
+	        return null;
+	    },
+	
+	    /**
+	     * add a recognizer to the manager
+	     * existing recognizers with the same event name will be removed
+	     * @param {Recognizer} recognizer
+	     * @returns {Recognizer|Manager}
+	     */
+	    add: function(recognizer) {
+	        if (invokeArrayArg(recognizer, 'add', this)) {
+	            return this;
+	        }
+	
+	        // remove existing
+	        var existing = this.get(recognizer.options.event);
+	        if (existing) {
+	            this.remove(existing);
+	        }
+	
+	        this.recognizers.push(recognizer);
+	        recognizer.manager = this;
+	
+	        this.touchAction.update();
+	        return recognizer;
+	    },
+	
+	    /**
+	     * remove a recognizer by name or instance
+	     * @param {Recognizer|String} recognizer
+	     * @returns {Manager}
+	     */
+	    remove: function(recognizer) {
+	        if (invokeArrayArg(recognizer, 'remove', this)) {
+	            return this;
+	        }
+	
+	        recognizer = this.get(recognizer);
+	
+	        // let's make sure this recognizer exists
+	        if (recognizer) {
+	            var recognizers = this.recognizers;
+	            var index = inArray(recognizers, recognizer);
+	
+	            if (index !== -1) {
+	                recognizers.splice(index, 1);
+	                this.touchAction.update();
+	            }
+	        }
+	
+	        return this;
+	    },
+	
+	    /**
+	     * bind event
+	     * @param {String} events
+	     * @param {Function} handler
+	     * @returns {EventEmitter} this
+	     */
+	    on: function(events, handler) {
+	        if (events === undefined) {
+	            return;
+	        }
+	        if (handler === undefined) {
+	            return;
+	        }
+	
+	        var handlers = this.handlers;
+	        each(splitStr(events), function(event) {
+	            handlers[event] = handlers[event] || [];
+	            handlers[event].push(handler);
+	        });
+	        return this;
+	    },
+	
+	    /**
+	     * unbind event, leave emit blank to remove all handlers
+	     * @param {String} events
+	     * @param {Function} [handler]
+	     * @returns {EventEmitter} this
+	     */
+	    off: function(events, handler) {
+	        if (events === undefined) {
+	            return;
+	        }
+	
+	        var handlers = this.handlers;
+	        each(splitStr(events), function(event) {
+	            if (!handler) {
+	                delete handlers[event];
+	            } else {
+	                handlers[event] && handlers[event].splice(inArray(handlers[event], handler), 1);
+	            }
+	        });
+	        return this;
+	    },
+	
+	    /**
+	     * emit event to the listeners
+	     * @param {String} event
+	     * @param {Object} data
+	     */
+	    emit: function(event, data) {
+	        // we also want to trigger dom events
+	        if (this.options.domEvents) {
+	            triggerDomEvent(event, data);
+	        }
+	
+	        // no handlers, so skip it all
+	        var handlers = this.handlers[event] && this.handlers[event].slice();
+	        if (!handlers || !handlers.length) {
+	            return;
+	        }
+	
+	        data.type = event;
+	        data.preventDefault = function() {
+	            data.srcEvent.preventDefault();
+	        };
+	
+	        var i = 0;
+	        while (i < handlers.length) {
+	            handlers[i](data);
+	            i++;
+	        }
+	    },
+	
+	    /**
+	     * destroy the manager and unbinds all events
+	     * it doesn't unbind dom events, that is the user own responsibility
+	     */
+	    destroy: function() {
+	        this.element && toggleCssProps(this, false);
+	
+	        this.handlers = {};
+	        this.session = {};
+	        this.input.destroy();
+	        this.element = null;
+	    }
+	};
+	
+	/**
+	 * add/remove the css properties as defined in manager.options.cssProps
+	 * @param {Manager} manager
+	 * @param {Boolean} add
+	 */
+	function toggleCssProps(manager, add) {
+	    var element = manager.element;
+	    if (!element.style) {
+	        return;
+	    }
+	    var prop;
+	    each(manager.options.cssProps, function(value, name) {
+	        prop = prefixed(element.style, name);
+	        if (add) {
+	            manager.oldCssProps[prop] = element.style[prop];
+	            element.style[prop] = value;
+	        } else {
+	            element.style[prop] = manager.oldCssProps[prop] || '';
+	        }
+	    });
+	    if (!add) {
+	        manager.oldCssProps = {};
+	    }
+	}
+	
+	/**
+	 * trigger dom event
+	 * @param {String} event
+	 * @param {Object} data
+	 */
+	function triggerDomEvent(event, data) {
+	    var gestureEvent = document.createEvent('Event');
+	    gestureEvent.initEvent(event, true, true);
+	    gestureEvent.gesture = data;
+	    data.target.dispatchEvent(gestureEvent);
+	}
+	
+	assign(Hammer, {
+	    INPUT_START: INPUT_START,
+	    INPUT_MOVE: INPUT_MOVE,
+	    INPUT_END: INPUT_END,
+	    INPUT_CANCEL: INPUT_CANCEL,
+	
+	    STATE_POSSIBLE: STATE_POSSIBLE,
+	    STATE_BEGAN: STATE_BEGAN,
+	    STATE_CHANGED: STATE_CHANGED,
+	    STATE_ENDED: STATE_ENDED,
+	    STATE_RECOGNIZED: STATE_RECOGNIZED,
+	    STATE_CANCELLED: STATE_CANCELLED,
+	    STATE_FAILED: STATE_FAILED,
+	
+	    DIRECTION_NONE: DIRECTION_NONE,
+	    DIRECTION_LEFT: DIRECTION_LEFT,
+	    DIRECTION_RIGHT: DIRECTION_RIGHT,
+	    DIRECTION_UP: DIRECTION_UP,
+	    DIRECTION_DOWN: DIRECTION_DOWN,
+	    DIRECTION_HORIZONTAL: DIRECTION_HORIZONTAL,
+	    DIRECTION_VERTICAL: DIRECTION_VERTICAL,
+	    DIRECTION_ALL: DIRECTION_ALL,
+	
+	    Manager: Manager,
+	    Input: Input,
+	    TouchAction: TouchAction,
+	
+	    TouchInput: TouchInput,
+	    MouseInput: MouseInput,
+	    PointerEventInput: PointerEventInput,
+	    TouchMouseInput: TouchMouseInput,
+	    SingleTouchInput: SingleTouchInput,
+	
+	    Recognizer: Recognizer,
+	    AttrRecognizer: AttrRecognizer,
+	    Tap: TapRecognizer,
+	    Pan: PanRecognizer,
+	    Swipe: SwipeRecognizer,
+	    Pinch: PinchRecognizer,
+	    Rotate: RotateRecognizer,
+	    Press: PressRecognizer,
+	
+	    on: addEventListeners,
+	    off: removeEventListeners,
+	    each: each,
+	    merge: merge,
+	    extend: extend,
+	    assign: assign,
+	    inherit: inherit,
+	    bindFn: bindFn,
+	    prefixed: prefixed
+	});
+	
+	// this prevents errors when Hammer is loaded in the presence of an AMD
+	//  style loader but by script tag, not by the loader.
+	var freeGlobal = (typeof window !== 'undefined' ? window : (typeof self !== 'undefined' ? self : {})); // jshint ignore:line
+	freeGlobal.Hammer = Hammer;
+	
+	if (true) {
+	    !(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	        return Hammer;
+	    }.call(exports, __webpack_require__, exports, module), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else if (typeof module != 'undefined' && module.exports) {
+	    module.exports = Hammer;
+	} else {
+	    window[exportName] = Hammer;
+	}
+	
+	})(window, document, 'Hammer');
+
+
+/***/ },
+/* 293 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	//{name: 'extraLines'}
+	//{name: 'speedUp', maxTime: 10000}
+	//{name: 'blur', maxTime: 10000}
+	//{name: 'shake', maxTime: 10000}
+	//{name: 'reverse', maxTime: 5000}
+	
+	function extraLines(grid) {
+	
+	    grid.splice(0, 4);
+	    grid.push([8, 8, 8, 0, 0, 8, 8, 0, 8, 8], [0, 8, 8, 8, 0, 8, 0, 8, 8, 8], [8, 0, 8, 8, 8, 8, 8, 8, 0, 8], [8, 8, 0, 8, 8, 0, 8, 0, 8, 8]);
+	    return grid;
+	}
+	
+	function shake(grid) {
+	    var notEmptyRow = [];
+	    grid.map(function (row, index) {
+	        if (row.some(function (cell) {
+	            return cell > 0;
+	        })) {
+	            notEmptyRow.push(index);
+	        }
+	    });
+	    notEmptyRow.forEach(function (notERow) {
+	        var randomCol = Math.floor(Math.random() * 9);
+	        grid[notERow][randomCol] = 0;
+	    });
+	    return grid;
+	}
+	
+	module.exports = {
+	    extraLines: extraLines,
+	    shake: shake
 	};
 
 /***/ }

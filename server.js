@@ -3,10 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-
-var state = {
-  status: 'not accepting'
-}
+var gameState = 'ACCEPTING_PLAYERS';
 
 var PLAYERS = {};
 
@@ -22,25 +19,27 @@ app.get('*', function (req, res) {
 
 io.on('connection', function (socket) {
   io.emit('playerList', PLAYERS);
+
   socket.on('disconnect', function () {
     Object.keys(PLAYERS).forEach(function(player) {
         if(PLAYERS[player].socketId === socket.id){
           delete PLAYERS[player];
         }
     })
-    state.status='not accepting'
-    io.sockets.emit('logout', PLAYERS)
-
+    io.sockets.emit('logout', socket.id);
   });
+
+  socket.on('entering_game', function() {
+    console.log('SOmeone entered the game');
+    socket.emit('game_status', gameState);
+  })
 
   socket.on('dropPlayers', function (msg) {
     PLAYERS = {};
     io.sockets.emit('dropPlayers')
   })
 
-  socket.on('start_game', function (msg) {
-    {state.status === 'accepting' ? io.emit('start_game') : null}
-  })
+  socket.on('start_game', startTheGame);
 
 
   socket.on('megatron_activated', function() {
@@ -50,48 +49,82 @@ io.on('connection', function (socket) {
     var idx = MEGATRONS.find(socket);
     MEGATRONS.splice(idx, 1);
   })
-  
+
   socket.on('megatron_screen', function(data) {
-    Object.assign(PLAYERS[data.playerName], data);
-    
+    console.log(data);
+    io.emit('score_update', {
+      name: data.playerName,
+      score: data.score
+    });
     MEGATRONS.forEach(function(mt) {
       mt.emit('update_megatron', data);
-    })
+    });
   })
 
-  socket.on("new_player", function (msg) {
+  socket.on("new_player", function (newPlayerName) {
+    console.log('new player', newPlayerName);
     if (Object.keys(PLAYERS).length >= 6) {
-      state.status = 'not accepting'
-      console.log('Sorry too many players are already logged in')
-      socket.emit('denied');
+      socket.emit('game_status', 'TOO_MANY_PLAYERS');
     }
 
     else {
-      if(Object.keys(PLAYERS).length > 0) {
-        Object.keys(PLAYERS).forEach(function(player){
-        if(player === msg.name){
-          console.log("ITS GOING IN")
-          socket.emit("name_taken");
-        } else {
-          PLAYERS[msg.name] = {socketId: socket.id, playerName: msg.name};
+      var nameTaken = false;
+      Object.keys(PLAYERS).forEach(function(playerName){
+        if (newPlayerName === playerName) {
+          nameTaken = true;
         }
-      })
-      } else {
-        PLAYERS[msg.name] = {socketId: socket.id, playerName: msg.name};
-        socket.emit('create_ok', msg.name)
+      });
+
+      if(nameTaken) {
+        socket.emit("name_taken");
       }
-      
-      state.status = 'accepting'
-      io.emit('playerList', PLAYERS);
-      console.log("NEW PLAYER JOINED", msg.name)
-      console.log("NEW PLAYER LIST", PLAYERS)
-      socket.emit('queued');
+      else {
+        var newPlayer = {socketId: socket.id, playerName: newPlayerName};
+        PLAYERS[newPlayerName] = newPlayer;
+        socket.emit("game_status", "QUEUED");
+        io.emit("update_players", PLAYERS);
+
+        if (Object.keys(PLAYERS).length === 6) {
+          startTheGame();
+        }
+      }
     }
-
-
   })
 });
 
+function startTheGame() {
+  var pieces = getGamePieces();
+  io.emit('game_status', 'PLAYING');
+  for (var playerName in PLAYERS) {
+    io.to(PLAYERS[playerName].socketId).emit('start_game', {pieces: pieces, name: playerName});
+  }
+}
+
+function shuffleBag() {
+	var array = ['I', 'J', 'Z', 'S', 'O', 'L', 'T'];
+	var arrLength = array.length;
+
+    while (arrLength > 0) {
+        var index = Math.floor(Math.random() * arrLength);
+        arrLength--;
+        var temp = array[arrLength];
+        array[arrLength] = array[index];
+        array[index] = temp;
+    }
+    return array;
+}
+
+
+function getGamePieces() {
+    var array = [];
+    var i = 0;
+    while (i < 150) {
+		array.push(shuffleBag())
+		i++;
+	}
+    var gamePieces = [].concat.apply([], array);
+    return gamePieces;
+}
 
 http.listen(process.env.PORT || 3000, function () {
   console.log('SKYNET IS ONLINE!');

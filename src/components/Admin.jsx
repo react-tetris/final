@@ -1,17 +1,13 @@
 import React from 'react';
 import ReactHowler from 'react-howler';
 
-
+import socket from '../socket';
 
 class Admin extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      socket: this.props.socket,
-      playing: false
-    };
     this.clearPlayers = this.clearPlayers.bind(this);
     this.startGame = this.startGame.bind(this);
     this.handleSound = this.handleSound.bind(this)
@@ -22,7 +18,7 @@ class Admin extends React.Component {
   }
 
   startGame() {
-    this.state.socket.emit('start_game', 'server received!')
+    socket.emit('start_game');
   }
 
   handleSound() {
@@ -32,14 +28,10 @@ class Admin extends React.Component {
   }
 
   render() {
-  
+
     return (
       <div className='admin-page'>
             <h1 className='admin-h1'>Admin page</h1>
-          <ReactHowler
-          src={'../sound/videoplayback.m4a'}
-          playing={this.state.playing}
-        />
             <button className='arcade-button' type='button' onClick={this.clearPlayers}>Restart Game</button>
             <button className='arcade-button' type='button' onClick={this.startGame}>Start Game</button>
             <button type='button' onClick={this.handleSound}>Test Sound</button>

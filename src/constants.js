@@ -35,5 +35,6 @@ module.exports={
     GRID_COLS: 10,
     Y_START: -1,
     X_START: 3,
-    HARD_DROP: 60
+    HARD_DROP: 60,
+    DEFAULT_YSPEED: 8
 }
