@@ -38,7 +38,8 @@ class Megatron extends React.Component {
         super(props);
 
         this.state = {
-            activePlayers: {}
+            activePlayers: {},
+            playing: false
         };
 
     }
@@ -48,13 +49,16 @@ class Megatron extends React.Component {
         socket.emit('megatron_activated')
         socket.on('update_megatron', function(data) {
             that.state.activePlayers[data.playerName] = data;
+            that.state.playing = true;
         })
+        
         this.timer = setInterval(function() {
             that.forceUpdate()
         }, 250);
 
 
         socket.on('dropPlayers', function(data) {
+            console.log(data)
             that.setState({
                 activePlayers: {}
             })
