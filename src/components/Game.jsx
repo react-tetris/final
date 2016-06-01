@@ -27,7 +27,8 @@ export default class Game extends React.Component {
 			score: 0,
 			handicapsAcc: [],
 			handicapBombs: [],
-			gameMessage: 1
+			gameMessage: 1,
+			rank: '?'
 		}
 		this.serverTimer = 0;
 		this.updateGameState = this.updateGameState.bind(this);
@@ -41,7 +42,11 @@ export default class Game extends React.Component {
 		this.handleBombClick = this.handleBombClick.bind(this);
 
 		this.handleSwipe = this.handleSwipe.bind(this);
-		this.goFS = this.goFS.bind(this);
+		
+		this.setRank = this.setRank.bind(this);
+		this.scoreUpdate = this.scoreUpdate.bind(this);
+		
+		this.scores = {}
 	}
 	componentDidMount() {
 		var that = this;
@@ -74,11 +79,33 @@ export default class Game extends React.Component {
 		// setTimeout(function(){
 		// 	that.state.handicapBombs.push({name: 'flip', maxTime: 5000});
 		// }, 5000)
+		
+		socket.on('score_update', this.scoreUpdate);
 
 	}
+	scoreUpdate(scoreData) {
+		console.log(scoreData, this.scores);
+		var that = this;
+			this.scores[scoreData.name] = scoreData.score;
+
+			this.state.rank = Object.keys(this.scores).map(function(playerName) {
+				return {name: playerName, score: that.scores[playerName]}
+			}).sort(
+				function(a,b) {
+					return b.score - a.score;
+				}
+			).findIndex(
+				function(scoreData) {
+					return scoreData.name === that.props.playerName;
+				}
+			) + 1;
+
+			
+		} 
 	componentWillUnmount() {
 		document.removeEventListener('keydown', this.handleKeydown);
 		document.removeEventListener('keyup', this.handleKeyup);
+		socket.off('score_update', this.scoreUpdate);
 	}
 
 	//display 3, 2, 1 countdown before starting game
@@ -98,9 +125,6 @@ export default class Game extends React.Component {
 			}, 1000)
 			this.updateGameState();
 		}
-	}
-	goFS(){
-		document.requestFullScreen();
 	}
 	handleSwipe(e){
 		e.preventDefault();
@@ -201,7 +225,9 @@ export default class Game extends React.Component {
 		this.state.handicapBombs.push(bomb);
 		this.state.handicapsAcc.splice(0,1);
 	}
-
+	setRank(rank) {
+		this.state.rank = rank;
+	}
 	updateGameState(){
 
 		if (this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'extraLines'){
@@ -255,6 +281,7 @@ export default class Game extends React.Component {
 						})
 						return;
 					} else {
+						socket.emit('score_update', {name: this.props.playerName, score: newScore})
 						this.setState({
 							grid: clearedGrid,
 							nextPiece: constants.SHAPES[this.state.gameBag[this.pieceCounter + 1]],
@@ -289,7 +316,7 @@ export default class Game extends React.Component {
 				score: this.state.score,
 				hardDrop: this.hardDrop,
 				playerName: this.props.playerName,
-				rank: this.props.rank,
+				rank: this.state.rank,
 				handicapsAcc: this.state.handicapsAcc,
 				handicapBombs: this.state.handicapBombs
 			}
@@ -338,7 +365,7 @@ export default class Game extends React.Component {
 							</div>
 							<div className="score">
 								<h2>SCORE</h2>
-								<h3>{this.state.score} ({this.props.rank})</h3>
+								<h3>{this.state.score} ({this.state.rank})</h3>
 							</div>
 						</div>
 							<div className="handicaps">

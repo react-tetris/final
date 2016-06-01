@@ -38,6 +38,7 @@ io.on('connection', function (socket) {
     console.log('in the socket')
     PLAYERS = {};
     io.sockets.emit('dropPlayers', 'ACCEPTING_PLAYERS')
+    gameState = 'ACCEPTING_PLAYERS';
   })
 
   socket.on('start_game', startTheGame);
@@ -52,13 +53,19 @@ io.on('connection', function (socket) {
   })
 
   socket.on('megatron_screen', function(data) {
+    if (gameState !== 'PLAYING') {
+      return;
+    }
     console.log(data);
-    io.emit('score_update', {
-      name: data.playerName,
-      score: data.score
-    });
     MEGATRONS.forEach(function(mt) {
       mt.emit('update_megatron', data);
+    });
+  })
+  
+  socket.on('score_update', function(data) {
+    io.emit('score_update', {
+      name: data.name,
+      score: data.score
     });
   })
 
@@ -96,6 +103,7 @@ io.on('connection', function (socket) {
 function startTheGame() {
   var pieces = getGamePieces();
   io.emit('game_status', 'PLAYING');
+  gameState = 'PLAYING';
   for (var playerName in PLAYERS) {
     io.to(PLAYERS[playerName].socketId).emit('start_game', {pieces: pieces, name: playerName});
   }

@@ -52,26 +52,6 @@ export default class App extends React.Component {
 			});
 		});
 
-		socket.on('score_update', function(scoreData) {
-			that.scores[scoreData.name] = scoreData.score;
-
-			var rank = Object.keys(that.scores).map(function(playerName) {
-				return {name: playerName, score: that.scores[playerName]}
-			}).sort(
-				function(a,b) {
-					return b.score - a.score;
-				}
-			).findIndex(
-				function(scoreData) {
-					return scoreData.name === that.state.playerName;
-				}
-			) + 1;
-
-			that.setState({
-				rank: rank
-			})
-		});
-
 		// //Retrieving score from each player Waiting for the girls for merge
 		// socket.on('update_score', function(score) {
 		// 	console.log(score);
@@ -103,7 +83,7 @@ export default class App extends React.Component {
 
     if (this.state.playState === 'PLAYING') {
       if (this.state.isPlayer === true) {
-        return <Game rank={this.state.rank} playerName={this.state.playerName} gameBag={this.state.pieces}/>;
+        return <Game playerName={this.state.playerName} gameBag={this.state.pieces}/>;
       }
       else {
         return <div className='alert'><header>
