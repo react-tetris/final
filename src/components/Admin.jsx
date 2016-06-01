@@ -36,7 +36,6 @@ class Admin extends React.Component {
               <button className='adminButton' type='button' onClick={this.clearPlayers}>RESTART</button>
               <button className='adminButton' type='button' onClick={this.startGame}>START</button>
             </div>  
-            <button className='adminButton' type='button' onClick={this.handleSound}>Test Sound</button>
       </div>
     )
   }

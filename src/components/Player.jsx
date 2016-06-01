@@ -17,6 +17,10 @@ export default class Player extends React.Component {
   render() {
     return (
       <div className='enterScreen'>
+      <header>
+         <img src='http://flaticons.net/icons/Network%20and%20Security/Bomb.png' />
+         <h1>BOMBTRIS</h1>
+        </header>
           <form className='enterForm' onSubmit={this.handleSubmit}>
             <input className='enterInput' type='text' ref='userName' placeholder='Enter your Name'/>
             <button className='enterButton' type='submit'>ENTER</button>

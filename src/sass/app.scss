@@ -449,6 +449,22 @@
         transform: scale(1.1);
     }
 
+<<<<<<< HEAD
+.bombsButton{
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/graphics/BombFilled.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-right: 30px;
+    padding-top: 8px;
+    color: rgba(155,155,155,1);
+}
+
+=======
     .cat {
         top: 45%;
         left: -500px;
@@ -461,6 +477,7 @@
     @keyframes creep {
         50%   {left: 0px;}
     }
+>>>>>>> 6f602ec0417a3ae3548a399080dab1e7489e6bcf
 
     @media only screen and (min-device-width: 320px) and (max-device-width: 510px) and (orientation: portrait){
         .nextTitle{
@@ -500,17 +517,71 @@
 
 }
 
+<<<<<<< HEAD
+@media only screen and (orientation: landscape) {
+    &::after {
+        content: "PLEASE FLIP YOUR DEVICE";
+        color: white;
+        text-align: center;
+=======
     //---------------ADMIN PAGE-----------------
     .adminPage {
         background: url('/background.png');
         color: white;
         height: 100vh;
         width: 100vw;
+>>>>>>> 6f602ec0417a3ae3548a399080dab1e7489e6bcf
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
+<<<<<<< HEAD
+        font-family: 'Orbitron', sans-serif;
+        font-size: 3em;
+        background: url('/background.png');
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 
+}
+
+}
+
+header{
+       font-size: 1em;
+       font-size: 5vmin;
+       display: flex;
+       flex-direction: row;
+       justify-content: center;
+       align-items: center;
+       padding: 1em;
+       
+       img{
+           height: 3em;
+           width: 3em;
+       }
+       h1{
+           margin: 0;
+           padding: 0;
+          -webkit-margin-before: 0;
+          -webkit-margin-after: 0;
+       }
+   }
+
+
+//---------------ADMIN PAGE-----------------
+.adminPage {
+    background: url('/background.png');
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     .adminH1 {
         font-size: 5em;
@@ -522,7 +593,6 @@
         justify-content: space-between;
         align-items: center;
     }
-
     .adminButton {
         font-size: 2em;
         background: #3A3E41;
@@ -546,7 +616,7 @@
     }
 }
 
-//----------------------------------ENTER SCREEN-------------
+//--------------------ENTER SCREEN----------------
 
 .enterScreen {
     background: url('/background.png');
@@ -572,6 +642,11 @@
     
 }
 
+.enterInput {
+    padding: 6px;
+    border-radius: 5px;
+}
+
 .enterButton {
     font-size: 1em;
     background: #3A3E41;
@@ -592,10 +667,9 @@
         box-shadow: none;
         outline: 0;
      }
-        
 }
 
-//---------------------------------ALERTS----------
+//------------------ALERTS-------------------
 
 .alert {
     background: url('/background.png');
