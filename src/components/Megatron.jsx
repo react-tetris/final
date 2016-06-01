@@ -52,7 +52,7 @@ class Megatron extends React.Component {
     render() {
         // console.log(this.state.activePlayers, "THIS IS THE STATE")
         var that = this;
-        var TO_RENDER = (<div className='admin-wait'>Waiting for Admin to start game</div>);
+        var TO_RENDER = (<div className="megatronWaiting">Waiting for Admin to start game</div>);
 
         var players = this.state.activePlayers;
         var playerNames = Object.keys(players);
