@@ -308,8 +308,7 @@ export default class Game extends React.Component {
 
 		return (
 
-			<Hammer onTap={this.goFS}>
-			<div className="page">
+			<div className="gamePage">
 				<div className="main">
 					<div className='leftSideBar'>
 						<Hammer onTap={this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleRightMove : this.handleLeftMove}>
@@ -348,7 +347,6 @@ export default class Game extends React.Component {
 							</div>
 					</div>
 			</div>
-			</Hammer>
 		);
 	}
 }

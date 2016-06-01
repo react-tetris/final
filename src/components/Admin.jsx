@@ -30,12 +30,14 @@ class Admin extends React.Component {
   render() {
 
     return (
-      <div className='admin-page'>
-            <h1 className='admin-h1'>Admin page</h1>
-            <button className='arcade-button' type='button' onClick={this.clearPlayers}>Restart Game</button>
-            <button className='arcade-button' type='button' onClick={this.startGame}>Start Game</button>
-            <button type='button' onClick={this.handleSound}>Test Sound</button>
-          </div>
+      <div className='adminPage'>
+            <h1 className='adminH1'>Admin page</h1>
+            <div className='adminButtons'>
+              <button className='adminButton' type='button' onClick={this.clearPlayers}>Restart Game</button>
+              <button className='adminButton' type='button' onClick={this.startGame}>Start Game</button>
+              <button className='adminButton' type='button' onClick={this.handleSound}>Test Sound</button>
+            </div>  
+      </div>
     )
   }
 }

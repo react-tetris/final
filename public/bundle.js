@@ -34019,104 +34019,100 @@
 				var options = { preventDefault: true, swipe: { threshold: 0.5, velocity: 0, dragBlockHorizontal: true } };
 	
 				return _react2.default.createElement(
-					_reactHammerjs2.default,
-					{ onTap: this.goFS },
+					'div',
+					{ className: 'gamePage' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'page' },
+						{ className: 'main' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'main' },
+							{ className: 'leftSideBar' },
+							_react2.default.createElement(
+								_reactHammerjs2.default,
+								{ onTap: this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleRightMove : this.handleLeftMove },
+								_react2.default.createElement('div', { className: 'controlButton leftButton' })
+							)
+						),
+						_react2.default.createElement(
+							_reactHammerjs2.default,
+							{ onSwipe: this.handleSwipe, onTap: this.handleRotate, vertical: true, options: options },
+							_react2.default.createElement(_grid2.default.Grid, { message: this.state.gameMessage ? typeof this.state.gameMessage === "number" ? 4 - this.state.gameMessage : this.state.gameMessage : null, handicap: this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null, grid: this.state.grid, hardDrop: this.hardDrop ? _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null, activePiece: { activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'rightSideBar' },
+							_react2.default.createElement(
+								_reactHammerjs2.default,
+								{ onTap: this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleLeftMove : this.handleRightMove },
+								_react2.default.createElement('div', { className: 'controlButton rightButton' })
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'footer' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'nextPiece' },
+							_react2.default.createElement(
+								'h2',
+								{ className: 'nextTitle' },
+								'NEXT'
+							),
+							this.state.nextPiece.map(function (row, index) {
+								return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+							})
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'sidebarElement' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'leftSideBar' },
+								{ className: 'lines' },
 								_react2.default.createElement(
-									_reactHammerjs2.default,
-									{ onTap: this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleRightMove : this.handleLeftMove },
-									_react2.default.createElement('div', { className: 'controlButton leftButton' })
+									'h2',
+									null,
+									'LINES'
+								),
+								_react2.default.createElement(
+									'h3',
+									null,
+									this.state.totalLines
 								)
 							),
 							_react2.default.createElement(
-								_reactHammerjs2.default,
-								{ onSwipe: this.handleSwipe, onTap: this.handleRotate, vertical: true, options: options },
-								_react2.default.createElement(_grid2.default.Grid, { message: this.state.gameMessage ? typeof this.state.gameMessage === "number" ? 4 - this.state.gameMessage : this.state.gameMessage : null, handicap: this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null, grid: this.state.grid, hardDrop: this.hardDrop ? _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null, activePiece: { activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) })
-							),
-							_react2.default.createElement(
 								'div',
-								{ className: 'rightSideBar' },
+								{ className: 'score' },
 								_react2.default.createElement(
-									_reactHammerjs2.default,
-									{ onTap: this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleLeftMove : this.handleRightMove },
-									_react2.default.createElement('div', { className: 'controlButton rightButton' })
+									'h2',
+									null,
+									'SCORE'
+								),
+								_react2.default.createElement(
+									'h3',
+									null,
+									this.state.score,
+									' (',
+									this.props.rank,
+									')'
 								)
 							)
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'footer' },
+							{ className: 'handicaps' },
 							_react2.default.createElement(
-								'div',
-								{ className: 'nextPiece' },
-								_react2.default.createElement(
-									'h2',
-									{ className: 'nextTitle' },
-									'NEXT'
-								),
-								this.state.nextPiece.map(function (row, index) {
-									return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
-								})
+								'h2',
+								null,
+								'BOMBS'
 							),
 							_react2.default.createElement(
-								'div',
-								{ className: 'sidebarElement' },
+								_reactHammerjs2.default,
+								{ onTap: this.handleBombClick },
 								_react2.default.createElement(
-									'div',
-									{ className: 'lines' },
-									_react2.default.createElement(
-										'h2',
-										null,
-										'LINES'
-									),
-									_react2.default.createElement(
-										'h3',
-										null,
-										this.state.totalLines
-									)
-								),
-								_react2.default.createElement(
-									'div',
-									{ className: 'score' },
-									_react2.default.createElement(
-										'h2',
-										null,
-										'SCORE'
-									),
-									_react2.default.createElement(
-										'h3',
-										null,
-										this.state.score,
-										' (',
-										this.props.rank,
-										')'
-									)
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'handicaps' },
-								_react2.default.createElement(
-									'h2',
-									null,
-									'BOMBS'
-								),
-								_react2.default.createElement(
-									_reactHammerjs2.default,
-									{ onTap: this.handleBombClick },
-									_react2.default.createElement(
-										'h3',
-										{ className: 'bombsButton', type: 'button', disabled: disabled, ref: 'the_bomb' },
-										this.state.handicapsAcc.length
-									)
+									'h3',
+									{ className: 'bombsButton', type: 'button', disabled: disabled, ref: 'the_bomb' },
+									this.state.handicapsAcc.length
 								)
 							)
 						)
@@ -37465,26 +37461,30 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'admin-page' },
+	        { className: 'adminPage' },
 	        _react2.default.createElement(
 	          'h1',
-	          { className: 'admin-h1' },
+	          { className: 'adminH1' },
 	          'Admin page'
 	        ),
 	        _react2.default.createElement(
-	          'button',
-	          { className: 'arcade-button', type: 'button', onClick: this.clearPlayers },
-	          'Restart Game'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'arcade-button', type: 'button', onClick: this.startGame },
-	          'Start Game'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'button', onClick: this.handleSound },
-	          'Test Sound'
+	          'div',
+	          { className: 'adminButtons' },
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'adminButton', type: 'button', onClick: this.clearPlayers },
+	            'Restart Game'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'adminButton', type: 'button', onClick: this.startGame },
+	            'Start Game'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'adminButton', type: 'button', onClick: this.handleSound },
+	            'Test Sound'
+	          )
 	        )
 	      );
 	    }
