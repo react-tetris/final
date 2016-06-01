@@ -304,7 +304,7 @@ export default class Game extends React.Component {
 		// TODO: this.props.rank
 
 		var disabled = this.state.handicapsAcc.length === 0;
-		var options = {preventDefault: true, swipe: {threshold: 0.5, velocity: 0, dragBlockHorizontal: true}};
+		var options = {preventDefault: true, swipe: {threshold: 0.1, velocity: 0, dragBlockHorizontal: true}};
 
 		return (
 

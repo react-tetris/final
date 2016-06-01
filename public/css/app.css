@@ -323,22 +323,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /*background: #25292C;*/
-    background: #3A3E41;
-    padding: 20px;
-    text-align: center;
-    border-radius: 50%;
-    color: #9b9b9b;
-    text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.8), 1px 1px 2px black;
-    box-shadow: inset 3px 1px 2px rgba(255, 255, 255, 0.3), inset 3px 15px 45px rgba(255, 255, 255, 0.1), inset -3px -1px 2px rgba(0, 0, 0, 0.5), inset -3px -15px 45px rgba(0, 0, 0, 0.2), 1px 5px 30px -4px black;
-    -webkit-transition: 0.1s ease-out;
-    -moz-transition: 0.1s ease-out;
-    -o-transition: 0.1s ease-out;
-    transition: 0.1s ease-out; }
-  .gamePage .bombsButton:focus {
-    outline: none; }
-  .gamePage .bombsButton:active {
-    transform: scale(1.1); }
+    background-image: url("/graphics/BombFilled.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-right: 30px;
+    padding-top: 8px;
+    color: #9b9b9b; }
   .gamePage .cat {
     top: 45%;
     left: -500px;
@@ -360,8 +350,9 @@
     .gamePage .message {
       font-size: 2em; } }
   @media only screen and (orientation: landscape) {
-    .gamePage body::after {
+    .gamePage::after {
       content: "PLEASE FLIP YOUR DEVICE";
+      color: white;
       text-align: center;
       display: flex;
       align-items: center;
@@ -375,6 +366,23 @@
       left: 0;
       width: 100%;
       height: 100%; } }
+
+header {
+  font-size: 1em;
+  font-size: 5vmin;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1em; }
+  header img {
+    height: 3em;
+    width: 3em; }
+  header h1 {
+    margin: 0;
+    padding: 0;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0; }
 
 .adminPage {
   background: url("/background.png");
@@ -403,6 +411,9 @@
     text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.8), 1px 1px 2px black;
     box-shadow: inset 3px 1px 2px rgba(255, 255, 255, 0.3), inset 3px 15px 45px rgba(255, 255, 255, 0.1), inset -3px -1px 2px rgba(0, 0, 0, 0.5), inset -3px -15px 45px rgba(0, 0, 0, 0.2), 1px 5px 30px -4px black;
     transition: 0.1s ease-out; }
+    .adminPage .adminButton:focus {
+      box-shadow: none;
+      outline: 0; }
 
 .enterScreen {
   background: url("/background.png");
@@ -420,6 +431,10 @@
   justify-content: center;
   align-items: center; }
 
+.enterInput {
+  padding: 6px;
+  border-radius: 5px; }
+
 .enterButton {
   font-size: 1em;
   background: #3A3E41;
@@ -431,6 +446,9 @@
   text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.8), 1px 1px 2px black;
   box-shadow: inset 3px 1px 2px rgba(255, 255, 255, 0.3), inset 3px 15px 45px rgba(255, 255, 255, 0.1), inset -3px -1px 2px rgba(0, 0, 0, 0.5), inset -3px -15px 45px rgba(0, 0, 0, 0.2), 1px 5px 30px -4px black;
   transition: 0.1s ease-out; }
+  .enterButton:focus {
+    box-shadow: none;
+    outline: 0; }
 
 .alert {
   background: url("/background.png");

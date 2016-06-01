@@ -424,30 +424,14 @@ h3 {
     display: flex;
     justify-content: center;
     align-items: center;
-    /*background: #25292C;*/
-    background: #3A3E41;
-    padding: 20px;
-    text-align: center;
-    border-radius: 50%;
+    background-image: url('/graphics/BombFilled.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-right: 30px;
+    padding-top: 8px;
     color: rgba(155,155,155,1);
-    text-shadow: -1px -1px 0px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,1);
-    box-shadow: inset 3px 1px 2px rgba(255,255,255,0.3),
-                inset 3px 15px 45px rgba(255,255,255,0.1),
-                inset -3px -1px 2px rgba(0,0,0,0.5),
-                inset -3px -15px 45px rgba(0,0,0,0.2),
-                1px 5px 30px -4px rgba(0,0,0,1);
-    -webkit-transition: 0.1s ease-out;
-    -moz-transition:    0.1s ease-out;
-    -o-transition:      0.1s ease-out;
-    transition:         0.1s ease-out;
 }
 
-.bombsButton:focus {
-    outline: none;
-}
-.bombsButton:active {
-    transform: scale(1.1);
-}
 
 .cat {
     top: 45%;
@@ -479,8 +463,9 @@ h3 {
 }
 
 @media only screen and (orientation: landscape) {
-    body::after {
+    &::after {
         content: "PLEASE FLIP YOUR DEVICE";
+        color: white;
         text-align: center;
         display: flex;
         align-items: center;
@@ -499,6 +484,28 @@ h3 {
 }
 
 }
+
+header{
+       font-size: 1em;
+       font-size: 5vmin;
+       display: flex;
+       flex-direction: row;
+       justify-content: center;
+       align-items: center;
+       padding: 1em;
+       
+       img{
+           height: 3em;
+           width: 3em;
+       }
+       h1{
+           margin: 0;
+           padding: 0;
+          -webkit-margin-before: 0;
+          -webkit-margin-after: 0;
+       }
+   }
+
 
 //---------------ADMIN PAGE-----------------
 .adminPage {
@@ -538,10 +545,14 @@ h3 {
                 inset -3px -15px 45px rgba(0,0,0,0.2),
                 1px 5px 30px -4px rgba(0,0,0,1);
     transition: 0.1s ease-out;
+    &:focus{
+        box-shadow: none;
+        outline: 0;
+    }
 }
 }
 
-//----------------------------------ENTER SCREEN-------------
+//--------------------ENTER SCREEN----------------
 
 .enterScreen {
     background: url('/background.png');
@@ -561,6 +572,11 @@ h3 {
     align-items: center;
 }
 
+.enterInput {
+    padding: 6px;
+    border-radius: 5px;
+}
+
 .enterButton {
     font-size: 1em;
     background: #3A3E41;
@@ -576,9 +592,13 @@ h3 {
                 inset -3px -15px 45px rgba(0,0,0,0.2),
                 1px 5px 30px -4px rgba(0,0,0,1);
     transition: 0.1s ease-out;
+        &:focus{
+            box-shadow: none;
+            outline: 0;
+        }
 }
 
-//---------------------------------ALERTS----------
+//------------------ALERTS-------------------
 
 .alert {
     background: url('/background.png');

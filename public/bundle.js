@@ -26007,6 +26007,16 @@
 						return _react2.default.createElement(
 							'div',
 							{ className: 'alert' },
+							_react2.default.createElement(
+								'header',
+								null,
+								_react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
+								_react2.default.createElement(
+									'h1',
+									null,
+									'BOMBTRIS'
+								)
+							),
 							'Game in session, please wait for the next game...'
 						);
 					}
@@ -26020,6 +26030,16 @@
 					return _react2.default.createElement(
 						'div',
 						{ className: 'alert' },
+						_react2.default.createElement(
+							'header',
+							null,
+							_react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
+							_react2.default.createElement(
+								'h1',
+								null,
+								'BOMBTRIS'
+							)
+						),
 						'Game is full, please wait for the next game...'
 					);
 				}
@@ -33721,6 +33741,16 @@
 	        'div',
 	        { className: 'enterScreen' },
 	        _react2.default.createElement(
+	          'header',
+	          null,
+	          _react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
+	          _react2.default.createElement(
+	            'h1',
+	            null,
+	            'BOMBTRIS'
+	          )
+	        ),
+	        _react2.default.createElement(
 	          'form',
 	          { className: 'enterForm', onSubmit: this.handleSubmit },
 	          _react2.default.createElement('input', { className: 'enterInput', type: 'text', ref: 'userName', placeholder: 'Enter your Name' }),
@@ -34211,7 +34241,7 @@
 				// TODO: this.props.rank
 	
 				var disabled = this.state.handicapsAcc.length === 0;
-				var options = { preventDefault: true, swipe: { threshold: 0.5, velocity: 0, dragBlockHorizontal: true } };
+				var options = { preventDefault: true, swipe: { threshold: 0.1, velocity: 0, dragBlockHorizontal: true } };
 	
 				return _react2.default.createElement(
 					'div',
@@ -37675,11 +37705,6 @@
 	            { className: 'adminButton', type: 'button', onClick: this.startGame },
 	            'START'
 	          )
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'adminButton', type: 'button', onClick: this.handleSound },
-	          'Test Sound'
 	        )
 	      );
 	    }
