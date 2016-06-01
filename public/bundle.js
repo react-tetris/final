@@ -60,11 +60,11 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _Admin = __webpack_require__(290);
+	var _Admin = __webpack_require__(289);
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
-	var _Megatron = __webpack_require__(296);
+	var _Megatron = __webpack_require__(295);
 	
 	var _Megatron2 = _interopRequireDefault(_Megatron);
 	
@@ -25872,7 +25872,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -25885,15 +25885,15 @@
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
-	var _Player = __webpack_require__(281);
+	var _Player = __webpack_require__(280);
 	
 	var _Player2 = _interopRequireDefault(_Player);
 	
-	var _Queued = __webpack_require__(282);
+	var _Queued = __webpack_require__(281);
 	
 	var _Queued2 = _interopRequireDefault(_Queued);
 	
-	var _Game = __webpack_require__(286);
+	var _Game = __webpack_require__(282);
 	
 	var _Game2 = _interopRequireDefault(_Game);
 	
@@ -25906,161 +25906,144 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var App = function (_React$Component) {
-		_inherits(App, _React$Component);
+	  _inherits(App, _React$Component);
 	
-		function App() {
-			_classCallCheck(this, App);
+	  function App() {
+	    _classCallCheck(this, App);
 	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
-			_this.state = {
-				playState: 'STOPPED',
-				players: {},
-				nameTaken: false
-			};
+	    _this.state = {
+	      playState: 'STOPPED',
+	      players: {},
+	      nameTaken: false
+	    };
 	
-			_this.scores = {};
-			return _this;
-		}
+	    _this.scores = {};
+	    return _this;
+	  }
 	
-		_createClass(App, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				var that = this;
-				_socket2.default.emit('entering_game');
+	  _createClass(App, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var that = this;
+	      _socket2.default.emit('entering_game');
 	
-				_socket2.default.on('game_status', function (newGameState) {
-					that.setState({
-						playState: newGameState
-					});
-				});
+	      _socket2.default.on('game_status', function (newGameState) {
+	        that.setState({
+	          playState: newGameState
+	        });
+	      });
 	
-				_socket2.default.on('dropPlayers', function (newGameState) {
-					console.log(newGameState);
-					that.setState({
-						playState: newGameState
-					});
-				});
+	      _socket2.default.on('dropPlayers', function (newGameState) {
+	        that.setState({
+	          playState: newGameState
+	        });
+	      });
 	
-				_socket2.default.on('start_game', function (state) {
-					that.setState({
-						playState: 'PLAYING',
-						pieces: state.pieces,
-						isPlayer: true,
-						playerName: state.name
-					});
-				});
+	      _socket2.default.on('start_game', function (state) {
+	        that.setState({
+	          playState: 'PLAYING',
+	          pieces: state.pieces,
+	          isPlayer: true,
+	          playerName: state.name
+	        });
+	      });
 	
-				_socket2.default.on('update_players', function (players) {
-					that.setState({
-						players: players
-					});
-				});
+	      _socket2.default.on('update_players', function (players) {
+	        that.setState({
+	          players: players
+	        });
+	      });
 	
-				_socket2.default.on('score_update', function (scoreData) {
-					that.scores[scoreData.name] = scoreData.score;
+	      // //Retrieving score from each player Waiting for the girls for merge
+	      // socket.on('update_score', function(score) {
+	      // 	console.log(score);
+	      // 	that.setState({
+	      // 		scores: score
+	      // 	})
+	      // })
 	
-					var rank = Object.keys(that.scores).map(function (playerName) {
-						return { name: playerName, score: that.scores[playerName] };
-					}).sort(function (a, b) {
-						return b.score - a.score;
-					}).findIndex(function (scoreData) {
-						return scoreData.name === that.state.playerName;
-					}) + 1;
+	      // socket.on('name_taken', function() {
+	      //     that.setState({
+	      //     	nameTaken: true
+	      //     })
+	      // })
 	
-					that.setState({
-						rank: rank
-					});
-				});
+	      // socket.on('create_ok', function(name) {
+	      //     that.setState({
+	      //     	playerName: name
+	      //     })
+	      // })
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      if (this.state.playState === "STOPPED") {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'alert' },
+	          'loading...'
+	        );
+	      }
 	
-				// //Retrieving score from each player Waiting for the girls for merge
-				// socket.on('update_score', function(score) {
-				// 	console.log(score);
-				// 	that.setState({
-				// 		scores: score
-				// 	})
-				// })
+	      if (this.state.playState === 'ACCEPTING_PLAYERS') {
+	        return _react2.default.createElement(_Player2.default, null);
+	      }
 	
-				// socket.on('name_taken', function() {
-				//     that.setState({
-				//     	nameTaken: true
-				//     })
-				// })
+	      if (this.state.playState === 'PLAYING') {
+	        if (this.state.isPlayer === true) {
+	          return _react2.default.createElement(_Game2.default, { playerName: this.state.playerName, gameBag: this.state.pieces });
+	        } else {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'alert' },
+	            _react2.default.createElement(
+	              'header',
+	              null,
+	              _react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
+	              _react2.default.createElement(
+	                'h1',
+	                null,
+	                'BOMBTRIS'
+	              )
+	            ),
+	            'Game in session, please wait for the next game...'
+	          );
+	        }
+	      }
 	
-				// socket.on('create_ok', function(name) {
-				//     that.setState({
-				//     	playerName: name
-				//     })
-				// })
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				if (this.state.playState === "STOPPED") {
-					return _react2.default.createElement(
-						'div',
-						{ className: 'alert' },
-						'loading...'
-					);
-				}
+	      if (this.state.playState === 'QUEUED') {
+	        return _react2.default.createElement(_Queued2.default, { players: this.state.players });
+	      }
 	
-				if (this.state.playState === 'ACCEPTING_PLAYERS') {
-					return _react2.default.createElement(_Player2.default, null);
-				}
+	      if (this.state.playState === 'TOO_MANY_PLAYERS') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'alert' },
+	          _react2.default.createElement(
+	            'header',
+	            null,
+	            _react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'BOMBTRIS'
+	            )
+	          ),
+	          'Game is full, please wait for the next game...'
+	        );
+	      }
 	
-				if (this.state.playState === 'PLAYING') {
-					if (this.state.isPlayer === true) {
-						return _react2.default.createElement(_Game2.default, { rank: this.state.rank, playerName: this.state.playerName, gameBag: this.state.pieces });
-					} else {
-						return _react2.default.createElement(
-							'div',
-							{ className: 'alert' },
-							_react2.default.createElement(
-								'header',
-								null,
-								_react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
-								_react2.default.createElement(
-									'h1',
-									null,
-									'BOMBTRIS'
-								)
-							),
-							'Game in session, please wait for the next game...'
-						);
-					}
-				}
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'you have reached an unreachable state!'
+	      );
+	    }
+	  }]);
 	
-				if (this.state.playState === 'QUEUED') {
-					return _react2.default.createElement(_Queued2.default, { players: this.state.players });
-				}
-	
-				if (this.state.playState === 'TOO_MANY_PLAYERS') {
-					return _react2.default.createElement(
-						'div',
-						{ className: 'alert' },
-						_react2.default.createElement(
-							'header',
-							null,
-							_react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
-							_react2.default.createElement(
-								'h1',
-								null,
-								'BOMBTRIS'
-							)
-						),
-						'Game is full, please wait for the next game...'
-					);
-				}
-	
-				return _react2.default.createElement(
-					'div',
-					null,
-					'you have reached an unreachable state!'
-				);
-			}
-		}]);
-	
-		return App;
+	  return App;
 	}(_react2.default.Component);
 	
 	exports.default = App;
@@ -26178,7 +26161,7 @@
 	 */
 	
 	exports.Manager = __webpack_require__(245);
-	exports.Socket = __webpack_require__(273);
+	exports.Socket = __webpack_require__(272);
 
 
 /***/ },
@@ -28513,14 +28496,14 @@
 	 */
 	
 	var eio = __webpack_require__(246);
-	var Socket = __webpack_require__(273);
-	var Emitter = __webpack_require__(274);
+	var Socket = __webpack_require__(272);
+	var Emitter = __webpack_require__(273);
 	var parser = __webpack_require__(237);
-	var on = __webpack_require__(276);
-	var bind = __webpack_require__(277);
+	var on = __webpack_require__(275);
+	var bind = __webpack_require__(276);
 	var debug = __webpack_require__(234)('socket.io-client:manager');
-	var indexOf = __webpack_require__(271);
-	var Backoff = __webpack_require__(280);
+	var indexOf = __webpack_require__(270);
+	var Backoff = __webpack_require__(279);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -29099,13 +29082,13 @@
 	 */
 	
 	var transports = __webpack_require__(249);
-	var Emitter = __webpack_require__(264);
+	var Emitter = __webpack_require__(242);
 	var debug = __webpack_require__(234)('engine.io-client:socket');
-	var index = __webpack_require__(271);
+	var index = __webpack_require__(270);
 	var parser = __webpack_require__(255);
 	var parseuri = __webpack_require__(233);
-	var parsejson = __webpack_require__(272);
-	var parseqs = __webpack_require__(265);
+	var parsejson = __webpack_require__(271);
+	var parseqs = __webpack_require__(264);
 	
 	/**
 	 * Module exports.
@@ -29835,8 +29818,8 @@
 	
 	var XMLHttpRequest = __webpack_require__(250);
 	var XHR = __webpack_require__(252);
-	var JSONP = __webpack_require__(268);
-	var websocket = __webpack_require__(269);
+	var JSONP = __webpack_require__(267);
+	var websocket = __webpack_require__(268);
 	
 	/**
 	 * Export transports.
@@ -29960,8 +29943,8 @@
 	
 	var XMLHttpRequest = __webpack_require__(250);
 	var Polling = __webpack_require__(253);
-	var Emitter = __webpack_require__(264);
-	var inherit = __webpack_require__(266);
+	var Emitter = __webpack_require__(242);
+	var inherit = __webpack_require__(265);
 	var debug = __webpack_require__(234)('engine.io-client:polling-xhr');
 	
 	/**
@@ -30378,10 +30361,10 @@
 	 */
 	
 	var Transport = __webpack_require__(254);
-	var parseqs = __webpack_require__(265);
+	var parseqs = __webpack_require__(264);
 	var parser = __webpack_require__(255);
-	var inherit = __webpack_require__(266);
-	var yeast = __webpack_require__(267);
+	var inherit = __webpack_require__(265);
+	var yeast = __webpack_require__(266);
 	var debug = __webpack_require__(234)('engine.io-client:polling');
 	
 	/**
@@ -30631,7 +30614,7 @@
 	 */
 	
 	var parser = __webpack_require__(255);
-	var Emitter = __webpack_require__(264);
+	var Emitter = __webpack_require__(242);
 	
 	/**
 	 * Module exports.
@@ -31973,176 +31956,6 @@
 /* 264 */
 /***/ function(module, exports) {
 
-	
-	/**
-	 * Expose `Emitter`.
-	 */
-	
-	module.exports = Emitter;
-	
-	/**
-	 * Initialize a new `Emitter`.
-	 *
-	 * @api public
-	 */
-	
-	function Emitter(obj) {
-	  if (obj) return mixin(obj);
-	};
-	
-	/**
-	 * Mixin the emitter properties.
-	 *
-	 * @param {Object} obj
-	 * @return {Object}
-	 * @api private
-	 */
-	
-	function mixin(obj) {
-	  for (var key in Emitter.prototype) {
-	    obj[key] = Emitter.prototype[key];
-	  }
-	  return obj;
-	}
-	
-	/**
-	 * Listen on the given `event` with `fn`.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-	
-	Emitter.prototype.on =
-	Emitter.prototype.addEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-	  (this._callbacks[event] = this._callbacks[event] || [])
-	    .push(fn);
-	  return this;
-	};
-	
-	/**
-	 * Adds an `event` listener that will be invoked a single
-	 * time then automatically removed.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-	
-	Emitter.prototype.once = function(event, fn){
-	  var self = this;
-	  this._callbacks = this._callbacks || {};
-	
-	  function on() {
-	    self.off(event, on);
-	    fn.apply(this, arguments);
-	  }
-	
-	  on.fn = fn;
-	  this.on(event, on);
-	  return this;
-	};
-	
-	/**
-	 * Remove the given callback for `event` or all
-	 * registered callbacks.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-	
-	Emitter.prototype.off =
-	Emitter.prototype.removeListener =
-	Emitter.prototype.removeAllListeners =
-	Emitter.prototype.removeEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-	
-	  // all
-	  if (0 == arguments.length) {
-	    this._callbacks = {};
-	    return this;
-	  }
-	
-	  // specific event
-	  var callbacks = this._callbacks[event];
-	  if (!callbacks) return this;
-	
-	  // remove all handlers
-	  if (1 == arguments.length) {
-	    delete this._callbacks[event];
-	    return this;
-	  }
-	
-	  // remove specific handler
-	  var cb;
-	  for (var i = 0; i < callbacks.length; i++) {
-	    cb = callbacks[i];
-	    if (cb === fn || cb.fn === fn) {
-	      callbacks.splice(i, 1);
-	      break;
-	    }
-	  }
-	  return this;
-	};
-	
-	/**
-	 * Emit `event` with the given args.
-	 *
-	 * @param {String} event
-	 * @param {Mixed} ...
-	 * @return {Emitter}
-	 */
-	
-	Emitter.prototype.emit = function(event){
-	  this._callbacks = this._callbacks || {};
-	  var args = [].slice.call(arguments, 1)
-	    , callbacks = this._callbacks[event];
-	
-	  if (callbacks) {
-	    callbacks = callbacks.slice(0);
-	    for (var i = 0, len = callbacks.length; i < len; ++i) {
-	      callbacks[i].apply(this, args);
-	    }
-	  }
-	
-	  return this;
-	};
-	
-	/**
-	 * Return array of callbacks for `event`.
-	 *
-	 * @param {String} event
-	 * @return {Array}
-	 * @api public
-	 */
-	
-	Emitter.prototype.listeners = function(event){
-	  this._callbacks = this._callbacks || {};
-	  return this._callbacks[event] || [];
-	};
-	
-	/**
-	 * Check if this emitter has `event` handlers.
-	 *
-	 * @param {String} event
-	 * @return {Boolean}
-	 * @api public
-	 */
-	
-	Emitter.prototype.hasListeners = function(event){
-	  return !! this.listeners(event).length;
-	};
-
-
-/***/ },
-/* 265 */
-/***/ function(module, exports) {
-
 	/**
 	 * Compiles a querystring
 	 * Returns string representation of the object
@@ -32183,7 +31996,7 @@
 
 
 /***/ },
-/* 266 */
+/* 265 */
 /***/ function(module, exports) {
 
 	
@@ -32195,7 +32008,7 @@
 	};
 
 /***/ },
-/* 267 */
+/* 266 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32269,7 +32082,7 @@
 
 
 /***/ },
-/* 268 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -32278,7 +32091,7 @@
 	 */
 	
 	var Polling = __webpack_require__(253);
-	var inherit = __webpack_require__(266);
+	var inherit = __webpack_require__(265);
 	
 	/**
 	 * Module exports.
@@ -32514,7 +32327,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 269 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -32523,9 +32336,9 @@
 	
 	var Transport = __webpack_require__(254);
 	var parser = __webpack_require__(255);
-	var parseqs = __webpack_require__(265);
-	var inherit = __webpack_require__(266);
-	var yeast = __webpack_require__(267);
+	var parseqs = __webpack_require__(264);
+	var inherit = __webpack_require__(265);
+	var yeast = __webpack_require__(266);
 	var debug = __webpack_require__(234)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	
@@ -32538,7 +32351,7 @@
 	var WebSocket = BrowserWebSocket;
 	if (!WebSocket && typeof window === 'undefined') {
 	  try {
-	    WebSocket = __webpack_require__(270);
+	    WebSocket = __webpack_require__(269);
 	  } catch (e) { }
 	}
 	
@@ -32809,13 +32622,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 270 */
+/* 269 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 271 */
+/* 270 */
 /***/ function(module, exports) {
 
 	
@@ -32830,7 +32643,7 @@
 	};
 
 /***/ },
-/* 272 */
+/* 271 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -32868,7 +32681,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 273 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -32877,12 +32690,12 @@
 	 */
 	
 	var parser = __webpack_require__(237);
-	var Emitter = __webpack_require__(274);
-	var toArray = __webpack_require__(275);
-	var on = __webpack_require__(276);
-	var bind = __webpack_require__(277);
+	var Emitter = __webpack_require__(273);
+	var toArray = __webpack_require__(274);
+	var on = __webpack_require__(275);
+	var bind = __webpack_require__(276);
 	var debug = __webpack_require__(234)('socket.io-client:socket');
-	var hasBin = __webpack_require__(278);
+	var hasBin = __webpack_require__(277);
 	
 	/**
 	 * Module exports.
@@ -33286,7 +33099,7 @@
 
 
 /***/ },
-/* 274 */
+/* 273 */
 /***/ function(module, exports) {
 
 	
@@ -33453,7 +33266,7 @@
 
 
 /***/ },
-/* 275 */
+/* 274 */
 /***/ function(module, exports) {
 
 	module.exports = toArray
@@ -33472,7 +33285,7 @@
 
 
 /***/ },
-/* 276 */
+/* 275 */
 /***/ function(module, exports) {
 
 	
@@ -33502,7 +33315,7 @@
 
 
 /***/ },
-/* 277 */
+/* 276 */
 /***/ function(module, exports) {
 
 	/**
@@ -33531,7 +33344,7 @@
 
 
 /***/ },
-/* 278 */
+/* 277 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -33539,7 +33352,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(279);
+	var isArray = __webpack_require__(278);
 	
 	/**
 	 * Module exports.
@@ -33597,7 +33410,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 279 */
+/* 278 */
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -33606,7 +33419,7 @@
 
 
 /***/ },
-/* 280 */
+/* 279 */
 /***/ function(module, exports) {
 
 	
@@ -33697,7 +33510,7 @@
 
 
 /***/ },
-/* 281 */
+/* 280 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33817,7 +33630,7 @@
 	exports.default = Player;
 
 /***/ },
-/* 282 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33832,15 +33645,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _constants = __webpack_require__(283);
+	var _constants = __webpack_require__(285);
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
-	var _game_play = __webpack_require__(284);
+	var _game_play = __webpack_require__(287);
 	
 	var _game_play2 = _interopRequireDefault(_game_play);
 	
-	var _grid = __webpack_require__(285);
+	var _grid = __webpack_require__(286);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
@@ -33918,447 +33731,7 @@
 	exports.default = Queued;
 
 /***/ },
-/* 283 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	module.exports = {
-	    COLORS: {
-	        I: 'cyan',
-	        J: 'blue',
-	        L: 'orange',
-	        O: 'yellow',
-	        S: 'green',
-	        T: 'purple',
-	        Z: 'red'
-	    },
-	    SHAPES: {
-	        I: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
-	        J: [[2, 0, 0], [2, 2, 2], [0, 0, 0]],
-	        L: [[0, 0, 3], [3, 3, 3], [0, 0, 0]],
-	        O: [[4, 4], [4, 4]],
-	        S: [[0, 5, 5], [5, 5, 0], [0, 0, 0]],
-	        T: [[0, 6, 0], [6, 6, 6], [0, 0, 0]],
-	        Z: [[7, 7, 0], [0, 7, 7], [0, 0, 0]]
-	    },
-	    GRID_ROWS: 20,
-	    GRID_COLS: 10,
-	    Y_START: -1,
-	    X_START: 3,
-	    HARD_DROP: 60,
-	    DEFAULT_YSPEED: 8
-	};
-
-/***/ },
-/* 284 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	function getTetLength(tet) {
-		return tet.filter(function (row) {
-			return row.some(function (block) {
-				return block > 0;
-			});
-		}).length;
-	}
-	
-	function checkGameOver(grid) {
-		if (grid[0].some(function (block) {
-			return block > 0;
-		})) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	function canMoveLeft(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var floorCurrTetY = Math.floor(currTetY);
-		var tetYMax = floorCurrTetY + tetLength;
-	
-		var leftCells = [];
-		var canMove = true;
-	
-		if (floorCurrTetY < 0) {
-			canMove = false;
-		} else {
-			currTet.forEach(function (row, rowIndex) {
-				row.forEach(function (cell, cellIndex) {
-					if (cell != 0 && (!currTet[rowIndex][cellIndex - 1] ? true : currTet[rowIndex][cellIndex - 1] === 0 ? true : false)) {
-						leftCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
-					}
-				});
-			});
-			leftCells.forEach(function (leftCell) {
-				if (leftCell.x - 1 < 0 ? true : currGrid[leftCell.y][leftCell.x - 1] != 0 ? true : false) {
-					canMove = false;
-				}
-			});
-		}
-		return canMove;
-	}
-	
-	function canMoveRight(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var floorCurrTetY = Math.floor(currTetY);
-		var tetYMax = floorCurrTetY + tetLength;
-	
-		var rightCells = [];
-		var canMove = true;
-	
-		if (floorCurrTetY < 0) {
-			canMove = false;
-		} else {
-			currTet.forEach(function (row, rowIndex) {
-				row.forEach(function (cell, cellIndex) {
-					if (cell != 0 && (!currTet[rowIndex][cellIndex + 1] ? true : currTet[rowIndex][cellIndex + 1] === 0 ? true : false)) {
-						rightCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
-					}
-				});
-			});
-			rightCells.forEach(function (rightCell) {
-				if (rightCell.x + 1 > 19 ? true : currGrid[rightCell.y][rightCell.x + 1] != 0 ? true : false) {
-					canMove = false;
-				}
-			});
-		}
-		return canMove;
-	}
-	
-	function canMoveDown(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var floorCurrTetY = Math.floor(currTetY);
-		var tetYMax = floorCurrTetY + tetLength;
-	
-		var bottomCells = [];
-		var canMove = true;
-		if (tetYMax > 0) {
-			currTet.forEach(function (row, rowIndex) {
-				row.forEach(function (cell, cellIndex) {
-					if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
-						bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
-					}
-				});
-			});
-			bottomCells.forEach(function (bottomCell) {
-				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
-					canMove = false;
-				}
-			});
-		}
-		return canMove;
-	}
-	
-	function getBottomMostPosition(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var canMove = true;
-		var bottomMostY = currTetY;
-		var floorCurrTetY = Math.floor(currTetY);
-		var bottomCells = [];
-	
-		currTet.forEach(function (row, rowIndex) {
-			row.forEach(function (cell, cellIndex) {
-				if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
-					bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex, colHeight: rowIndex });
-				}
-			});
-		});
-	
-		while (canMove) {
-			bottomCells.forEach(function (bottomCell) {
-				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
-					canMove = false;
-					bottomMostY = bottomCell.y - bottomCell.colHeight;
-				} else {
-					bottomCell.y += 1;
-				}
-			});
-		}
-		return bottomMostY;
-	}
-	
-	function mergeGrid(currGrid, currTet, currTetX, currTetY) {
-		var tetLength = currTet.length;
-		var relGridRow = 0;
-		var relGridCol = 0;
-		var newGrid = [];
-		for (var row = 0; row < tetLength; row++) {
-			for (var col = 0; col < tetLength; col++) {
-				if (currTet[row][col] === 0) {
-					continue;
-				}
-				relGridRow = Math.floor(currTetY) + row;
-				relGridCol = currTetX + col;
-				if (currGrid[relGridRow]) {
-					currGrid[relGridRow][relGridCol] = currTet[row][col];
-				}
-			}
-		}
-		return currGrid;
-	}
-	
-	function canRotate(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = currTet.length;
-		var tetXMax = currTetX + getTetLength(currTet);
-		var rotatedTet = rotateRight(currTet);
-		var rotationAllowed = true;
-		var relGridRow = 0;
-		var relGridCol = 0;
-		//only allow rotation once whole piece is on board
-		if (currTetY < 0) {
-			return true;
-		}
-		//check if whole tetrimino array is inside grid bounds
-		//if yes can rotate
-		else if (tetXMax > 19 && currTetX < 0) {
-				return false;
-			}
-			//if tetrimino is in bounds, check if overlapping grid pieces are empty or full
-			else {
-					for (var row = 0; row < tetLength; row++) {
-						for (var col = 0; col < tetLength; col++) {
-							//if empty cell in tetrimino, doesnt matter
-							if (rotatedTet[row][col] === 0) {
-								continue;
-							}
-							relGridRow = Math.floor(currTetY) + row;
-							relGridCol = currTetX + col;
-							if (currGrid[relGridRow][relGridCol] != 0) {
-								rotationAllowed = false;
-							}
-						}
-					}
-					return rotationAllowed;
-				}
-	}
-	
-	function clearLines(grid) {
-		var fullRows = 0;
-		grid.map(function (row, index) {
-			if (row.every(function (cell) {
-				return cell > 0;
-			})) {
-				fullRows++;
-				grid.splice(index, 1);
-				grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-			}
-		});
-	
-		var gameOver = checkGameOver(grid);
-	
-		return { clearedGrid: grid, clearedLines: fullRows, gameOver: gameOver };
-	}
-	
-	function rotateRight(array) {
-		var n = array.length;
-		var rotated = [];
-		array.map(function (row, i) {
-			rotated[i] = [];
-			row.map(function (cell, j) {
-				rotated[i][j] = array[n - j - 1][i];
-			});
-		});
-		return rotated;
-	}
-	
-	function getPoints(clearedLines) {
-		var points;
-		switch (clearedLines) {
-			case 0:
-				points = 0;
-				break;
-			case 1:
-				points = 40;
-				break;
-			case 2:
-				points = 100;
-				break;
-			case 3:
-				points = 300;
-				break;
-			case 4:
-				points = 800;
-				break;
-		}
-		return points;
-	}
-	
-	function combos(prevLines, currLines) {
-		if (!prevLines || prevLines === 0) {
-			return getPoints(currLines);
-		}
-		return getPoints(currLines) * 1.5;
-	}
-	
-	function getRandomBomb(handicapArr, clearedLines) {
-		var bombs = [{ name: 'extraLines' }, { name: 'speedUp', maxTime: 8000 }, { name: 'shake', maxTime: 2000 }, { name: 'reverse', maxTime: 5000 }, { name: 'blur', maxTime: 5000 }, { name: 'flip', maxTime: 8000 }, { name: 'troll', maxTime: 5000 }];
-	
-		// {name: 'cat', maxTime: 5000}
-		var randomBomb = bombs[Math.floor(Math.random() * bombs.length)];
-	
-		if (clearedLines > 0) {
-			handicapArr.push(randomBomb);
-		}
-		return handicapArr;
-	}
-	
-	module.exports = {
-		getTetLength: getTetLength,
-		checkGameOver: checkGameOver,
-		canMoveLeft: canMoveLeft,
-		canMoveRight: canMoveRight,
-		canMoveDown: canMoveDown,
-		getBottomMostPosition: getBottomMostPosition,
-		mergeGrid: mergeGrid,
-		canRotate: canRotate,
-		clearLines: clearLines,
-		rotateRight: rotateRight,
-		getPoints: getPoints,
-		combos: combos,
-		getRandomBomb: getRandomBomb
-	};
-
-/***/ },
-/* 285 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(283);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Row(props) {
-	
-	    function giveClass(num) {
-	        var theClass;
-	        switch (num) {
-	            case 0:
-	                theClass = "emptyCell";
-	                break;
-	            case 1:
-	                theClass = "I";
-	                break;
-	            case 2:
-	                theClass = "J";
-	                break;
-	            case 3:
-	                theClass = "L";
-	                break;
-	            case 4:
-	                theClass = "O";
-	                break;
-	            case 5:
-	                theClass = "S";
-	                break;
-	            case 6:
-	                theClass = "T";
-	                break;
-	            case 7:
-	                theClass = "Z";
-	                break;
-	            case 8:
-	                theClass = "addedLines";
-	                break;
-	        }
-	        if (props.shadow) {
-	            theClass += " shadow";
-	        }
-	
-	        return theClass;
-	    }
-	
-	    return _react2.default.createElement(
-	        'div',
-	        { className: 'row' },
-	        props.row.map(function (cell, index) {
-	            return cell === 0 ? _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) }) : _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) });
-	        })
-	    );
-	}
-	
-	function Grid(props) {
-	    // var currentPieceLength = props.activePiece.length;
-	    // var currentPieceWidth = currentPieceLength/constants.GRID_COLS * 100;
-	    // var currentPieceHeight = currentPieceLength/constants.GRID_ROWS * 100;
-	    // var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
-	    var currentX = props.activePiece.activePiecePosition.x * props.scaling;
-	    var currentY;
-	    //currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
-	    currentY = Math.floor(props.activePiece.activePiecePosition.y) * props.scaling;
-	    //var shadowY = props.shadowY / constants.GRID_ROWS * 100;
-	    var shadowY = props.shadowY * props.scaling;
-	    return _react2.default.createElement(
-	        'div',
-	        { className: props.handicap === 'shake' ? 'shake container' : props.handicap === 'blur' ? 'blur container' : props.handicap === 'flip' ? 'flipdiv container' : 'container' },
-	        props.handicap === 'troll' ? _react2.default.createElement(
-	            'div',
-	            { className: 'troll' },
-	            _react2.default.createElement('img', { src: 'http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' })
-	        ) : '',
-	        props.message ? _react2.default.createElement(
-	            'h1',
-	            { className: 'message' },
-	            props.message
-	        ) : '',
-	        props.handicap === 'reverse' ? _react2.default.createElement(
-	            'h1',
-	            { className: 'message' },
-	            'REVERSE'
-	        ) : '',
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'grid', id: 'grid' },
-	            props.grid.map(function (row, index) {
-	                return _react2.default.createElement(Row, { row: row, key: "r" + index });
-	            })
-	        ),
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'currentPiece', style: { position: 'absolute', top: currentY + 'vh', left: currentX + 'vh' } },
-	            props.activePiece.activePiece.map(function (row, index) {
-	                return _react2.default.createElement(Row, { row: row, key: "pr" + index });
-	            })
-	        ),
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'shadowPiece', style: { position: 'absolute', top: shadowY + 'vh', left: currentX + 'vh' } },
-	            props.activePiece.activePiece.map(function (row, index) {
-	                return _react2.default.createElement(Row, { row: row, shadow: true, key: "sr" + index });
-	            })
-	        )
-	    );
-	}
-	
-	//get initial grid of 0s for any given height/width
-	function getInitialGrid(rows, cols) {
-	    var grid = [];
-	    for (var row = 0; row < rows; row++) {
-	        grid[row] = [];
-	        for (var col = 0; col < cols; col++) {
-	            grid[row][col] = 0;
-	        }
-	    }
-	    return grid;
-	}
-	
-	module.exports = {
-	    getInitialGrid: getInitialGrid,
-	    Grid: Grid,
-	    Row: Row
-	};
-
-/***/ },
-/* 286 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34377,23 +33750,23 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactHammerjs = __webpack_require__(287);
+	var _reactHammerjs = __webpack_require__(283);
 	
 	var _reactHammerjs2 = _interopRequireDefault(_reactHammerjs);
 	
-	var _constants = __webpack_require__(283);
+	var _constants = __webpack_require__(285);
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
-	var _grid = __webpack_require__(285);
+	var _grid = __webpack_require__(286);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
-	var _game_play = __webpack_require__(284);
+	var _game_play = __webpack_require__(287);
 	
 	var _game_play2 = _interopRequireDefault(_game_play);
 	
-	var _handicaps = __webpack_require__(289);
+	var _handicaps = __webpack_require__(288);
 	
 	var _handicaps2 = _interopRequireDefault(_handicaps);
 	
@@ -34432,7 +33805,8 @@
 				score: 0,
 				handicapsAcc: [],
 				handicapBombs: [],
-				gameMessage: 1
+				gameMessage: 1,
+				rank: '?'
 			};
 			_this.serverTimer = 0;
 			_this.updateGameState = _this.updateGameState.bind(_this);
@@ -34446,7 +33820,11 @@
 			_this.handleBombClick = _this.handleBombClick.bind(_this);
 	
 			_this.handleSwipe = _this.handleSwipe.bind(_this);
-			_this.goFS = _this.goFS.bind(_this);
+	
+			_this.setRank = _this.setRank.bind(_this);
+			_this.scoreUpdate = _this.scoreUpdate.bind(_this);
+	
+			_this.scores = {};
 			return _this;
 		}
 	
@@ -34483,12 +33861,30 @@
 				// setTimeout(function(){
 				// 	that.state.handicapBombs.push({name: 'flip', maxTime: 5000});
 				// }, 5000)
+	
+				_socket2.default.on('score_update', this.scoreUpdate);
+			}
+		}, {
+			key: 'scoreUpdate',
+			value: function scoreUpdate(scoreData) {
+				console.log(scoreData, this.scores);
+				var that = this;
+				this.scores[scoreData.name] = scoreData.score;
+	
+				this.state.rank = Object.keys(this.scores).map(function (playerName) {
+					return { name: playerName, score: that.scores[playerName] };
+				}).sort(function (a, b) {
+					return b.score - a.score;
+				}).findIndex(function (scoreData) {
+					return scoreData.name === that.props.playerName;
+				}) + 1;
 			}
 		}, {
 			key: 'componentWillUnmount',
 			value: function componentWillUnmount() {
 				document.removeEventListener('keydown', this.handleKeydown);
 				document.removeEventListener('keyup', this.handleKeyup);
+				_socket2.default.off('score_update', this.scoreUpdate);
 			}
 	
 			//display 3, 2, 1 countdown before starting game
@@ -34512,15 +33908,9 @@
 				}
 			}
 		}, {
-			key: 'goFS',
-			value: function goFS() {
-				document.requestFullScreen();
-			}
-		}, {
 			key: 'handleSwipe',
 			value: function handleSwipe(e) {
 				e.preventDefault();
-				console.log(e);
 				if (e.direction === 16) {
 					this.handleHardDrop();
 				}
@@ -34626,6 +34016,11 @@
 				this.state.handicapsAcc.splice(0, 1);
 			}
 		}, {
+			key: 'setRank',
+			value: function setRank(rank) {
+				this.state.rank = rank;
+			}
+		}, {
 			key: 'updateGameState',
 			value: function updateGameState() {
 	
@@ -34679,6 +34074,7 @@
 								});
 								return;
 							} else {
+								_socket2.default.emit('score_update', { name: this.props.playerName, score: newScore });
 								this.setState({
 									grid: clearedGrid,
 									nextPiece: _constants2.default.SHAPES[this.state.gameBag[this.pieceCounter + 1]],
@@ -34713,7 +34109,7 @@
 						score: this.state.score,
 						hardDrop: this.hardDrop,
 						playerName: this.props.playerName,
-						rank: this.props.rank,
+						rank: this.state.rank,
 						handicapsAcc: this.state.handicapsAcc,
 						handicapBombs: this.state.handicapBombs
 					};
@@ -34808,7 +34204,7 @@
 									null,
 									this.state.score,
 									' (',
-									this.props.rank,
+									this.state.rank,
 									')'
 								)
 							)
@@ -34842,7 +34238,7 @@
 	exports.default = Game;
 
 /***/ },
-/* 287 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -34850,7 +34246,7 @@
 	
 	// require('hammerjs') when in a browser. This is safe because Hammer is only
 	// invoked in componentDidMount, which is not executed on the server.
-	var Hammer = (typeof window !== 'undefined') ? __webpack_require__(288) : undefined;
+	var Hammer = (typeof window !== 'undefined') ? __webpack_require__(284) : undefined;
 	
 	var privateProps = {
 		children: true,
@@ -34983,7 +34379,7 @@
 
 
 /***/ },
-/* 288 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*! Hammer.JS - v2.0.7 - 2016-04-22
@@ -37632,7 +37028,447 @@
 
 
 /***/ },
-/* 289 */
+/* 285 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = {
+	    COLORS: {
+	        I: 'cyan',
+	        J: 'blue',
+	        L: 'orange',
+	        O: 'yellow',
+	        S: 'green',
+	        T: 'purple',
+	        Z: 'red'
+	    },
+	    SHAPES: {
+	        I: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
+	        J: [[2, 0, 0], [2, 2, 2], [0, 0, 0]],
+	        L: [[0, 0, 3], [3, 3, 3], [0, 0, 0]],
+	        O: [[4, 4], [4, 4]],
+	        S: [[0, 5, 5], [5, 5, 0], [0, 0, 0]],
+	        T: [[0, 6, 0], [6, 6, 6], [0, 0, 0]],
+	        Z: [[7, 7, 0], [0, 7, 7], [0, 0, 0]]
+	    },
+	    GRID_ROWS: 20,
+	    GRID_COLS: 10,
+	    Y_START: -1,
+	    X_START: 3,
+	    HARD_DROP: 60,
+	    DEFAULT_YSPEED: 8
+	};
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(285);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Row(props) {
+	
+	    function giveClass(num) {
+	        var theClass;
+	        switch (num) {
+	            case 0:
+	                theClass = "emptyCell";
+	                break;
+	            case 1:
+	                theClass = "I";
+	                break;
+	            case 2:
+	                theClass = "J";
+	                break;
+	            case 3:
+	                theClass = "L";
+	                break;
+	            case 4:
+	                theClass = "O";
+	                break;
+	            case 5:
+	                theClass = "S";
+	                break;
+	            case 6:
+	                theClass = "T";
+	                break;
+	            case 7:
+	                theClass = "Z";
+	                break;
+	            case 8:
+	                theClass = "addedLines";
+	                break;
+	        }
+	        if (props.shadow) {
+	            theClass += " shadow";
+	        }
+	
+	        return theClass;
+	    }
+	
+	    return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        props.row.map(function (cell, index) {
+	            return cell === 0 ? _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) }) : _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) });
+	        })
+	    );
+	}
+	
+	function Grid(props) {
+	    // var currentPieceLength = props.activePiece.length;
+	    // var currentPieceWidth = currentPieceLength/constants.GRID_COLS * 100;
+	    // var currentPieceHeight = currentPieceLength/constants.GRID_ROWS * 100;
+	    // var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
+	    var currentX = props.activePiece.activePiecePosition.x * props.scaling;
+	    var currentY;
+	    //currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
+	    currentY = Math.floor(props.activePiece.activePiecePosition.y) * props.scaling;
+	    //var shadowY = props.shadowY / constants.GRID_ROWS * 100;
+	    var shadowY = props.shadowY * props.scaling;
+	    return _react2.default.createElement(
+	        'div',
+	        { className: props.handicap === 'shake' ? 'shake container' : props.handicap === 'blur' ? 'blur container' : props.handicap === 'flip' ? 'flipdiv container' : 'container' },
+	        props.handicap === 'troll' ? _react2.default.createElement(
+	            'div',
+	            { className: 'troll' },
+	            _react2.default.createElement('img', { src: 'http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' })
+	        ) : '',
+	        props.message ? _react2.default.createElement(
+	            'h1',
+	            { className: 'message' },
+	            props.message
+	        ) : '',
+	        props.handicap === 'reverse' ? _react2.default.createElement(
+	            'h1',
+	            { className: 'message' },
+	            'REVERSE'
+	        ) : '',
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'grid', id: 'grid' },
+	            props.grid.map(function (row, index) {
+	                return _react2.default.createElement(Row, { row: row, key: "r" + index });
+	            })
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'currentPiece', style: { position: 'absolute', top: currentY + 'vh', left: currentX + 'vh' } },
+	            props.activePiece.activePiece.map(function (row, index) {
+	                return _react2.default.createElement(Row, { row: row, key: "pr" + index });
+	            })
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'shadowPiece', style: { position: 'absolute', top: shadowY + 'vh', left: currentX + 'vh' } },
+	            props.activePiece.activePiece.map(function (row, index) {
+	                return _react2.default.createElement(Row, { row: row, shadow: true, key: "sr" + index });
+	            })
+	        )
+	    );
+	}
+	
+	//get initial grid of 0s for any given height/width
+	function getInitialGrid(rows, cols) {
+	    var grid = [];
+	    for (var row = 0; row < rows; row++) {
+	        grid[row] = [];
+	        for (var col = 0; col < cols; col++) {
+	            grid[row][col] = 0;
+	        }
+	    }
+	    return grid;
+	}
+	
+	module.exports = {
+	    getInitialGrid: getInitialGrid,
+	    Grid: Grid,
+	    Row: Row
+	};
+
+/***/ },
+/* 287 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	function getTetLength(tet) {
+		return tet.filter(function (row) {
+			return row.some(function (block) {
+				return block > 0;
+			});
+		}).length;
+	}
+	
+	function checkGameOver(grid) {
+		if (grid[0].some(function (block) {
+			return block > 0;
+		})) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function canMoveLeft(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var floorCurrTetY = Math.floor(currTetY);
+		var tetYMax = floorCurrTetY + tetLength;
+	
+		var leftCells = [];
+		var canMove = true;
+	
+		if (floorCurrTetY < 0) {
+			canMove = false;
+		} else {
+			currTet.forEach(function (row, rowIndex) {
+				row.forEach(function (cell, cellIndex) {
+					if (cell != 0 && (!currTet[rowIndex][cellIndex - 1] ? true : currTet[rowIndex][cellIndex - 1] === 0 ? true : false)) {
+						leftCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
+					}
+				});
+			});
+			leftCells.forEach(function (leftCell) {
+				if (leftCell.x - 1 < 0 ? true : currGrid[leftCell.y][leftCell.x - 1] != 0 ? true : false) {
+					canMove = false;
+				}
+			});
+		}
+		return canMove;
+	}
+	
+	function canMoveRight(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var floorCurrTetY = Math.floor(currTetY);
+		var tetYMax = floorCurrTetY + tetLength;
+	
+		var rightCells = [];
+		var canMove = true;
+	
+		if (floorCurrTetY < 0) {
+			canMove = false;
+		} else {
+			currTet.forEach(function (row, rowIndex) {
+				row.forEach(function (cell, cellIndex) {
+					if (cell != 0 && (!currTet[rowIndex][cellIndex + 1] ? true : currTet[rowIndex][cellIndex + 1] === 0 ? true : false)) {
+						rightCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
+					}
+				});
+			});
+			rightCells.forEach(function (rightCell) {
+				if (rightCell.x + 1 > 19 ? true : currGrid[rightCell.y][rightCell.x + 1] != 0 ? true : false) {
+					canMove = false;
+				}
+			});
+		}
+		return canMove;
+	}
+	
+	function canMoveDown(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var floorCurrTetY = Math.floor(currTetY);
+		var tetYMax = floorCurrTetY + tetLength;
+	
+		var bottomCells = [];
+		var canMove = true;
+		if (tetYMax > 0) {
+			currTet.forEach(function (row, rowIndex) {
+				row.forEach(function (cell, cellIndex) {
+					if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
+						bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
+					}
+				});
+			});
+			bottomCells.forEach(function (bottomCell) {
+				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
+					canMove = false;
+				}
+			});
+		}
+		return canMove;
+	}
+	
+	function getBottomMostPosition(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var canMove = true;
+		var bottomMostY = currTetY;
+		var floorCurrTetY = Math.floor(currTetY);
+		var bottomCells = [];
+	
+		currTet.forEach(function (row, rowIndex) {
+			row.forEach(function (cell, cellIndex) {
+				if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
+					bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex, colHeight: rowIndex });
+				}
+			});
+		});
+	
+		while (canMove) {
+			bottomCells.forEach(function (bottomCell) {
+				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
+					canMove = false;
+					bottomMostY = bottomCell.y - bottomCell.colHeight;
+				} else {
+					bottomCell.y += 1;
+				}
+			});
+		}
+		return bottomMostY;
+	}
+	
+	function mergeGrid(currGrid, currTet, currTetX, currTetY) {
+		var tetLength = currTet.length;
+		var relGridRow = 0;
+		var relGridCol = 0;
+		var newGrid = [];
+		for (var row = 0; row < tetLength; row++) {
+			for (var col = 0; col < tetLength; col++) {
+				if (currTet[row][col] === 0) {
+					continue;
+				}
+				relGridRow = Math.floor(currTetY) + row;
+				relGridCol = currTetX + col;
+				if (currGrid[relGridRow]) {
+					currGrid[relGridRow][relGridCol] = currTet[row][col];
+				}
+			}
+		}
+		return currGrid;
+	}
+	
+	function canRotate(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = currTet.length;
+		var tetXMax = currTetX + getTetLength(currTet);
+		var rotatedTet = rotateRight(currTet);
+		var rotationAllowed = true;
+		var relGridRow = 0;
+		var relGridCol = 0;
+		//only allow rotation once whole piece is on board
+		if (currTetY < 0) {
+			return true;
+		}
+		//check if whole tetrimino array is inside grid bounds
+		//if yes can rotate
+		else if (tetXMax > 19 && currTetX < 0) {
+				return false;
+			}
+			//if tetrimino is in bounds, check if overlapping grid pieces are empty or full
+			else {
+					for (var row = 0; row < tetLength; row++) {
+						for (var col = 0; col < tetLength; col++) {
+							//if empty cell in tetrimino, doesnt matter
+							if (rotatedTet[row][col] === 0) {
+								continue;
+							}
+							relGridRow = Math.floor(currTetY) + row;
+							relGridCol = currTetX + col;
+							if (currGrid[relGridRow][relGridCol] != 0) {
+								rotationAllowed = false;
+							}
+						}
+					}
+					return rotationAllowed;
+				}
+	}
+	
+	function clearLines(grid) {
+		var fullRows = 0;
+		grid.map(function (row, index) {
+			if (row.every(function (cell) {
+				return cell > 0;
+			})) {
+				fullRows++;
+				grid.splice(index, 1);
+				grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+			}
+		});
+	
+		var gameOver = checkGameOver(grid);
+	
+		return { clearedGrid: grid, clearedLines: fullRows, gameOver: gameOver };
+	}
+	
+	function rotateRight(array) {
+		var n = array.length;
+		var rotated = [];
+		array.map(function (row, i) {
+			rotated[i] = [];
+			row.map(function (cell, j) {
+				rotated[i][j] = array[n - j - 1][i];
+			});
+		});
+		return rotated;
+	}
+	
+	function getPoints(clearedLines) {
+		var points;
+		switch (clearedLines) {
+			case 0:
+				points = 0;
+				break;
+			case 1:
+				points = 40;
+				break;
+			case 2:
+				points = 100;
+				break;
+			case 3:
+				points = 300;
+				break;
+			case 4:
+				points = 800;
+				break;
+		}
+		return points;
+	}
+	
+	function combos(prevLines, currLines) {
+		if (!prevLines || prevLines === 0) {
+			return getPoints(currLines);
+		}
+		return getPoints(currLines) * 1.5;
+	}
+	
+	function getRandomBomb(handicapArr, clearedLines) {
+		var bombs = [{ name: 'extraLines' }, { name: 'speedUp', maxTime: 8000 }, { name: 'shake', maxTime: 2000 }, { name: 'reverse', maxTime: 5000 }, { name: 'blur', maxTime: 5000 }, { name: 'flip', maxTime: 8000 }, { name: 'troll', maxTime: 5000 }];
+	
+		// {name: 'cat', maxTime: 5000}
+		var randomBomb = bombs[Math.floor(Math.random() * bombs.length)];
+	
+		if (clearedLines > 0) {
+			handicapArr.push(randomBomb);
+		}
+		return handicapArr;
+	}
+	
+	module.exports = {
+		getTetLength: getTetLength,
+		checkGameOver: checkGameOver,
+		canMoveLeft: canMoveLeft,
+		canMoveRight: canMoveRight,
+		canMoveDown: canMoveDown,
+		getBottomMostPosition: getBottomMostPosition,
+		mergeGrid: mergeGrid,
+		canRotate: canRotate,
+		clearLines: clearLines,
+		rotateRight: rotateRight,
+		getPoints: getPoints,
+		combos: combos,
+		getRandomBomb: getRandomBomb
+	};
+
+/***/ },
+/* 288 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -37672,7 +37508,7 @@
 	};
 
 /***/ },
-/* 290 */
+/* 289 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37683,7 +37519,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactHowler = __webpack_require__(291);
+	var _reactHowler = __webpack_require__(290);
 	
 	var _reactHowler2 = _interopRequireDefault(_reactHowler);
 	
@@ -37766,15 +37602,15 @@
 	module.exports = Admin;
 
 /***/ },
-/* 291 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	module.exports = __webpack_require__(292).default;
+	module.exports = __webpack_require__(291).default;
 
 /***/ },
-/* 292 */
+/* 291 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37789,9 +37625,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _howler3 = __webpack_require__(293);
+	var _howler3 = __webpack_require__(292);
 	
-	var _utils = __webpack_require__(295);
+	var _utils = __webpack_require__(294);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -38029,7 +37865,7 @@
 	exports.default = ReactHowler;
 
 /***/ },
-/* 293 */
+/* 292 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38037,13 +37873,13 @@
 	var Howler = void 0;
 	
 	if (typeof window !== 'undefined') {
-	  Howler = __webpack_require__(294);
+	  Howler = __webpack_require__(293);
 	}
 	
 	module.exports = Howler;
 
 /***/ },
-/* 294 */
+/* 293 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*! howler.js v2.0.0-beta10 | (c) 2013-2016, James Simpson of GoldFire Studios | MIT License | howlerjs.com */
@@ -38053,7 +37889,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 295 */
+/* 294 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -38078,7 +37914,7 @@
 	};
 
 /***/ },
-/* 296 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38089,15 +37925,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _grid = __webpack_require__(285);
+	var _grid = __webpack_require__(286);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
-	var _game_play = __webpack_require__(284);
+	var _game_play = __webpack_require__(287);
 	
 	var _game_play2 = _interopRequireDefault(_game_play);
 	
-	var _reactHowler = __webpack_require__(291);
+	var _reactHowler = __webpack_require__(290);
 	
 	var _reactHowler2 = _interopRequireDefault(_reactHowler);
 	
@@ -38117,15 +37953,21 @@
 	    return _react2.default.createElement(
 	        'div',
 	        { className: 'playerGrid' },
-	        _react2.default.createElement(_grid2.default.Grid, { scaling: 2, grid: props.grid, hardDrop: props.hardDrop ? _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null, activePiece: { activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) }),
 	        _react2.default.createElement(
 	            'h2',
+	            null,
+	            props.rank
+	        ),
+	        _react2.default.createElement(_grid2.default.Grid, { scaling: 2, grid: props.grid, hardDrop: props.hardDrop ? _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null, activePiece: { activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) }),
+	        _react2.default.createElement(
+	            'h3',
 	            null,
 	            props.playerName
 	        ),
 	        _react2.default.createElement(
-	            'h2',
+	            'h3',
 	            null,
+	            'SCORE: ',
 	            props.score
 	        )
 	    );
@@ -38144,7 +37986,7 @@
 	                _react2.default.createElement(
 	                    'h3',
 	                    null,
-	                    'RANK: ' + players[player].rank
+	                    'Rank: ' + players[player].rank
 	                )
 	            );
 	        })
@@ -38160,7 +38002,8 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Megatron).call(this, props));
 	
 	        _this.state = {
-	            activePlayers: {}
+	            activePlayers: {},
+	            playing: false
 	        };
 	
 	        return _this;
@@ -38173,12 +38016,15 @@
 	            _socket2.default.emit('megatron_activated');
 	            _socket2.default.on('update_megatron', function (data) {
 	                that.state.activePlayers[data.playerName] = data;
+	                that.state.playing = true;
 	            });
+	
 	            this.timer = setInterval(function () {
 	                that.forceUpdate();
 	            }, 250);
 	
 	            _socket2.default.on('dropPlayers', function (data) {
+	                console.log(data);
 	                that.setState({
 	                    activePlayers: {}
 	                });
@@ -38239,11 +38085,6 @@
 	                    'div',
 	                    { className: 'megatronContainer' },
 	                    TO_RENDER
-	                ),
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'scoreboard' },
-	                    MegatronScoreBoard(that.state.activePlayers)
 	                )
 	            );
 	        }
@@ -38251,6 +38092,9 @@
 	
 	    return Megatron;
 	}(_react2.default.Component);
+	
+	//<div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
+	
 	
 	module.exports = Megatron;
 
