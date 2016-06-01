@@ -104,7 +104,6 @@ export default class Game extends React.Component {
 	}
 	handleSwipe(e){
 		e.preventDefault();
-		console.log(e)
 		if (e.direction === 16){
 			this.handleHardDrop();
 		}

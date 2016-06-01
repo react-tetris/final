@@ -770,7 +770,7 @@ header{
     height: 100vh;
     width: 100vw;
     background: url('/background.png');
-    background-size: cover; 
+    background-size: cover;
     
     .megatronContainer{
         display: flex;
@@ -781,7 +781,7 @@ header{
     }
     
     .playerGrid{
-        margin: 0 auto;
+        margin: auto auto;
 
        .row {
             display: flex;

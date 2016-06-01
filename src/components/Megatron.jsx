@@ -8,9 +8,10 @@ import socket from '../socket';
 function MegatronDisplay(props) {
     return (
         <div className='playerGrid'>
+            <h2>{props.rank}</h2>
             <Grid.Grid scaling={2} grid={props.grid} hardDrop={props.hardDrop ? gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null} activePiece={{ activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }} shadowY={gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) } />
-        <h2>{props.playerName}</h2>
-        <h2>{props.score}</h2>
+            <h3>{props.playerName}</h3>
+            <h3>SCORE: {props.score}</h3>
         </div>
     );
 }
@@ -23,7 +24,7 @@ function MegatronScoreBoard(players) {
                 return (
                 <div>
                     {'Player: ' + players[player].playerName + "  Score: "  + players[player].score}
-                    <h3>{'RANK: ' + players[player].rank}</h3>
+                    <h3>{'Rank: ' + players[player].rank}</h3>
                 </div>
                 )
             })}
@@ -104,11 +105,10 @@ class Megatron extends React.Component {
                  <div className='megatronContainer'>
                     {TO_RENDER}
                  </div>
-                <div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
             </div>
         )
     }
 }
 
-
+//<div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
 module.exports = Megatron;

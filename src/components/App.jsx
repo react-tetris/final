@@ -31,7 +31,6 @@ export default class App extends React.Component {
     });
 		
     socket.on('dropPlayers', function(newGameState) {
-    	console.log(newGameState)
       that.setState({
         playState: newGameState
       })

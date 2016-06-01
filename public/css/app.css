@@ -584,7 +584,7 @@ header {
     justify-content: space-around;
     align-items: center; }
   .megatron .playerGrid {
-    margin: 0 auto; }
+    margin: auto auto; }
     .megatron .playerGrid .row {
       display: flex;
       justify-content: center;
