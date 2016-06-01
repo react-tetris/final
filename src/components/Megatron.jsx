@@ -7,20 +7,30 @@ import socket from '../socket';
 
 function MegatronDisplay(props) {
     return (
-        <Grid.Grid grid={props.grid} hardDrop={props.hardDrop ? gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null} activePiece={{ activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }} shadowY={gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) } />
+        <div className='playerGrid'>
+            <Grid.Grid scaling={2} grid={props.grid} hardDrop={props.hardDrop ? gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null} activePiece={{ activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }} shadowY={gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) } />
+        <h2>{props.playerName}</h2>
+        <h2>{props.score}</h2>
+        </div>
     );
 }
 
-function MegatronScoreBoard (players){
+function MegatronScoreBoard(players) {
     console.log(players)
     return (
         <div className='scoreBoard'>
             {Object.keys(players).map(function(player){
-                return <div>{players[player].playerName + ': ' + players[player].score}</div>
+                return (
+                <div>
+                    {'Player: ' + players[player].playerName + "  Score: "  + players[player].score}
+                    <h3>{'RANK: ' + players[player].rank}</h3>
+                </div>
+                )
             })}
+            
         </div>
 
-        )
+    )
 }
 class Megatron extends React.Component {
 
@@ -31,7 +41,6 @@ class Megatron extends React.Component {
             activePlayers: {}
         };
 
-        // this.handleSound = this.handleSound.bind(this)
     }
 
     componentDidMount() {
@@ -40,8 +49,19 @@ class Megatron extends React.Component {
         socket.on('update_megatron', function(data) {
             that.state.activePlayers[data.playerName] = data;
         })
-        this.timer = setInterval(function() {that.forceUpdate()}, 250);
+        this.timer = setInterval(function() {
+            that.forceUpdate()
+        }, 250);
+
+
+        socket.on('dropPlayers', function(data) {
+            that.setState({
+                activePlayers: {}
+            })
+        })
     }
+
+
 
     componentWillUnmount() {
         this.state.socket.emit('megatron_deactivated')
@@ -50,9 +70,9 @@ class Megatron extends React.Component {
 
 
     render() {
-        // console.log(this.state.activePlayers, "THIS IS THE STATE")
+
         var that = this;
-        var TO_RENDER = (<div className='admin-wait'>Waiting for Admin to start game</div>);
+        var TO_RENDER = (<div className='megatronWaiting'>Waiting for Admin to start game</div>);
 
         var players = this.state.activePlayers;
         var playerNames = Object.keys(players);
@@ -75,15 +95,17 @@ class Megatron extends React.Component {
         }
 
         return (
-            <div className="megatron">
+            <div className='megatron'>
+                  <h1>BOMBTRIS</h1>
                   <ReactHowler
                     src={'../sound/videoplayback.m4a'}
                     playing={this.state.playing}
-            />
-        {TO_RENDER}
-
-        <div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
-        </div>
+                   />
+                 <div className='megatronContainer'>
+                    {TO_RENDER}
+                 </div>
+                <div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
+            </div>
         )
     }
 }

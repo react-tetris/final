@@ -25915,7 +25915,8 @@
 	
 			_this.state = {
 				playState: 'STOPPED',
-				players: {}
+				players: {},
+				nameTaken: false
 			};
 	
 			_this.scores = {};
@@ -25929,6 +25930,13 @@
 				_socket2.default.emit('entering_game');
 	
 				_socket2.default.on('game_status', function (newGameState) {
+					that.setState({
+						playState: newGameState
+					});
+				});
+	
+				_socket2.default.on('dropPlayers', function (newGameState) {
+					console.log(newGameState);
 					that.setState({
 						playState: newGameState
 					});
@@ -33724,15 +33732,30 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Player).call(this, props));
 	
+	    _this.state = {
+	      nameTaken: false
+	    };
+	
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Player, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var that = this;
+	      _socket2.default.on('name_taken', function () {
+	        that.setState({
+	          nameTaken: true
+	        });
+	      });
+	    }
+	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(event) {
-	      event.preventDefault();
-	      _socket2.default.emit('new_player', this.refs.userName.value.toUpperCase());
+	      event.preventDefault();{
+	        this.refs.userName.value === '' ? '' : _socket2.default.emit('new_player', this.refs.userName.value.toUpperCase());
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -33777,7 +33800,12 @@
 	            'button',
 	            { className: 'enterButton', type: 'submit' },
 	            'ENTER'
-	          )
+	          ),
+	          this.state.nameTaken ? _react2.default.createElement(
+	            'div',
+	            null,
+	            'Name already in use'
+	          ) : ''
 	        )
 	      );
 	    }
@@ -34263,12 +34291,12 @@
 	    // var currentPieceWidth = currentPieceLength/constants.GRID_COLS * 100;
 	    // var currentPieceHeight = currentPieceLength/constants.GRID_ROWS * 100;
 	    // var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
-	    var currentX = props.activePiece.activePiecePosition.x * 4;
+	    var currentX = props.activePiece.activePiecePosition.x * props.scaling;
 	    var currentY;
 	    //currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
-	    currentY = Math.floor(props.activePiece.activePiecePosition.y) * 4;
+	    currentY = Math.floor(props.activePiece.activePiecePosition.y) * props.scaling;
 	    //var shadowY = props.shadowY / constants.GRID_ROWS * 100;
-	    var shadowY = props.shadowY * 4;
+	    var shadowY = props.shadowY * props.scaling;
 	    return _react2.default.createElement(
 	        'div',
 	        { className: props.handicap === 'shake' ? 'shake container' : props.handicap === 'blur' ? 'blur container' : props.handicap === 'flip' ? 'flipdiv container' : 'container' },
@@ -34684,7 +34712,10 @@
 						totalLines: this.state.totalLines,
 						score: this.state.score,
 						hardDrop: this.hardDrop,
-						playerName: this.props.playerName
+						playerName: this.props.playerName,
+						rank: this.props.rank,
+						handicapsAcc: this.state.handicapsAcc,
+						handicapBombs: this.state.handicapBombs
 					};
 	
 					_socket2.default.emit('megatron_screen', playerInfo);
@@ -34720,7 +34751,7 @@
 						_react2.default.createElement(
 							_reactHammerjs2.default,
 							{ onSwipe: this.handleSwipe, onTap: this.handleRotate, vertical: true, options: options },
-							_react2.default.createElement(_grid2.default.Grid, { message: this.state.gameMessage ? typeof this.state.gameMessage === "number" ? 4 - this.state.gameMessage : this.state.gameMessage : null, handicap: this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null, grid: this.state.grid, hardDrop: this.hardDrop ? _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null, activePiece: { activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) })
+							_react2.default.createElement(_grid2.default.Grid, { scaling: 4, message: this.state.gameMessage ? typeof this.state.gameMessage === "number" ? 4 - this.state.gameMessage : this.state.gameMessage : null, handicap: this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null, grid: this.state.grid, hardDrop: this.hardDrop ? _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null, activePiece: { activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) })
 						),
 						_react2.default.createElement(
 							'div',
@@ -37685,7 +37716,7 @@
 	  _createClass(Admin, [{
 	    key: 'clearPlayers',
 	    value: function clearPlayers() {
-	      this.state.socket.emit('dropPlayers');
+	      _socket2.default.emit('dropPlayers');
 	    }
 	  }, {
 	    key: 'startGame',
@@ -38083,7 +38114,21 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	function MegatronDisplay(props) {
-	    return _react2.default.createElement(_grid2.default.Grid, { grid: props.grid, hardDrop: props.hardDrop ? _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null, activePiece: { activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) });
+	    return _react2.default.createElement(
+	        'div',
+	        { className: 'playerGrid' },
+	        _react2.default.createElement(_grid2.default.Grid, { scaling: 2, grid: props.grid, hardDrop: props.hardDrop ? _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null, activePiece: { activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) }),
+	        _react2.default.createElement(
+	            'h2',
+	            null,
+	            props.playerName
+	        ),
+	        _react2.default.createElement(
+	            'h2',
+	            null,
+	            props.score
+	        )
+	    );
 	}
 	
 	function MegatronScoreBoard(players) {
@@ -38095,7 +38140,12 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                players[player].playerName + ': ' + players[player].score
+	                'Player: ' + players[player].playerName + "  Score: " + players[player].score,
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'RANK: ' + players[player].rank
+	                )
 	            );
 	        })
 	    );
@@ -38113,7 +38163,6 @@
 	            activePlayers: {}
 	        };
 	
-	        // this.handleSound = this.handleSound.bind(this)
 	        return _this;
 	    }
 	
@@ -38128,6 +38177,12 @@
 	            this.timer = setInterval(function () {
 	                that.forceUpdate();
 	            }, 250);
+	
+	            _socket2.default.on('dropPlayers', function (data) {
+	                that.setState({
+	                    activePlayers: {}
+	                });
+	            });
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
@@ -38138,11 +38193,11 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            // console.log(this.state.activePlayers, "THIS IS THE STATE")
+	
 	            var that = this;
 	            var TO_RENDER = _react2.default.createElement(
 	                'div',
-	                { className: 'admin-wait' },
+	                { className: 'megatronWaiting' },
 	                'Waiting for Admin to start game'
 	            );
 	
@@ -38171,11 +38226,20 @@
 	            return _react2.default.createElement(
 	                'div',
 	                { className: 'megatron' },
+	                _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'BOMBTRIS'
+	                ),
 	                _react2.default.createElement(_reactHowler2.default, {
 	                    src: '../sound/videoplayback.m4a',
 	                    playing: this.state.playing
 	                }),
-	                TO_RENDER,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'megatronContainer' },
+	                    TO_RENDER
+	                ),
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'scoreboard' },

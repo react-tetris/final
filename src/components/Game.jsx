@@ -289,7 +289,10 @@ export default class Game extends React.Component {
 				totalLines: this.state.totalLines,
 				score: this.state.score,
 				hardDrop: this.hardDrop,
-				playerName: this.props.playerName
+				playerName: this.props.playerName,
+				rank: this.props.rank,
+				handicapsAcc: this.state.handicapsAcc,
+				handicapBombs: this.state.handicapBombs
 			}
 
 			socket.emit('megatron_screen', playerInfo)
@@ -316,7 +319,7 @@ export default class Game extends React.Component {
 						</Hammer>
 					</div>
 					<Hammer onSwipe={this.handleSwipe} onTap={this.handleRotate} vertical={true} options={options}>
-					<Grid.Grid message={this.state.gameMessage ? (typeof this.state.gameMessage === "number" ? 4-this.state.gameMessage : this.state.gameMessage) : null} handicap={this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null } grid={this.state.grid} hardDrop={this.hardDrop ? gp.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null} activePiece={{activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition}} shadowY={gp.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x)} />
+					<Grid.Grid scaling={4} message={this.state.gameMessage ? (typeof this.state.gameMessage === "number" ? 4-this.state.gameMessage : this.state.gameMessage) : null} handicap={this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null } grid={this.state.grid} hardDrop={this.hardDrop ? gp.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null} activePiece={{activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition}} shadowY={gp.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x)} />
 					</Hammer>
 					<div className='rightSideBar'>
 						<Hammer onTap={this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleLeftMove : this.handleRightMove}>

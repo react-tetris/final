@@ -475,7 +475,7 @@
     @keyframes creep {
         50%   {left: 0px;}
     }
-    
+
     @media only screen and (min-device-width: 320px) and (max-device-width: 510px) and (orientation: portrait){
         .nextTitle{
             display: none;
@@ -513,9 +513,28 @@
 
     }
 
-    }
+}
 
-
+    //---------------ADMIN PAGE-----------------
+.adminPage {
+    background: url('/background.png');
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 3em;
+    background: url('/background.png');
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+    
 header{
        font-size: 1em;
        font-size: 5vmin;
@@ -847,4 +866,275 @@ header{
             transform: rotateZ(180deg);
         }   
     }
+}
+
+//--------------MEGATRON------------------
+
+.megatron{
+    text-align: center;
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    height: 100vh;
+    width: 100vw;
+    background: url('/background.png');
+    background-size: cover; 
+    
+    .megatronContainer{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+    }
+    
+    .playerGrid{
+        margin: 0 auto;
+
+       .row {
+            display: flex;
+            justify-content: center;
+            height: 2vh;
+            pointer-events: none;
+        }
+
+        .emptyCell {
+            height: 2vh;
+            width: 2vh;
+        }
+
+        .addedLines {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/greyBlock.png');
+            background-size: contain;
+        }
+
+        .I {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/cyanBlock.png');
+            background-size: contain;
+            z-index: 100;
+        }
+
+        .I.shadow {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/cyanBlock.png');
+            background-size: contain;
+            opacity: 0.2;
+            z-index: 90;
+        }
+
+        .J {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/blueBlock.png');
+            background-size: contain;
+            z-index: 100;
+        }
+        .J.shadow {
+            height: 2vh;
+            width: 2vh;
+            opacity: 0.2;
+            background-image: url('/graphics/blueBlock.png');
+            background-size: contain;
+            z-index: 90;
+        }
+
+        .L {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/orangeBlock.png');
+            background-size: contain;
+            z-index: 100;
+        }
+
+        .L.shadow {
+            height: 2vh;
+            width: 2vh;
+            opacity: 0.2;
+            background-image: url('/graphics/orangeBlock.png');
+            background-size: contain;
+            z-index: 90;
+        }
+
+        .O {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/yellowBlock.png');
+            background-size: contain;
+            z-index: 100;
+        }
+
+        .O.shadow {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/yellowBlock.png');
+            background-size: contain;
+            opacity: 0.2;
+            z-index: 90;
+        }
+
+        .S {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/greenBlock.png');
+            background-size: contain;
+            z-index: 100;
+        }
+        .S.shadow {
+            height: 2vh;
+            width: 2vh;
+            /*background-color: green;*/
+            background-image: url('/graphics/greenBlock.png');
+            background-size: contain;
+            opacity: 0.2;
+            /*border-style: outset;*/
+            z-index: 90;
+        }
+
+        .T {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/purpleBlock.png');
+            background-size: contain;
+            z-index: 100;
+        }
+        .T.shadow {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/purpleBlock.png');
+            background-size: contain;
+            opacity: 0.2;
+            z-index: 90;
+        }
+
+        .Z {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/redBlock.png');
+            background-size: contain;
+            z-index: 100;
+        }
+        .Z.shadow {
+            height: 2vh;
+            width: 2vh;
+            background-image: url('/graphics/redBlock.png');
+            background-size: contain;
+            opacity: 0.2;
+            z-index: 90;
+        }
+        .container {
+            background: linear-gradient(rgba(255, 255, 255, 0),rgba(255,255,255,0.6));
+            position: relative;
+            height: 40vh;
+            width: 20vh;
+            overflow: hidden;
+            transition:all 2s ease-in-out;
+            margin: 0 auto;
+        }
+        .container.blur {
+            z-index: 999;
+            animation: filter-animation 5s infinite;
+        }
+
+        @keyframes filter-animation {
+            0% {
+                -webkit-filter: sepia(0) saturate(2) blur(10px);
+            }
+            50% {
+                -webkit-filter: sepia(1) saturate(4) blur(30px);
+            }
+            100% {
+                -webkit-filter: sepia(0) saturate(2) blur(10px);
+            }
+        }
+
+        .container.shake {
+            animation: shake 0.2s cubic-bezier(.36,.07,.19,.97) both infinite;
+            transform: translate3d(0,0,0);
+        }
+
+        @keyframes shake {
+            10%, 90% {
+                transform: translate3d(-10px, 0, 0);
+            }
+            20%, 80% {
+                transform: translate3d(20px, 0, 0);
+            }
+            30%, 50%, 70% {
+                transform: translate(-40px, 0, 0);
+            }
+            40%, 60% {
+                transform: translate3d(40px, 0, 0);
+            }
+        }
+
+        .flipdiv {
+            -moz-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            transition:all 2s ease-in-out;
+            transform: rotateX(180deg);
+        }
+
+        .troll{
+            top: 30%;
+            width: 100%;
+            position: absolute;
+            z-index: 500;
+            overflow: hidden;
+            animation: troll 5s ease-in-out;
+        }
+
+        .troll img{
+            width: 100%;
+        }
+
+        @keyframes troll {
+            5%, 95% {
+                transform: scale(0.2);
+            }
+            10%, 90% {
+                transform: scale(1.5) rotateZ(15deg);
+            }
+            20%, 80% {
+                transform: scale(1.2) rotateZ(-15deg);
+            }
+            30%, 50%, 70% {
+                transform: scale(0.8) rotateZ(15deg);
+            }
+            40%, 60% {
+                transform: scale(1.8);
+            }
+            100%{
+                transform: scale(0);
+            }
+        }
+
+        .message{
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+            top: 40%;
+            z-index: 200;
+            text-shadow: 2px 2px 4px lightgrey;
+        }
+
+        .cat {
+            top: 45%;
+            left: -500px;
+            transform: scaleX(-1);
+            position: absolute;
+            z-index: 200;
+            animation: creep 2s;
+        }
+
+        @keyframes creep {
+            50%   {left: 0px;}
+        } 
+        
+    }  
 }

@@ -56,12 +56,12 @@ function Grid(props) {
         // var currentPieceWidth = currentPieceLength/constants.GRID_COLS * 100;
         // var currentPieceHeight = currentPieceLength/constants.GRID_ROWS * 100;
         // var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
-        var currentX = props.activePiece.activePiecePosition.x * 4;
+        var currentX = props.activePiece.activePiecePosition.x * props.scaling;
         var currentY;
         //currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
-        currentY = Math.floor(props.activePiece.activePiecePosition.y) * 4;
+        currentY = Math.floor(props.activePiece.activePiecePosition.y) * props.scaling;
         //var shadowY = props.shadowY / constants.GRID_ROWS * 100;
-        var shadowY = props.shadowY * 4;
+        var shadowY = props.shadowY * props.scaling;
         return (
 
             <div className={props.handicap === 'shake' ? 'shake container' : (props.handicap === 'blur' ? 'blur container' : (props.handicap === 'flip' ? 'flipdiv container' : 'container'))}>

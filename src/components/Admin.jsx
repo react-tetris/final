@@ -14,7 +14,7 @@ class Admin extends React.Component {
   }
 
   clearPlayers() {
-    this.state.socket.emit('dropPlayers')
+    socket.emit('dropPlayers')
   }
 
   startGame() {
