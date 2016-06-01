@@ -449,7 +449,6 @@
         transform: scale(1.1);
     }
 
-<<<<<<< HEAD
 .bombsButton{
     width: 80px;
     height: 80px;
@@ -464,7 +463,6 @@
     color: rgba(155,155,155,1);
 }
 
-=======
     .cat {
         top: 45%;
         left: -500px;
@@ -477,8 +475,7 @@
     @keyframes creep {
         50%   {left: 0px;}
     }
->>>>>>> 6f602ec0417a3ae3548a399080dab1e7489e6bcf
-
+    
     @media only screen and (min-device-width: 320px) and (max-device-width: 510px) and (orientation: portrait){
         .nextTitle{
             display: none;
@@ -518,38 +515,6 @@
 
     }
 
-<<<<<<< HEAD
-@media only screen and (orientation: landscape) {
-    &::after {
-        content: "PLEASE FLIP YOUR DEVICE";
-        color: white;
-        text-align: center;
-=======
-    //---------------ADMIN PAGE-----------------
-    .adminPage {
-        background: url('/background.png');
-        color: white;
-        height: 100vh;
-        width: 100vw;
->>>>>>> 6f602ec0417a3ae3548a399080dab1e7489e6bcf
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-<<<<<<< HEAD
-        font-family: 'Orbitron', sans-serif;
-        font-size: 3em;
-        background: url('/background.png');
-        position: fixed;
-        z-index: 9999;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-}
-
-}
 
 header{
        font-size: 1em;
@@ -560,9 +525,9 @@ header{
        align-items: center;
        padding: 1em;
        
-       img{
-           height: 3em;
-           width: 3em;
+       img {
+           height: 1em;
+           width: 1em;
        }
        h1{
            margin: 0;
@@ -570,7 +535,114 @@ header{
           -webkit-margin-before: 0;
           -webkit-margin-after: 0;
        }
+       
+       .mbtris {
+           margin: -7px;
+       }
+       
+       .bombLogo{
+            position: relative;
+            bottom: 18px;
+            height: 2.5em;
+            width: 2.5em;
+            transform: rotate(-40deg);
+        }
+
+        .fireBomb {
+                display: inline-block;
+        }
    }
+
+
+
+//---------------FLAME------------------
+
+.flameContainer{
+  left: 13px;
+  bottom: 17px;
+  width: 20px;
+  height: 20px;
+  position:relative;
+  transform-origin:center bottom;
+  animation-name: flicker;
+  animation-duration:3ms;
+  animation-delay:200ms;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.flame{
+  bottom:0;
+  position:absolute;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+  transform:rotate(-45deg) scale(1.5,1.5);
+
+&.yellow{
+  left:19px; 
+  width: 1px;
+  height: 1px;
+  background:gold;
+  box-shadow: 0px 0px 4.5px 2px gold;
+}
+
+&.orange{
+  left:19px; 
+  width: 2px;
+  height: 2px;
+  background:orange;
+  box-shadow: 0px 0px 4.5px 2px orange;
+}
+
+&.red{
+  left: 19px;
+  width: 3px;
+  height: 3px;
+  background:OrangeRed;
+  box-shadow: 0px 0px 2.5px 2px OrangeRed;
+}
+
+&.white{
+  left:19px; 
+  bottom:-4px;
+  width: 1px;
+  height: 1px;
+  background:white;
+  box-shadow: 0px 0px 4.5px 2px white;
+}
+}
+// .circle{
+//   border-radius: 50%;
+//   position:absolute;  
+
+//    &.blue{
+//         width: 10px;
+//         height: 10px;
+//         left:25px;
+//         bottom:-25px; 
+//         background: SlateBlue;
+//         box-shadow: 0px 0px 15px 10px SlateBlue;
+//     }
+
+//     &.black{
+//         width: 40px;
+//         height: 40px;
+//         left:10px;
+//         bottom:-60px;  
+//         background: black;
+//         box-shadow: 0px 0px 15px 10px black;
+//     }
+// }
+@keyframes flicker{
+  0%   {transform: rotate(-1deg);}
+  20%  {transform: rotate(1deg);}
+  40%  {transform: rotate(-1deg);}
+  60%  {transform: rotate(1deg) scaleY(1.04);}
+  80%  {transform: rotate(-2deg) scaleY(0.92);}
+  100% {transform: rotate(1deg);}
+}
 
 
 //---------------ADMIN PAGE-----------------
@@ -652,7 +724,7 @@ header{
     font-size: 1em;
     background: #3A3E41;
     padding: 0.75em;
-    margin: 0.75em;
+    margin: 1em;
     text-align: center;
     border-radius: 999px;
     color: white;

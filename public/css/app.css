@@ -1,59 +1,625 @@
-/*
-Error: Invalid CSS after "...  display: flex": expected "{", was ";"
-        on line 535 of src/sass/app.scss
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: 'Orbitron', sans-serif; }
 
-530:         background: url('/background.png');
-531:         color: white;
-532:         height: 100vh;
-533:         width: 100vw;
-534: >>>>>>> 6f602ec0417a3ae3548a399080dab1e7489e6bcf
-535:         display: flex;
-536:         flex-direction: column;
-537:         justify-content: center;
-538: <<<<<<< HEAD
-539:         font-family: 'Orbitron', sans-serif;
-540:         font-size: 3em;
+.gamePage {
+  width: 100vw;
+  height: 100vh;
+  background-color: #1a1a1a;
+  background: url("/background.png");
+  background-size: cover;
+  display: flex;
+  flex-direction: column; }
+  .gamePage h1 {
+    font-size: 3em;
+    font-family: 'Orbitron', sans-serif;
+    color: white; }
+  .gamePage h2 {
+    font-size: 2em;
+    font-family: 'Orbitron', sans-serif;
+    color: white; }
+  .gamePage h3 {
+    font-size: 1em;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 500;
+    color: white; }
+  .gamePage .row {
+    display: flex;
+    justify-content: center;
+    height: 4vh;
+    pointer-events: none; }
+  .gamePage .emptyCell {
+    height: 4vh;
+    width: 4vh; }
+  .gamePage .addedLines {
+    height: 4vh;
+    width: 4vh;
+    background-image: url("/graphics/greyBlock.png");
+    background-size: contain;
+    /*background: linear-gradient(135deg, black,white);*/
+    /*border-width: 5px;
+    border-style: outset;*/
+    /*border-color: darkgrey;*/ }
+  .gamePage .I {
+    height: 4vh;
+    width: 4vh;
+    background-image: url("/graphics/cyanBlock.png");
+    background-size: contain;
+    /*background-color: cyan;
+    border-width: 5px;
+    border-style: outset;
+    border-color: cyan;*/
+    z-index: 100; }
+  .gamePage .I.shadow {
+    height: 4vh;
+    width: 4vh;
+    background-image: url("/graphics/cyanBlock.png");
+    background-size: contain;
+    /*background-color: cyan;*/
+    opacity: 0.2;
+    /*border-style: outset;*/
+    z-index: 90; }
+  .gamePage .J {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: blue;
+    border-width: 5px;
+    border-style: outset;
+    border-color: blue;*/
+    background-image: url("/graphics/blueBlock.png");
+    background-size: contain;
+    z-index: 100; }
+  .gamePage .J.shadow {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: blue;*/
+    opacity: 0.2;
+    /*border-style: outset;*/
+    background-image: url("/graphics/blueBlock.png");
+    background-size: contain;
+    z-index: 90; }
+  .gamePage .L {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: orangered;
+    border-width: 5px;
+    border-style: outset;
+    border-color: orangered;*/
+    background-image: url("/graphics/orangeBlock.png");
+    background-size: contain;
+    z-index: 100; }
+  .gamePage .L.shadow {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: orangered;*/
+    opacity: 0.2;
+    /*border-style: outset;*/
+    background-image: url("/graphics/orangeBlock.png");
+    background-size: contain;
+    z-index: 90; }
+  .gamePage .O {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: yellow;
+    border-width: 5px;
+    border-style: outset;
+    border-color: yellow;*/
+    background-image: url("/graphics/yellowBlock.png");
+    background-size: contain;
+    z-index: 100; }
+  .gamePage .O.shadow {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: yellow;*/
+    background-image: url("/graphics/yellowBlock.png");
+    background-size: contain;
+    opacity: 0.2;
+    /*border-style: outset;*/
+    z-index: 90; }
+  .gamePage .S {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: green;
+    border-width: 5px;
+    border-style: outset;
+    border-color: green;*/
+    background-image: url("/graphics/greenBlock.png");
+    background-size: contain;
+    z-index: 100; }
+  .gamePage .S.shadow {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: green;*/
+    background-image: url("/graphics/greenBlock.png");
+    background-size: contain;
+    opacity: 0.2;
+    /*border-style: outset;*/
+    z-index: 90; }
+  .gamePage .T {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: purple;
+    border-width: 5px;
+    border-style: outset;
+    border-color: purple;*/
+    background-image: url("/graphics/purpleBlock.png");
+    background-size: contain;
+    z-index: 100; }
+  .gamePage .T.shadow {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: purple;*/
+    background-image: url("/graphics/purpleBlock.png");
+    background-size: contain;
+    opacity: 0.2;
+    /*border-style: outset;*/
+    z-index: 90; }
+  .gamePage .Z {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: red;
+    border-width: 5px;
+    border-style: outset;
+    border-color: red;*/
+    background-image: url("/graphics/redBlock.png");
+    background-size: contain;
+    z-index: 100; }
+  .gamePage .Z.shadow {
+    height: 4vh;
+    width: 4vh;
+    /*background-color: red;*/
+    background-image: url("/graphics/redBlock.png");
+    background-size: contain;
+    opacity: 0.2;
+    /*border-style: outset;*/
+    z-index: 90; }
+  .gamePage #app {
+    height: 100vh;
+    width: 100vw; }
+  .gamePage .main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; }
+  .gamePage .header {
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  .gamePage .rightSideBar {
+    height: 80vh;
+    flex: 1; }
+  .gamePage .leftSideBar {
+    height: 80vh;
+    flex: 1; }
+  .gamePage .controlButton {
+    height: 80vh;
+    /*background-color: rgba(255, 255, 255, 0.2);*/
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 100%; }
+  .gamePage .rightButton {
+    background-position: center center;
+    background-image: url("http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/3d-transparent-glass-icons-arrows/006764-3d-transparent-glass-icon-arrows-arrowhead-solid-right.png");
+    background-size: contain;
+    background-repeat: no-repeat; }
+  .gamePage .leftButton {
+    background-position: center center;
+    background-image: url("http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons-256/3d-transparent-glass-icons-arrows/006763-3d-transparent-glass-icon-arrows-arrowhead-solid-left.png");
+    background-size: contain;
+    background-repeat: no-repeat; }
+  .gamePage .grid {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    /*pointer-events: none;*/
+    flex: 2; }
+  .gamePage .container {
+    background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.6));
+    position: relative;
+    height: 80vh;
+    width: 40vh;
+    overflow: hidden;
+    transition: all 2s ease-in-out;
+    /*pointer-events: none;*/
+    margin: 0 auto; }
+  .gamePage .container.blur {
+    z-index: 999;
+    animation: filter-animation 5s infinite; }
+@keyframes filter-animation {
+  0% {
+    -webkit-filter: sepia(0) saturate(2) blur(10px); }
+  50% {
+    -webkit-filter: sepia(1) saturate(4) blur(30px); }
+  100% {
+    -webkit-filter: sepia(0) saturate(2) blur(10px); } }
+  .gamePage .container.shake {
+    animation: shake 0.2s cubic-bezier(0.36, 0.07, 0.19, 0.97) both infinite;
+    transform: translate3d(0, 0, 0); }
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-10px, 0, 0); }
+  20%, 80% {
+    transform: translate3d(20px, 0, 0); }
+  30%, 50%, 70% {
+    transform: translate(-40px, 0, 0); }
+  40%, 60% {
+    transform: translate3d(40px, 0, 0); } }
+  .gamePage .flipdiv {
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transition: all 2s ease-in-out;
+    transform: rotateX(180deg); }
+  .gamePage .footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex-basis: auto;
+    padding: 0.5em;
+    width: 100%;
+    height: 20vh;
+    background-color: rgba(255, 255, 255, 0.2); }
+  .gamePage .sidebarElement {
+    display: flex;
+    flex-direction: column;
+    height: 20vh;
+    justify-content: space-around; }
+  .gamePage .nextPiece {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20vh;
+    height: 20vh;
+    margin: 0;
+    padding-top: 2rem; }
+  .gamePage .score, .gamePage .lines {
+    margin: 0;
+    padding: 0.8em; }
+  .gamePage .hardDrop {
+    transition: all 5s ease; }
+  .gamePage .troll {
+    top: 30%;
+    width: 100%;
+    position: absolute;
+    z-index: 500;
+    overflow: hidden;
+    animation: troll 5s ease-in-out; }
+  .gamePage .troll img {
+    width: 100%; }
+@keyframes troll {
+  5%, 95% {
+    transform: scale(0.2); }
+  10%, 90% {
+    transform: scale(1.5) rotateZ(15deg); }
+  20%, 80% {
+    transform: scale(1.2) rotateZ(-15deg); }
+  30%, 50%, 70% {
+    transform: scale(0.8) rotateZ(15deg); }
+  40%, 60% {
+    transform: scale(1.8); }
+  100% {
+    transform: scale(0); } }
+  .gamePage .message {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    top: 40%;
+    z-index: 200;
+    text-shadow: 2px 2px 4px lightgrey; }
+  .gamePage .handicaps {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 20vh;
+    padding: 0.8em; }
+  .gamePage .bombsButton {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*background: #25292C;*/
+    background: #3A3E41;
+    padding: 20px;
+    text-align: center;
+    border-radius: 50%;
+    color: #9b9b9b;
+    text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.8), 1px 1px 2px black;
+    box-shadow: inset 3px 1px 2px rgba(255, 255, 255, 0.3), inset 3px 15px 45px rgba(255, 255, 255, 0.1), inset -3px -1px 2px rgba(0, 0, 0, 0.5), inset -3px -15px 45px rgba(0, 0, 0, 0.2), 1px 5px 30px -4px black;
+    -webkit-transition: 0.1s ease-out;
+    -moz-transition: 0.1s ease-out;
+    -o-transition: 0.1s ease-out;
+    transition: 0.1s ease-out; }
+  .gamePage .bombsButton:focus {
+    outline: none; }
+  .gamePage .bombsButton:active {
+    transform: scale(1.1); }
+  .gamePage .bombsButton {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("/graphics/BombFilled.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding-right: 30px;
+    padding-top: 8px;
+    color: #9b9b9b; }
+  .gamePage .cat {
+    top: 45%;
+    left: -500px;
+    transform: scaleX(-1);
+    position: absolute;
+    z-index: 200;
+    animation: creep 2s; }
+@keyframes creep {
+  50% {
+    left: 0px; } }
+  @media only screen and (min-device-width: 320px) and (max-device-width: 510px) and (orientation: portrait) {
+    .gamePage .nextTitle {
+      display: none; }
+    .gamePage h2 {
+      font-size: 1em;
+      margin: 0; }
+    .gamePage h3 {
+      margin: 0; }
+    .gamePage .message {
+      font-size: 2em; } }
+  @media only screen and (orientation: landscape) {
+    .gamePage::after {
+      content: "PLEASE FLIP YOUR DEVICE";
+      color: white;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3em;
+      background: url("/background.png");
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%; } }
 
-Backtrace:
-src/sass/app.scss:535
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1189:in `expected'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1125:in `expected'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:1120:in `tok!'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:656:in `block'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:726:in `declaration_or_ruleset'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:676:in `block_child'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:668:in `block_contents'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:657:in `block'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:726:in `declaration_or_ruleset'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:676:in `block_child'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:668:in `block_contents'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:657:in `block'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:726:in `declaration_or_ruleset'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:676:in `block_child'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:665:in `block_contents'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:657:in `block'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:649:in `ruleset'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:675:in `block_child'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:668:in `block_contents'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:125:in `stylesheet'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/scss/parser.rb:41:in `parse'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/engine.rb:406:in `_to_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/engine.rb:381:in `_render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/engine.rb:298:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:492:in `update_stylesheet'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `each'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:473:in `on_file_changed'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/lib/sass/plugin/compiler.rb:331:in `block in watch'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/vendor/listen/lib/listen/listener.rb:252:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/vendor/listen/lib/listen/listener.rb:252:in `on_change'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/vendor/listen/lib/listen/adapters/polling.rb:48:in `call'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/vendor/listen/lib/listen/adapters/polling.rb:48:in `poll_changed_directories'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.22/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: Invalid CSS after \"...  display: flex\": expected \"{\", was \";\"\A         on line 535 of src/sass/app.scss\A \A 530:         background: url('/background.png');\A 531:         color: white;\A 532:         height: 100vh;\A 533:         width: 100vw;\A 534: >>>>>>> 6f602ec0417a3ae3548a399080dab1e7489e6bcf\A 535:         display: flex;\A 536:         flex-direction: column;\A 537:         justify-content: center;\A 538: <<<<<<< HEAD\A 539:         font-family: 'Orbitron', sans-serif;\A 540:         font-size: 3em;"; }
+header {
+  font-size: 1em;
+  font-size: 5vmin;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1em; }
+  header img {
+    height: 1em;
+    width: 1em; }
+  header h1 {
+    margin: 0;
+    padding: 0;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0; }
+  header .mbtris {
+    margin: -7px; }
+  header .bombLogo {
+    position: relative;
+    bottom: 18px;
+    height: 2.5em;
+    width: 2.5em;
+    transform: rotate(-40deg); }
+  header .fireBomb {
+    display: inline-block; }
+
+.flameContainer {
+  left: 13px;
+  bottom: 17px;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  transform-origin: center bottom;
+  animation-name: flicker;
+  animation-duration: 3ms;
+  animation-delay: 200ms;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+  animation-direction: alternate; }
+
+.flame {
+  bottom: 0;
+  position: absolute;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+  transform: rotate(-45deg) scale(1.5, 1.5); }
+  .flame.yellow {
+    left: 19px;
+    width: 1px;
+    height: 1px;
+    background: gold;
+    box-shadow: 0px 0px 4.5px 2px gold; }
+  .flame.orange {
+    left: 19px;
+    width: 2px;
+    height: 2px;
+    background: orange;
+    box-shadow: 0px 0px 4.5px 2px orange; }
+  .flame.red {
+    left: 19px;
+    width: 3px;
+    height: 3px;
+    background: OrangeRed;
+    box-shadow: 0px 0px 2.5px 2px OrangeRed; }
+  .flame.white {
+    left: 19px;
+    bottom: -4px;
+    width: 1px;
+    height: 1px;
+    background: white;
+    box-shadow: 0px 0px 4.5px 2px white; }
+
+@keyframes flicker {
+  0% {
+    transform: rotate(-1deg); }
+  20% {
+    transform: rotate(1deg); }
+  40% {
+    transform: rotate(-1deg); }
+  60% {
+    transform: rotate(1deg) scaleY(1.04); }
+  80% {
+    transform: rotate(-2deg) scaleY(0.92); }
+  100% {
+    transform: rotate(1deg); } }
+.adminPage {
+  background: url("/background.png");
+  color: white;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .adminPage .adminH1 {
+    font-size: 5em;
+    text-align: center; }
+  .adminPage .adminButtons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+  .adminPage .adminButton {
+    font-size: 2em;
+    background: #3A3E41;
+    padding: 0.75em;
+    margin: 0.75em;
+    text-align: center;
+    border-radius: 999px;
+    color: white;
+    text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.8), 1px 1px 2px black;
+    box-shadow: inset 3px 1px 2px rgba(255, 255, 255, 0.3), inset 3px 15px 45px rgba(255, 255, 255, 0.1), inset -3px -1px 2px rgba(0, 0, 0, 0.5), inset -3px -15px 45px rgba(0, 0, 0, 0.2), 1px 5px 30px -4px black;
+    transition: 0.1s ease-out; }
+    .adminPage .adminButton:focus {
+      box-shadow: none;
+      outline: 0; }
+
+.enterScreen {
+  background: url("/background.png");
+  color: white;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+
+.enterForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .enterForm input:focus, .enterForm input:active {
+    box-shadow: none;
+    outline: 0; }
+
+.enterInput {
+  padding: 6px;
+  border-radius: 5px; }
+
+.enterButton {
+  font-size: 1em;
+  background: #3A3E41;
+  padding: 0.75em;
+  margin: 1em;
+  text-align: center;
+  border-radius: 999px;
+  color: white;
+  text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.8), 1px 1px 2px black;
+  box-shadow: inset 3px 1px 2px rgba(255, 255, 255, 0.3), inset 3px 15px 45px rgba(255, 255, 255, 0.1), inset -3px -1px 2px rgba(0, 0, 0, 0.5), inset -3px -15px 45px rgba(0, 0, 0, 0.2), 1px 5px 30px -4px black;
+  transition: 0.1s ease-out; }
+  .enterButton:focus {
+    box-shadow: none;
+    outline: 0; }
+
+.alert {
+  background: url("/background.png");
+  color: white;
+  font-size: 2em;
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+
+.queuedPage {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  height: 100vh;
+  width: 100vw;
+  background: url("/background.png");
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+  .queuedPage .loadingImageContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .queuedPage .loadingImageContainer .loadingImage {
+      margin: auto;
+      animation: queuedRotate 1s infinite; }
+      .queuedPage .loadingImageContainer .loadingImage .I {
+        height: 4vmin;
+        width: 4vmin;
+        background-image: url("/graphics/cyanBlock.png");
+        background-size: contain;
+        z-index: 100; }
+      .queuedPage .loadingImageContainer .loadingImage .emptyCell {
+        height: 4vmin;
+        width: 4vmin; }
+      .queuedPage .loadingImageContainer .loadingImage .row {
+        display: flex;
+        justify-content: center;
+        height: 4vmin;
+        pointer-events: none; }
+  .queuedPage ul {
+    list-style-type: none;
+    margin: 0;
+    margin-top: 2em;
+    padding: 0;
+    font-size: 3vmin;
+    min-height: 30vh; }
+  .queuedPage h2 {
+    margin: 0.6em;
+    font-size: 4vmin;
+    font-weight: 500;
+    margin-top: 0; }
+  .queuedPage header {
+    font-size: 1em;
+    font-size: 5vmin;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 1em; }
+    .queuedPage header img {
+      height: 3em;
+      width: 3em; }
+    .queuedPage header h1 {
+      margin: 0;
+      padding: 0;
+      -webkit-margin-before: 0;
+      -webkit-margin-after: 0; }
+@keyframes queuedRotate {
+  0% {
+    transform: rotateZ(0deg); }
+  100% {
+    transform: rotateZ(180deg); } }
+
+/*# sourceMappingURL=app.css.map */
