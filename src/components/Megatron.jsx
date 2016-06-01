@@ -7,7 +7,11 @@ import socket from '../socket';
 
 function MegatronDisplay(props) {
     return (
-        <Grid.Grid grid={props.grid} hardDrop={props.hardDrop ? gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null} activePiece={{ activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }} shadowY={gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) } />
+        <div className='playerGrid'>
+            <Grid.Grid scaling={2} grid={props.grid} hardDrop={props.hardDrop ? gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null} activePiece={{ activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }} shadowY={gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) } />
+        <h2>{props.playerName}</h2>
+        <h2>{props.score}</h2>
+        </div>
     );
 }
 
@@ -62,7 +66,7 @@ class Megatron extends React.Component {
                 var player = players[playerName]
                 if (player.grid) {
                     return (
-                        <div className='' key={player.playerName}>
+                        <div key={player.playerName}>
                             <MegatronDisplay {...player}/>
 
                         </div>
@@ -76,11 +80,14 @@ class Megatron extends React.Component {
 
         return (
             <div className='megatron'>
+                  <h1>BOMBTRIS</h1>
                   <ReactHowler
                     src={'../sound/videoplayback.m4a'}
                     playing={this.state.playing}
                    />
-                {TO_RENDER}
+                 <div className='megatronContainer'>
+                    {TO_RENDER}
+                 </div>
                 <div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
             </div>
         )
