@@ -8,6 +8,8 @@ import App from './components/App';
 import Admin from './components/Admin';
 import Megatron from './components/Megatron';
 
+
+
 var routes = (
 	<Router history={browserHistory}>
     <Route path="/" component={App} />
