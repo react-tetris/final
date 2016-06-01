@@ -11,16 +11,22 @@ function MegatronDisplay(props) {
     );
 }
 
-function MegatronScoreBoard (players){
+function MegatronScoreBoard(players) {
     console.log(players)
     return (
         <div className='scoreBoard'>
             {Object.keys(players).map(function(player){
-                return <div>{players[player].playerName + ': ' + players[player].score}</div>
+                return (
+                <div>
+                    {'Player: ' + players[player].playerName + "  Score: "  + players[player].score}
+                    <h3>{'RANK: ' + players[player].rank}</h3>
+                </div>
+                )
             })}
+            
         </div>
 
-        )
+    )
 }
 class Megatron extends React.Component {
 
@@ -31,7 +37,6 @@ class Megatron extends React.Component {
             activePlayers: {}
         };
 
-        // this.handleSound = this.handleSound.bind(this)
     }
 
     componentDidMount() {
@@ -40,8 +45,19 @@ class Megatron extends React.Component {
         socket.on('update_megatron', function(data) {
             that.state.activePlayers[data.playerName] = data;
         })
-        this.timer = setInterval(function() {that.forceUpdate()}, 250);
+        this.timer = setInterval(function() {
+            that.forceUpdate()
+        }, 250);
+
+
+        socket.on('dropPlayers', function(data) {
+            that.setState({
+                activePlayers: {}
+            })
+        })
     }
+
+
 
     componentWillUnmount() {
         this.state.socket.emit('megatron_deactivated')
@@ -50,7 +66,7 @@ class Megatron extends React.Component {
 
 
     render() {
-        // console.log(this.state.activePlayers, "THIS IS THE STATE")
+
         var that = this;
         var TO_RENDER = (<div className='admin-wait'>Waiting for Admin to start game</div>);
 

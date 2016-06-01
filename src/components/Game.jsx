@@ -289,7 +289,10 @@ export default class Game extends React.Component {
 				totalLines: this.state.totalLines,
 				score: this.state.score,
 				hardDrop: this.hardDrop,
-				playerName: this.props.playerName
+				playerName: this.props.playerName,
+				rank: this.props.rank,
+				handicapsAcc: this.state.handicapsAcc,
+				handicapBombs: this.state.handicapBombs
 			}
 
 			socket.emit('megatron_screen', playerInfo)
@@ -304,7 +307,7 @@ export default class Game extends React.Component {
 		// TODO: this.props.rank
 
 		var disabled = this.state.handicapsAcc.length === 0;
-		var options = {preventDefault: true, swipe: {threshold: 0.5, velocity: 0, dragBlockHorizontal: true}};
+		var options = {preventDefault: true, swipe: {threshold: 0.1, velocity: 0, dragBlockHorizontal: true}};
 
 		return (
 

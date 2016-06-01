@@ -30,13 +30,14 @@ io.on('connection', function (socket) {
   });
 
   socket.on('entering_game', function() {
-    console.log('SOmeone entered the game');
+    console.log('Someone entered the game');
     socket.emit('game_status', gameState);
   })
 
   socket.on('dropPlayers', function (msg) {
+    console.log('in the socket')
     PLAYERS = {};
-    io.sockets.emit('dropPlayers')
+    io.sockets.emit('dropPlayers', 'ACCEPTING_PLAYERS')
   })
 
   socket.on('start_game', startTheGame);
@@ -99,6 +100,7 @@ function startTheGame() {
     io.to(PLAYERS[playerName].socketId).emit('start_game', {pieces: pieces, name: playerName});
   }
 }
+
 
 function shuffleBag() {
 	var array = ['I', 'J', 'Z', 'S', 'O', 'L', 'T'];

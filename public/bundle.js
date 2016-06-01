@@ -25872,7 +25872,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+			value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -25893,7 +25893,7 @@
 	
 	var _Queued2 = _interopRequireDefault(_Queued);
 	
-	var _Game = __webpack_require__(283);
+	var _Game = __webpack_require__(286);
 	
 	var _Game2 = _interopRequireDefault(_Game);
 	
@@ -25906,133 +25906,141 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var App = function (_React$Component) {
-		_inherits(App, _React$Component);
+			_inherits(App, _React$Component);
 	
-		function App() {
-			_classCallCheck(this, App);
+			function App() {
+					_classCallCheck(this, App);
 	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
+					var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
-			_this.state = {
-				playState: 'STOPPED',
-				players: {}
-			};
+					_this.state = {
+							playState: 'STOPPED',
+							players: {},
+							nameTaken: false
+					};
 	
-			_this.scores = {};
-			return _this;
-		}
-	
-		_createClass(App, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				var that = this;
-				_socket2.default.emit('entering_game');
-	
-				_socket2.default.on('game_status', function (newGameState) {
-					that.setState({
-						playState: newGameState
-					});
-				});
-	
-				_socket2.default.on('start_game', function (state) {
-					that.setState({
-						playState: 'PLAYING',
-						pieces: state.pieces,
-						isPlayer: true,
-						playerName: state.name
-					});
-				});
-	
-				_socket2.default.on('update_players', function (players) {
-					that.setState({
-						players: players
-					});
-				});
-	
-				_socket2.default.on('score_update', function (scoreData) {
-					that.scores[scoreData.name] = scoreData.score;
-	
-					var rank = Object.keys(that.scores).map(function (playerName) {
-						return { name: playerName, score: that.scores[playerName] };
-					}).sort(function (a, b) {
-						return b.score - a.score;
-					}).findIndex(function (scoreData) {
-						return scoreData.name === that.state.playerName;
-					}) + 1;
-	
-					that.setState({
-						rank: rank
-					});
-				});
-	
-				// //Retrieving score from each player Waiting for the girls for merge
-				// socket.on('update_score', function(score) {
-				// 	console.log(score);
-				// 	that.setState({
-				// 		scores: score
-				// 	})
-				// })
-	
-				// socket.on('name_taken', function() {
-				//     that.setState({
-				//     	nameTaken: true
-				//     })
-				// })
-	
-				// socket.on('create_ok', function(name) {
-				//     that.setState({
-				//     	playerName: name
-				//     })
-				// })
+					_this.scores = {};
+					return _this;
 			}
-		}, {
-			key: 'render',
-			value: function render() {
-				if (this.state.playState === "STOPPED") {
-					return _react2.default.createElement(
-						'div',
-						{ className: 'alert' },
-						'loading...'
-					);
-				}
 	
-				if (this.state.playState === 'ACCEPTING_PLAYERS') {
-					return _react2.default.createElement(_Player2.default, null);
-				}
+			_createClass(App, [{
+					key: 'componentDidMount',
+					value: function componentDidMount() {
+							var that = this;
+							_socket2.default.emit('entering_game');
 	
-				if (this.state.playState === 'PLAYING') {
-					if (this.state.isPlayer === true) {
-						return _react2.default.createElement(_Game2.default, { rank: this.state.rank, playerName: this.state.playerName, gameBag: this.state.pieces });
-					} else {
-						return _react2.default.createElement(
-							'div',
-							{ className: 'alert' },
-							'Game in session, please wait for the next game...'
-						);
+							_socket2.default.on('game_status', function (newGameState) {
+									that.setState({
+											playState: newGameState
+									});
+							});
+	
+							_socket2.default.on('dropPlayers', function (newGameState) {
+									console.log(newGameState);
+									that.setState({
+											playState: newGameState
+									});
+							});
+	
+							_socket2.default.on('start_game', function (state) {
+									that.setState({
+											playState: 'PLAYING',
+											pieces: state.pieces,
+											isPlayer: true,
+											playerName: state.name
+									});
+							});
+	
+							_socket2.default.on('update_players', function (players) {
+									that.setState({
+											players: players
+									});
+							});
+	
+							_socket2.default.on('score_update', function (scoreData) {
+									that.scores[scoreData.name] = scoreData.score;
+	
+									var rank = Object.keys(that.scores).map(function (playerName) {
+											return { name: playerName, score: that.scores[playerName] };
+									}).sort(function (a, b) {
+											return b.score - a.score;
+									}).findIndex(function (scoreData) {
+											return scoreData.name === that.state.playerName;
+									}) + 1;
+	
+									that.setState({
+											rank: rank
+									});
+							});
+	
+							// //Retrieving score from each player Waiting for the girls for merge
+							// socket.on('update_score', function(score) {
+							// 	console.log(score);
+							// 	that.setState({
+							// 		scores: score
+							// 	})
+							// })
+	
+							// socket.on('name_taken', function() {
+							//     that.setState({
+							//     	nameTaken: true
+							//     })
+							// })
+	
+							// socket.on('create_ok', function(name) {
+							//     that.setState({
+							//     	playerName: name
+							//     })
+							// })
 					}
-				}
+			}, {
+					key: 'render',
+					value: function render() {
+							if (this.state.playState === "STOPPED") {
+									return _react2.default.createElement(
+											'div',
+											{ className: 'alert' },
+											'loading...'
+									);
+							}
 	
-				if (this.state.playState === 'QUEUED') {
-					return _react2.default.createElement(_Queued2.default, { players: this.state.players });
-				}
+							if (this.state.playState === 'ACCEPTING_PLAYERS') {
+									return _react2.default.createElement(_Player2.default, null);
+							}
 	
-				if (this.state.playState === 'TOO_MANY_PLAYERS') {
-					return _react2.default.createElement(
-						'div',
-						{ className: 'alert' },
-						'Game is full, please wait for the next game...'
-					);
-				}
+							if (this.state.playState === 'PLAYING') {
+									if (this.state.isPlayer === true) {
+											return _react2.default.createElement(_Game2.default, { rank: this.state.rank, playerName: this.state.playerName, gameBag: this.state.pieces });
+									} else {
+											return _react2.default.createElement(
+													'div',
+													{ className: 'alert' },
+													'Game in session, please wait for the next game...'
+											);
+									}
+							}
 	
-				return _react2.default.createElement(
-					'div',
-					null,
-					'you have reached an unreachable state!'
-				);
-			}
-		}]);
+							if (this.state.playState === 'QUEUED') {
+									return _react2.default.createElement(_Queued2.default, { players: this.state.players });
+							}
 	
-		return App;
+							if (this.state.playState === 'TOO_MANY_PLAYERS') {
+									return _react2.default.createElement(
+											'div',
+											{ className: 'alert' },
+											'Game is full, please wait for the next game...'
+									);
+							}
+	
+							return _react2.default.createElement(
+									'div',
+									null,
+									'you have reached an unreachable state!'
+							);
+					}
+			}]);
+	
+			return App;
 	}(_react2.default.Component);
 	
 	exports.default = App;
@@ -33704,15 +33712,30 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Player).call(this, props));
 	
+	    _this.state = {
+	      nameTaken: false
+	    };
+	
 	    _this.handleSubmit = _this.handleSubmit.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Player, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var that = this;
+	      _socket2.default.on('name_taken', function () {
+	        that.setState({
+	          nameTaken: true
+	        });
+	      });
+	    }
+	  }, {
 	    key: 'handleSubmit',
 	    value: function handleSubmit(event) {
-	      event.preventDefault();
-	      _socket2.default.emit('new_player', this.refs.userName.value.toUpperCase());
+	      event.preventDefault();{
+	        this.refs.userName.value === '' ? '' : _socket2.default.emit('new_player', this.refs.userName.value.toUpperCase());
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -33728,7 +33751,12 @@
 	            'button',
 	            { className: 'enterButton', type: 'submit' },
 	            'ENTER'
-	          )
+	          ),
+	          this.state.nameTaken ? _react2.default.createElement(
+	            'div',
+	            null,
+	            'Name already in use'
+	          ) : ''
 	        )
 	      );
 	    }
@@ -33755,15 +33783,15 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _constants = __webpack_require__(286);
+	var _constants = __webpack_require__(283);
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
-	var _game_play = __webpack_require__(288);
+	var _game_play = __webpack_require__(284);
 	
 	var _game_play2 = _interopRequireDefault(_game_play);
 	
-	var _grid = __webpack_require__(287);
+	var _grid = __webpack_require__(285);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
@@ -33842,6 +33870,446 @@
 
 /***/ },
 /* 283 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = {
+	    COLORS: {
+	        I: 'cyan',
+	        J: 'blue',
+	        L: 'orange',
+	        O: 'yellow',
+	        S: 'green',
+	        T: 'purple',
+	        Z: 'red'
+	    },
+	    SHAPES: {
+	        I: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
+	        J: [[2, 0, 0], [2, 2, 2], [0, 0, 0]],
+	        L: [[0, 0, 3], [3, 3, 3], [0, 0, 0]],
+	        O: [[4, 4], [4, 4]],
+	        S: [[0, 5, 5], [5, 5, 0], [0, 0, 0]],
+	        T: [[0, 6, 0], [6, 6, 6], [0, 0, 0]],
+	        Z: [[7, 7, 0], [0, 7, 7], [0, 0, 0]]
+	    },
+	    GRID_ROWS: 20,
+	    GRID_COLS: 10,
+	    Y_START: -1,
+	    X_START: 3,
+	    HARD_DROP: 60,
+	    DEFAULT_YSPEED: 8
+	};
+
+/***/ },
+/* 284 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	function getTetLength(tet) {
+		return tet.filter(function (row) {
+			return row.some(function (block) {
+				return block > 0;
+			});
+		}).length;
+	}
+	
+	function checkGameOver(grid) {
+		if (grid[0].some(function (block) {
+			return block > 0;
+		})) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function canMoveLeft(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var floorCurrTetY = Math.floor(currTetY);
+		var tetYMax = floorCurrTetY + tetLength;
+	
+		var leftCells = [];
+		var canMove = true;
+	
+		if (floorCurrTetY < 0) {
+			canMove = false;
+		} else {
+			currTet.forEach(function (row, rowIndex) {
+				row.forEach(function (cell, cellIndex) {
+					if (cell != 0 && (!currTet[rowIndex][cellIndex - 1] ? true : currTet[rowIndex][cellIndex - 1] === 0 ? true : false)) {
+						leftCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
+					}
+				});
+			});
+			leftCells.forEach(function (leftCell) {
+				if (leftCell.x - 1 < 0 ? true : currGrid[leftCell.y][leftCell.x - 1] != 0 ? true : false) {
+					canMove = false;
+				}
+			});
+		}
+		return canMove;
+	}
+	
+	function canMoveRight(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var floorCurrTetY = Math.floor(currTetY);
+		var tetYMax = floorCurrTetY + tetLength;
+	
+		var rightCells = [];
+		var canMove = true;
+	
+		if (floorCurrTetY < 0) {
+			canMove = false;
+		} else {
+			currTet.forEach(function (row, rowIndex) {
+				row.forEach(function (cell, cellIndex) {
+					if (cell != 0 && (!currTet[rowIndex][cellIndex + 1] ? true : currTet[rowIndex][cellIndex + 1] === 0 ? true : false)) {
+						rightCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
+					}
+				});
+			});
+			rightCells.forEach(function (rightCell) {
+				if (rightCell.x + 1 > 19 ? true : currGrid[rightCell.y][rightCell.x + 1] != 0 ? true : false) {
+					canMove = false;
+				}
+			});
+		}
+		return canMove;
+	}
+	
+	function canMoveDown(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var floorCurrTetY = Math.floor(currTetY);
+		var tetYMax = floorCurrTetY + tetLength;
+	
+		var bottomCells = [];
+		var canMove = true;
+		if (tetYMax > 0) {
+			currTet.forEach(function (row, rowIndex) {
+				row.forEach(function (cell, cellIndex) {
+					if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
+						bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
+					}
+				});
+			});
+			bottomCells.forEach(function (bottomCell) {
+				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
+					canMove = false;
+				}
+			});
+		}
+		return canMove;
+	}
+	
+	function getBottomMostPosition(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var canMove = true;
+		var bottomMostY = currTetY;
+		var floorCurrTetY = Math.floor(currTetY);
+		var bottomCells = [];
+	
+		currTet.forEach(function (row, rowIndex) {
+			row.forEach(function (cell, cellIndex) {
+				if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
+					bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex, colHeight: rowIndex });
+				}
+			});
+		});
+	
+		while (canMove) {
+			bottomCells.forEach(function (bottomCell) {
+				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
+					canMove = false;
+					bottomMostY = bottomCell.y - bottomCell.colHeight;
+				} else {
+					bottomCell.y += 1;
+				}
+			});
+		}
+		return bottomMostY;
+	}
+	
+	function mergeGrid(currGrid, currTet, currTetX, currTetY) {
+		var tetLength = currTet.length;
+		var relGridRow = 0;
+		var relGridCol = 0;
+		var newGrid = [];
+		for (var row = 0; row < tetLength; row++) {
+			for (var col = 0; col < tetLength; col++) {
+				if (currTet[row][col] === 0) {
+					continue;
+				}
+				relGridRow = Math.floor(currTetY) + row;
+				relGridCol = currTetX + col;
+				if (currGrid[relGridRow]) {
+					currGrid[relGridRow][relGridCol] = currTet[row][col];
+				}
+			}
+		}
+		return currGrid;
+	}
+	
+	function canRotate(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = currTet.length;
+		var tetXMax = currTetX + getTetLength(currTet);
+		var rotatedTet = rotateRight(currTet);
+		var rotationAllowed = true;
+		var relGridRow = 0;
+		var relGridCol = 0;
+		//only allow rotation once whole piece is on board
+		if (currTetY < 0) {
+			return true;
+		}
+		//check if whole tetrimino array is inside grid bounds
+		//if yes can rotate
+		else if (tetXMax > 19 && currTetX < 0) {
+				return false;
+			}
+			//if tetrimino is in bounds, check if overlapping grid pieces are empty or full
+			else {
+					for (var row = 0; row < tetLength; row++) {
+						for (var col = 0; col < tetLength; col++) {
+							//if empty cell in tetrimino, doesnt matter
+							if (rotatedTet[row][col] === 0) {
+								continue;
+							}
+							relGridRow = Math.floor(currTetY) + row;
+							relGridCol = currTetX + col;
+							if (currGrid[relGridRow][relGridCol] != 0) {
+								rotationAllowed = false;
+							}
+						}
+					}
+					return rotationAllowed;
+				}
+	}
+	
+	function clearLines(grid) {
+		var fullRows = 0;
+		grid.map(function (row, index) {
+			if (row.every(function (cell) {
+				return cell > 0;
+			})) {
+				fullRows++;
+				grid.splice(index, 1);
+				grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+			}
+		});
+	
+		var gameOver = checkGameOver(grid);
+	
+		return { clearedGrid: grid, clearedLines: fullRows, gameOver: gameOver };
+	}
+	
+	function rotateRight(array) {
+		var n = array.length;
+		var rotated = [];
+		array.map(function (row, i) {
+			rotated[i] = [];
+			row.map(function (cell, j) {
+				rotated[i][j] = array[n - j - 1][i];
+			});
+		});
+		return rotated;
+	}
+	
+	function getPoints(clearedLines) {
+		var points;
+		switch (clearedLines) {
+			case 0:
+				points = 0;
+				break;
+			case 1:
+				points = 40;
+				break;
+			case 2:
+				points = 100;
+				break;
+			case 3:
+				points = 300;
+				break;
+			case 4:
+				points = 800;
+				break;
+		}
+		return points;
+	}
+	
+	function combos(prevLines, currLines) {
+		if (!prevLines || prevLines === 0) {
+			return getPoints(currLines);
+		}
+		return getPoints(currLines) * 1.5;
+	}
+	
+	function getRandomBomb(handicapArr, clearedLines) {
+		var bombs = [{ name: 'extraLines' }, { name: 'speedUp', maxTime: 8000 }, { name: 'shake', maxTime: 2000 }, { name: 'reverse', maxTime: 5000 }, { name: 'blur', maxTime: 5000 }, { name: 'flip', maxTime: 8000 }, { name: 'troll', maxTime: 5000 }];
+	
+		// {name: 'cat', maxTime: 5000}
+		var randomBomb = bombs[Math.floor(Math.random() * bombs.length)];
+	
+		if (clearedLines > 0) {
+			handicapArr.push(randomBomb);
+		}
+		return handicapArr;
+	}
+	
+	module.exports = {
+		getTetLength: getTetLength,
+		checkGameOver: checkGameOver,
+		canMoveLeft: canMoveLeft,
+		canMoveRight: canMoveRight,
+		canMoveDown: canMoveDown,
+		getBottomMostPosition: getBottomMostPosition,
+		mergeGrid: mergeGrid,
+		canRotate: canRotate,
+		clearLines: clearLines,
+		rotateRight: rotateRight,
+		getPoints: getPoints,
+		combos: combos,
+		getRandomBomb: getRandomBomb
+	};
+
+/***/ },
+/* 285 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(283);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Row(props) {
+	
+	    function giveClass(num) {
+	        var theClass;
+	        switch (num) {
+	            case 0:
+	                theClass = "emptyCell";
+	                break;
+	            case 1:
+	                theClass = "I";
+	                break;
+	            case 2:
+	                theClass = "J";
+	                break;
+	            case 3:
+	                theClass = "L";
+	                break;
+	            case 4:
+	                theClass = "O";
+	                break;
+	            case 5:
+	                theClass = "S";
+	                break;
+	            case 6:
+	                theClass = "T";
+	                break;
+	            case 7:
+	                theClass = "Z";
+	                break;
+	            case 8:
+	                theClass = "addedLines";
+	                break;
+	        }
+	        if (props.shadow) {
+	            theClass += " shadow";
+	        }
+	
+	        return theClass;
+	    }
+	
+	    return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        props.row.map(function (cell, index) {
+	            return cell === 0 ? _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) }) : _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) });
+	        })
+	    );
+	}
+	
+	function Grid(props) {
+	    // var currentPieceLength = props.activePiece.length;
+	    // var currentPieceWidth = currentPieceLength/constants.GRID_COLS * 100;
+	    // var currentPieceHeight = currentPieceLength/constants.GRID_ROWS * 100;
+	    // var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
+	    var currentX = props.activePiece.activePiecePosition.x * 4;
+	    var currentY;
+	    //currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
+	    currentY = Math.floor(props.activePiece.activePiecePosition.y) * 4;
+	    //var shadowY = props.shadowY / constants.GRID_ROWS * 100;
+	    var shadowY = props.shadowY * 4;
+	    return _react2.default.createElement(
+	        'div',
+	        { className: props.handicap === 'shake' ? 'shake container' : props.handicap === 'blur' ? 'blur container' : props.handicap === 'flip' ? 'flipdiv container' : 'container' },
+	        props.handicap === 'troll' ? _react2.default.createElement(
+	            'div',
+	            { className: 'troll' },
+	            _react2.default.createElement('img', { src: 'http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' })
+	        ) : '',
+	        props.message ? _react2.default.createElement(
+	            'h1',
+	            { className: 'message' },
+	            props.message
+	        ) : '',
+	        props.handicap === 'reverse' ? _react2.default.createElement(
+	            'h1',
+	            { className: 'message' },
+	            'REVERSE'
+	        ) : '',
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'grid', id: 'grid' },
+	            props.grid.map(function (row, index) {
+	                return _react2.default.createElement(Row, { row: row, key: "r" + index });
+	            })
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'currentPiece', style: { position: 'absolute', top: currentY + 'vh', left: currentX + 'vh' } },
+	            props.activePiece.activePiece.map(function (row, index) {
+	                return _react2.default.createElement(Row, { row: row, key: "pr" + index });
+	            })
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'shadowPiece', style: { position: 'absolute', top: shadowY + 'vh', left: currentX + 'vh' } },
+	            props.activePiece.activePiece.map(function (row, index) {
+	                return _react2.default.createElement(Row, { row: row, shadow: true, key: "sr" + index });
+	            })
+	        )
+	    );
+	}
+	
+	//get initial grid of 0s for any given height/width
+	function getInitialGrid(rows, cols) {
+	    var grid = [];
+	    for (var row = 0; row < rows; row++) {
+	        grid[row] = [];
+	        for (var col = 0; col < cols; col++) {
+	            grid[row][col] = 0;
+	        }
+	    }
+	    return grid;
+	}
+	
+	module.exports = {
+	    getInitialGrid: getInitialGrid,
+	    Grid: Grid,
+	    Row: Row
+	};
+
+/***/ },
+/* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33860,19 +34328,19 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactHammerjs = __webpack_require__(284);
+	var _reactHammerjs = __webpack_require__(287);
 	
 	var _reactHammerjs2 = _interopRequireDefault(_reactHammerjs);
 	
-	var _constants = __webpack_require__(286);
+	var _constants = __webpack_require__(283);
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
-	var _grid = __webpack_require__(287);
+	var _grid = __webpack_require__(285);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
-	var _game_play = __webpack_require__(288);
+	var _game_play = __webpack_require__(284);
 	
 	var _game_play2 = _interopRequireDefault(_game_play);
 	
@@ -34195,7 +34663,10 @@
 						totalLines: this.state.totalLines,
 						score: this.state.score,
 						hardDrop: this.hardDrop,
-						playerName: this.props.playerName
+						playerName: this.props.playerName,
+						rank: this.props.rank,
+						handicapsAcc: this.state.handicapsAcc,
+						handicapBombs: this.state.handicapBombs
 					};
 	
 					_socket2.default.emit('megatron_screen', playerInfo);
@@ -34211,7 +34682,7 @@
 				// TODO: this.props.rank
 	
 				var disabled = this.state.handicapsAcc.length === 0;
-				var options = { preventDefault: true, swipe: { threshold: 0.5, velocity: 0, dragBlockHorizontal: true } };
+				var options = { preventDefault: true, swipe: { threshold: 0.1, velocity: 0, dragBlockHorizontal: true } };
 	
 				return _react2.default.createElement(
 					'div',
@@ -34322,7 +34793,7 @@
 	exports.default = Game;
 
 /***/ },
-/* 284 */
+/* 287 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -34330,7 +34801,7 @@
 	
 	// require('hammerjs') when in a browser. This is safe because Hammer is only
 	// invoked in componentDidMount, which is not executed on the server.
-	var Hammer = (typeof window !== 'undefined') ? __webpack_require__(285) : undefined;
+	var Hammer = (typeof window !== 'undefined') ? __webpack_require__(288) : undefined;
 	
 	var privateProps = {
 		children: true,
@@ -34463,7 +34934,7 @@
 
 
 /***/ },
-/* 285 */
+/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*! Hammer.JS - v2.0.7 - 2016-04-22
@@ -37112,446 +37583,6 @@
 
 
 /***/ },
-/* 286 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	module.exports = {
-	    COLORS: {
-	        I: 'cyan',
-	        J: 'blue',
-	        L: 'orange',
-	        O: 'yellow',
-	        S: 'green',
-	        T: 'purple',
-	        Z: 'red'
-	    },
-	    SHAPES: {
-	        I: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
-	        J: [[2, 0, 0], [2, 2, 2], [0, 0, 0]],
-	        L: [[0, 0, 3], [3, 3, 3], [0, 0, 0]],
-	        O: [[4, 4], [4, 4]],
-	        S: [[0, 5, 5], [5, 5, 0], [0, 0, 0]],
-	        T: [[0, 6, 0], [6, 6, 6], [0, 0, 0]],
-	        Z: [[7, 7, 0], [0, 7, 7], [0, 0, 0]]
-	    },
-	    GRID_ROWS: 20,
-	    GRID_COLS: 10,
-	    Y_START: -1,
-	    X_START: 3,
-	    HARD_DROP: 60,
-	    DEFAULT_YSPEED: 8
-	};
-
-/***/ },
-/* 287 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(286);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Row(props) {
-	
-	    function giveClass(num) {
-	        var theClass;
-	        switch (num) {
-	            case 0:
-	                theClass = "emptyCell";
-	                break;
-	            case 1:
-	                theClass = "I";
-	                break;
-	            case 2:
-	                theClass = "J";
-	                break;
-	            case 3:
-	                theClass = "L";
-	                break;
-	            case 4:
-	                theClass = "O";
-	                break;
-	            case 5:
-	                theClass = "S";
-	                break;
-	            case 6:
-	                theClass = "T";
-	                break;
-	            case 7:
-	                theClass = "Z";
-	                break;
-	            case 8:
-	                theClass = "addedLines";
-	                break;
-	        }
-	        if (props.shadow) {
-	            theClass += " shadow";
-	        }
-	
-	        return theClass;
-	    }
-	
-	    return _react2.default.createElement(
-	        'div',
-	        { className: 'row' },
-	        props.row.map(function (cell, index) {
-	            return cell === 0 ? _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) }) : _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) });
-	        })
-	    );
-	}
-	
-	function Grid(props) {
-	    // var currentPieceLength = props.activePiece.length;
-	    // var currentPieceWidth = currentPieceLength/constants.GRID_COLS * 100;
-	    // var currentPieceHeight = currentPieceLength/constants.GRID_ROWS * 100;
-	    // var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
-	    var currentX = props.activePiece.activePiecePosition.x * 4;
-	    var currentY;
-	    //currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
-	    currentY = Math.floor(props.activePiece.activePiecePosition.y) * 4;
-	    //var shadowY = props.shadowY / constants.GRID_ROWS * 100;
-	    var shadowY = props.shadowY * 4;
-	    return _react2.default.createElement(
-	        'div',
-	        { className: props.handicap === 'shake' ? 'shake container' : props.handicap === 'blur' ? 'blur container' : props.handicap === 'flip' ? 'flipdiv container' : 'container' },
-	        props.handicap === 'troll' ? _react2.default.createElement(
-	            'div',
-	            { className: 'troll' },
-	            _react2.default.createElement('img', { src: 'http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' })
-	        ) : '',
-	        props.message ? _react2.default.createElement(
-	            'h1',
-	            { className: 'message' },
-	            props.message
-	        ) : '',
-	        props.handicap === 'reverse' ? _react2.default.createElement(
-	            'h1',
-	            { className: 'message' },
-	            'REVERSE'
-	        ) : '',
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'grid', id: 'grid' },
-	            props.grid.map(function (row, index) {
-	                return _react2.default.createElement(Row, { row: row, key: "r" + index });
-	            })
-	        ),
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'currentPiece', style: { position: 'absolute', top: currentY + 'vh', left: currentX + 'vh' } },
-	            props.activePiece.activePiece.map(function (row, index) {
-	                return _react2.default.createElement(Row, { row: row, key: "pr" + index });
-	            })
-	        ),
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'shadowPiece', style: { position: 'absolute', top: shadowY + 'vh', left: currentX + 'vh' } },
-	            props.activePiece.activePiece.map(function (row, index) {
-	                return _react2.default.createElement(Row, { row: row, shadow: true, key: "sr" + index });
-	            })
-	        )
-	    );
-	}
-	
-	//get initial grid of 0s for any given height/width
-	function getInitialGrid(rows, cols) {
-	    var grid = [];
-	    for (var row = 0; row < rows; row++) {
-	        grid[row] = [];
-	        for (var col = 0; col < cols; col++) {
-	            grid[row][col] = 0;
-	        }
-	    }
-	    return grid;
-	}
-	
-	module.exports = {
-	    getInitialGrid: getInitialGrid,
-	    Grid: Grid,
-	    Row: Row
-	};
-
-/***/ },
-/* 288 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	function getTetLength(tet) {
-		return tet.filter(function (row) {
-			return row.some(function (block) {
-				return block > 0;
-			});
-		}).length;
-	}
-	
-	function checkGameOver(grid) {
-		if (grid[0].some(function (block) {
-			return block > 0;
-		})) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	function canMoveLeft(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var floorCurrTetY = Math.floor(currTetY);
-		var tetYMax = floorCurrTetY + tetLength;
-	
-		var leftCells = [];
-		var canMove = true;
-	
-		if (floorCurrTetY < 0) {
-			canMove = false;
-		} else {
-			currTet.forEach(function (row, rowIndex) {
-				row.forEach(function (cell, cellIndex) {
-					if (cell != 0 && (!currTet[rowIndex][cellIndex - 1] ? true : currTet[rowIndex][cellIndex - 1] === 0 ? true : false)) {
-						leftCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
-					}
-				});
-			});
-			leftCells.forEach(function (leftCell) {
-				if (leftCell.x - 1 < 0 ? true : currGrid[leftCell.y][leftCell.x - 1] != 0 ? true : false) {
-					canMove = false;
-				}
-			});
-		}
-		return canMove;
-	}
-	
-	function canMoveRight(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var floorCurrTetY = Math.floor(currTetY);
-		var tetYMax = floorCurrTetY + tetLength;
-	
-		var rightCells = [];
-		var canMove = true;
-	
-		if (floorCurrTetY < 0) {
-			canMove = false;
-		} else {
-			currTet.forEach(function (row, rowIndex) {
-				row.forEach(function (cell, cellIndex) {
-					if (cell != 0 && (!currTet[rowIndex][cellIndex + 1] ? true : currTet[rowIndex][cellIndex + 1] === 0 ? true : false)) {
-						rightCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
-					}
-				});
-			});
-			rightCells.forEach(function (rightCell) {
-				if (rightCell.x + 1 > 19 ? true : currGrid[rightCell.y][rightCell.x + 1] != 0 ? true : false) {
-					canMove = false;
-				}
-			});
-		}
-		return canMove;
-	}
-	
-	function canMoveDown(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var floorCurrTetY = Math.floor(currTetY);
-		var tetYMax = floorCurrTetY + tetLength;
-	
-		var bottomCells = [];
-		var canMove = true;
-		if (tetYMax > 0) {
-			currTet.forEach(function (row, rowIndex) {
-				row.forEach(function (cell, cellIndex) {
-					if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
-						bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
-					}
-				});
-			});
-			bottomCells.forEach(function (bottomCell) {
-				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
-					canMove = false;
-				}
-			});
-		}
-		return canMove;
-	}
-	
-	function getBottomMostPosition(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var canMove = true;
-		var bottomMostY = currTetY;
-		var floorCurrTetY = Math.floor(currTetY);
-		var bottomCells = [];
-	
-		currTet.forEach(function (row, rowIndex) {
-			row.forEach(function (cell, cellIndex) {
-				if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
-					bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex, colHeight: rowIndex });
-				}
-			});
-		});
-	
-		while (canMove) {
-			bottomCells.forEach(function (bottomCell) {
-				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
-					canMove = false;
-					bottomMostY = bottomCell.y - bottomCell.colHeight;
-				} else {
-					bottomCell.y += 1;
-				}
-			});
-		}
-		return bottomMostY;
-	}
-	
-	function mergeGrid(currGrid, currTet, currTetX, currTetY) {
-		var tetLength = currTet.length;
-		var relGridRow = 0;
-		var relGridCol = 0;
-		var newGrid = [];
-		for (var row = 0; row < tetLength; row++) {
-			for (var col = 0; col < tetLength; col++) {
-				if (currTet[row][col] === 0) {
-					continue;
-				}
-				relGridRow = Math.floor(currTetY) + row;
-				relGridCol = currTetX + col;
-				if (currGrid[relGridRow]) {
-					currGrid[relGridRow][relGridCol] = currTet[row][col];
-				}
-			}
-		}
-		return currGrid;
-	}
-	
-	function canRotate(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = currTet.length;
-		var tetXMax = currTetX + getTetLength(currTet);
-		var rotatedTet = rotateRight(currTet);
-		var rotationAllowed = true;
-		var relGridRow = 0;
-		var relGridCol = 0;
-		//only allow rotation once whole piece is on board
-		if (currTetY < 0) {
-			return true;
-		}
-		//check if whole tetrimino array is inside grid bounds
-		//if yes can rotate
-		else if (tetXMax > 19 && currTetX < 0) {
-				return false;
-			}
-			//if tetrimino is in bounds, check if overlapping grid pieces are empty or full
-			else {
-					for (var row = 0; row < tetLength; row++) {
-						for (var col = 0; col < tetLength; col++) {
-							//if empty cell in tetrimino, doesnt matter
-							if (rotatedTet[row][col] === 0) {
-								continue;
-							}
-							relGridRow = Math.floor(currTetY) + row;
-							relGridCol = currTetX + col;
-							if (currGrid[relGridRow][relGridCol] != 0) {
-								rotationAllowed = false;
-							}
-						}
-					}
-					return rotationAllowed;
-				}
-	}
-	
-	function clearLines(grid) {
-		var fullRows = 0;
-		grid.map(function (row, index) {
-			if (row.every(function (cell) {
-				return cell > 0;
-			})) {
-				fullRows++;
-				grid.splice(index, 1);
-				grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-			}
-		});
-	
-		var gameOver = checkGameOver(grid);
-	
-		return { clearedGrid: grid, clearedLines: fullRows, gameOver: gameOver };
-	}
-	
-	function rotateRight(array) {
-		var n = array.length;
-		var rotated = [];
-		array.map(function (row, i) {
-			rotated[i] = [];
-			row.map(function (cell, j) {
-				rotated[i][j] = array[n - j - 1][i];
-			});
-		});
-		return rotated;
-	}
-	
-	function getPoints(clearedLines) {
-		var points;
-		switch (clearedLines) {
-			case 0:
-				points = 0;
-				break;
-			case 1:
-				points = 40;
-				break;
-			case 2:
-				points = 100;
-				break;
-			case 3:
-				points = 300;
-				break;
-			case 4:
-				points = 800;
-				break;
-		}
-		return points;
-	}
-	
-	function combos(prevLines, currLines) {
-		if (!prevLines || prevLines === 0) {
-			return getPoints(currLines);
-		}
-		return getPoints(currLines) * 1.5;
-	}
-	
-	function getRandomBomb(handicapArr, clearedLines) {
-		var bombs = [{ name: 'extraLines' }, { name: 'speedUp', maxTime: 8000 }, { name: 'shake', maxTime: 2000 }, { name: 'reverse', maxTime: 5000 }, { name: 'blur', maxTime: 5000 }, { name: 'flip', maxTime: 8000 }, { name: 'troll', maxTime: 5000 }];
-	
-		// {name: 'cat', maxTime: 5000}
-		var randomBomb = bombs[Math.floor(Math.random() * bombs.length)];
-	
-		if (clearedLines > 0) {
-			handicapArr.push(randomBomb);
-		}
-		return handicapArr;
-	}
-	
-	module.exports = {
-		getTetLength: getTetLength,
-		checkGameOver: checkGameOver,
-		canMoveLeft: canMoveLeft,
-		canMoveRight: canMoveRight,
-		canMoveDown: canMoveDown,
-		getBottomMostPosition: getBottomMostPosition,
-		mergeGrid: mergeGrid,
-		canRotate: canRotate,
-		clearLines: clearLines,
-		rotateRight: rotateRight,
-		getPoints: getPoints,
-		combos: combos,
-		getRandomBomb: getRandomBomb
-	};
-
-/***/ },
 /* 289 */
 /***/ function(module, exports) {
 
@@ -37636,7 +37667,7 @@
 	  _createClass(Admin, [{
 	    key: 'clearPlayers',
 	    value: function clearPlayers() {
-	      this.state.socket.emit('dropPlayers');
+	      _socket2.default.emit('dropPlayers');
 	    }
 	  }, {
 	    key: 'startGame',
@@ -37675,11 +37706,6 @@
 	            { className: 'adminButton', type: 'button', onClick: this.startGame },
 	            'START'
 	          )
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'adminButton', type: 'button', onClick: this.handleSound },
-	          'Test Sound'
 	        )
 	      );
 	    }
@@ -38014,11 +38040,11 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _grid = __webpack_require__(287);
+	var _grid = __webpack_require__(285);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
-	var _game_play = __webpack_require__(288);
+	var _game_play = __webpack_require__(284);
 	
 	var _game_play2 = _interopRequireDefault(_game_play);
 	
@@ -38051,7 +38077,12 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                players[player].playerName + ': ' + players[player].score
+	                'Player: ' + players[player].playerName + "  Score: " + players[player].score,
+	                _react2.default.createElement(
+	                    'h3',
+	                    null,
+	                    'RANK: ' + players[player].rank
+	                )
 	            );
 	        })
 	    );
@@ -38069,7 +38100,6 @@
 	            activePlayers: {}
 	        };
 	
-	        // this.handleSound = this.handleSound.bind(this)
 	        return _this;
 	    }
 	
@@ -38084,6 +38114,12 @@
 	            this.timer = setInterval(function () {
 	                that.forceUpdate();
 	            }, 250);
+	
+	            _socket2.default.on('dropPlayers', function (data) {
+	                that.setState({
+	                    activePlayers: {}
+	                });
+	            });
 	        }
 	    }, {
 	        key: 'componentWillUnmount',
@@ -38094,7 +38130,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            // console.log(this.state.activePlayers, "THIS IS THE STATE")
+	
 	            var that = this;
 	            var TO_RENDER = _react2.default.createElement(
 	                'div',

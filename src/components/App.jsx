@@ -13,7 +13,8 @@ export default class App extends React.Component {
 
 		this.state = {
 			playState: 'STOPPED',
-			players: {}
+			players: {},
+			nameTaken: false
 		};
 
 		this.scores = {};
@@ -28,7 +29,15 @@ export default class App extends React.Component {
         playState: newGameState
       })
     });
-
+		
+    socket.on('dropPlayers', function(newGameState) {
+    	console.log(newGameState)
+      that.setState({
+        playState: newGameState
+      })
+    });
+    
+    
     socket.on('start_game', function(state) {
       that.setState({
         playState: 'PLAYING',
