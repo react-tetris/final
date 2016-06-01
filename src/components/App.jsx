@@ -107,7 +107,10 @@ export default class App extends React.Component {
         return <Game rank={this.state.rank} playerName={this.state.playerName} gameBag={this.state.pieces}/>;
       }
       else {
-        return <div className='alert'>Game in session, please wait for the next game...</div>;
+        return <div className='alert'><header>
+         <img src='http://flaticons.net/icons/Network%20and%20Security/Bomb.png' />
+         <h1>BOMBTRIS</h1>
+        </header>Game in session, please wait for the next game...</div>;
       }
     }
 
@@ -116,7 +119,10 @@ export default class App extends React.Component {
     }
 
     if (this.state.playState === 'TOO_MANY_PLAYERS') {
-      return <div className='alert'>Game is full, please wait for the next game...</div>;
+      return <div className='alert'><header>
+         <img src='http://flaticons.net/icons/Network%20and%20Security/Bomb.png' />
+         <h1>BOMBTRIS</h1>
+        </header>Game is full, please wait for the next game...</div>;
     }
 
 		return <div>you have reached an unreachable state!</div>;
