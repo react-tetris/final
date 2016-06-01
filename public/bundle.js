@@ -60,19 +60,11 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-<<<<<<< HEAD
-	var _Admin = __webpack_require__(290);
-	
-	var _Admin2 = _interopRequireDefault(_Admin);
-	
-	var _Megatron = __webpack_require__(296);
-=======
 	var _Admin = __webpack_require__(289);
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
 	var _Megatron = __webpack_require__(295);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	var _Megatron2 = _interopRequireDefault(_Megatron);
 	
@@ -25893,17 +25885,6 @@
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
-<<<<<<< HEAD
-	var _Player = __webpack_require__(281);
-	
-	var _Player2 = _interopRequireDefault(_Player);
-	
-	var _Queued = __webpack_require__(282);
-	
-	var _Queued2 = _interopRequireDefault(_Queued);
-	
-	var _Game = __webpack_require__(283);
-=======
 	var _Player = __webpack_require__(280);
 	
 	var _Player2 = _interopRequireDefault(_Player);
@@ -25913,7 +25894,6 @@
 	var _Queued2 = _interopRequireDefault(_Queued);
 	
 	var _Game = __webpack_require__(282);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	var _Game2 = _interopRequireDefault(_Game);
 	
@@ -26170,11 +26150,7 @@
 	 */
 	
 	exports.Manager = __webpack_require__(245);
-<<<<<<< HEAD
-	exports.Socket = __webpack_require__(273);
-=======
 	exports.Socket = __webpack_require__(272);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 
 
 /***/ },
@@ -28509,16 +28485,6 @@
 	 */
 	
 	var eio = __webpack_require__(246);
-<<<<<<< HEAD
-	var Socket = __webpack_require__(273);
-	var Emitter = __webpack_require__(274);
-	var parser = __webpack_require__(237);
-	var on = __webpack_require__(276);
-	var bind = __webpack_require__(277);
-	var debug = __webpack_require__(234)('socket.io-client:manager');
-	var indexOf = __webpack_require__(271);
-	var Backoff = __webpack_require__(280);
-=======
 	var Socket = __webpack_require__(272);
 	var Emitter = __webpack_require__(273);
 	var parser = __webpack_require__(237);
@@ -28527,7 +28493,6 @@
 	var debug = __webpack_require__(234)('socket.io-client:manager');
 	var indexOf = __webpack_require__(270);
 	var Backoff = __webpack_require__(279);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -29106,21 +29071,13 @@
 	 */
 	
 	var transports = __webpack_require__(249);
-	var Emitter = __webpack_require__(264);
+	var Emitter = __webpack_require__(242);
 	var debug = __webpack_require__(234)('engine.io-client:socket');
-<<<<<<< HEAD
-	var index = __webpack_require__(271);
-	var parser = __webpack_require__(255);
-	var parseuri = __webpack_require__(233);
-	var parsejson = __webpack_require__(272);
-	var parseqs = __webpack_require__(265);
-=======
 	var index = __webpack_require__(270);
 	var parser = __webpack_require__(255);
 	var parseuri = __webpack_require__(233);
 	var parsejson = __webpack_require__(271);
 	var parseqs = __webpack_require__(264);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	/**
 	 * Module exports.
@@ -29850,13 +29807,8 @@
 	
 	var XMLHttpRequest = __webpack_require__(250);
 	var XHR = __webpack_require__(252);
-<<<<<<< HEAD
-	var JSONP = __webpack_require__(268);
-	var websocket = __webpack_require__(269);
-=======
 	var JSONP = __webpack_require__(267);
 	var websocket = __webpack_require__(268);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	/**
 	 * Export transports.
@@ -29980,13 +29932,8 @@
 	
 	var XMLHttpRequest = __webpack_require__(250);
 	var Polling = __webpack_require__(253);
-<<<<<<< HEAD
-	var Emitter = __webpack_require__(264);
-	var inherit = __webpack_require__(266);
-=======
 	var Emitter = __webpack_require__(242);
 	var inherit = __webpack_require__(265);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	var debug = __webpack_require__(234)('engine.io-client:polling-xhr');
 	
 	/**
@@ -30403,17 +30350,10 @@
 	 */
 	
 	var Transport = __webpack_require__(254);
-<<<<<<< HEAD
-	var parseqs = __webpack_require__(265);
-	var parser = __webpack_require__(255);
-	var inherit = __webpack_require__(266);
-	var yeast = __webpack_require__(267);
-=======
 	var parseqs = __webpack_require__(264);
 	var parser = __webpack_require__(255);
 	var inherit = __webpack_require__(265);
 	var yeast = __webpack_require__(266);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	var debug = __webpack_require__(234)('engine.io-client:polling');
 	
 	/**
@@ -30663,7 +30603,7 @@
 	 */
 	
 	var parser = __webpack_require__(255);
-	var Emitter = __webpack_require__(264);
+	var Emitter = __webpack_require__(242);
 	
 	/**
 	 * Module exports.
@@ -32003,179 +31943,6 @@
 
 /***/ },
 /* 264 */
-<<<<<<< HEAD
-/***/ function(module, exports) {
-
-	
-	/**
-	 * Expose `Emitter`.
-	 */
-	
-	module.exports = Emitter;
-	
-	/**
-	 * Initialize a new `Emitter`.
-	 *
-	 * @api public
-	 */
-	
-	function Emitter(obj) {
-	  if (obj) return mixin(obj);
-	};
-	
-	/**
-	 * Mixin the emitter properties.
-	 *
-	 * @param {Object} obj
-	 * @return {Object}
-	 * @api private
-	 */
-	
-	function mixin(obj) {
-	  for (var key in Emitter.prototype) {
-	    obj[key] = Emitter.prototype[key];
-	  }
-	  return obj;
-	}
-	
-	/**
-	 * Listen on the given `event` with `fn`.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-	
-	Emitter.prototype.on =
-	Emitter.prototype.addEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-	  (this._callbacks[event] = this._callbacks[event] || [])
-	    .push(fn);
-	  return this;
-	};
-	
-	/**
-	 * Adds an `event` listener that will be invoked a single
-	 * time then automatically removed.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-	
-	Emitter.prototype.once = function(event, fn){
-	  var self = this;
-	  this._callbacks = this._callbacks || {};
-	
-	  function on() {
-	    self.off(event, on);
-	    fn.apply(this, arguments);
-	  }
-	
-	  on.fn = fn;
-	  this.on(event, on);
-	  return this;
-	};
-	
-	/**
-	 * Remove the given callback for `event` or all
-	 * registered callbacks.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-	
-	Emitter.prototype.off =
-	Emitter.prototype.removeListener =
-	Emitter.prototype.removeAllListeners =
-	Emitter.prototype.removeEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-	
-	  // all
-	  if (0 == arguments.length) {
-	    this._callbacks = {};
-	    return this;
-	  }
-	
-	  // specific event
-	  var callbacks = this._callbacks[event];
-	  if (!callbacks) return this;
-	
-	  // remove all handlers
-	  if (1 == arguments.length) {
-	    delete this._callbacks[event];
-	    return this;
-	  }
-	
-	  // remove specific handler
-	  var cb;
-	  for (var i = 0; i < callbacks.length; i++) {
-	    cb = callbacks[i];
-	    if (cb === fn || cb.fn === fn) {
-	      callbacks.splice(i, 1);
-	      break;
-	    }
-	  }
-	  return this;
-	};
-	
-	/**
-	 * Emit `event` with the given args.
-	 *
-	 * @param {String} event
-	 * @param {Mixed} ...
-	 * @return {Emitter}
-	 */
-	
-	Emitter.prototype.emit = function(event){
-	  this._callbacks = this._callbacks || {};
-	  var args = [].slice.call(arguments, 1)
-	    , callbacks = this._callbacks[event];
-	
-	  if (callbacks) {
-	    callbacks = callbacks.slice(0);
-	    for (var i = 0, len = callbacks.length; i < len; ++i) {
-	      callbacks[i].apply(this, args);
-	    }
-	  }
-	
-	  return this;
-	};
-	
-	/**
-	 * Return array of callbacks for `event`.
-	 *
-	 * @param {String} event
-	 * @return {Array}
-	 * @api public
-	 */
-	
-	Emitter.prototype.listeners = function(event){
-	  this._callbacks = this._callbacks || {};
-	  return this._callbacks[event] || [];
-	};
-	
-	/**
-	 * Check if this emitter has `event` handlers.
-	 *
-	 * @param {String} event
-	 * @return {Boolean}
-	 * @api public
-	 */
-	
-	Emitter.prototype.hasListeners = function(event){
-	  return !! this.listeners(event).length;
-	};
-
-
-/***/ },
-/* 265 */
-=======
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	/**
@@ -32218,11 +31985,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 266 */
-=======
 /* 265 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	
@@ -32234,11 +31997,7 @@
 	};
 
 /***/ },
-<<<<<<< HEAD
-/* 267 */
-=======
 /* 266 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32312,11 +32071,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 268 */
-=======
 /* 267 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -32325,11 +32080,7 @@
 	 */
 	
 	var Polling = __webpack_require__(253);
-<<<<<<< HEAD
-	var inherit = __webpack_require__(266);
-=======
 	var inherit = __webpack_require__(265);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	/**
 	 * Module exports.
@@ -32565,11 +32316,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-<<<<<<< HEAD
-/* 269 */
-=======
 /* 268 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -32578,15 +32325,9 @@
 	
 	var Transport = __webpack_require__(254);
 	var parser = __webpack_require__(255);
-<<<<<<< HEAD
-	var parseqs = __webpack_require__(265);
-	var inherit = __webpack_require__(266);
-	var yeast = __webpack_require__(267);
-=======
 	var parseqs = __webpack_require__(264);
 	var inherit = __webpack_require__(265);
 	var yeast = __webpack_require__(266);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	var debug = __webpack_require__(234)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	
@@ -32599,11 +32340,7 @@
 	var WebSocket = BrowserWebSocket;
 	if (!WebSocket && typeof window === 'undefined') {
 	  try {
-<<<<<<< HEAD
-	    WebSocket = __webpack_require__(270);
-=======
 	    WebSocket = __webpack_require__(269);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	  } catch (e) { }
 	}
 	
@@ -32874,21 +32611,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-<<<<<<< HEAD
-/* 270 */
-=======
 /* 269 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-<<<<<<< HEAD
-/* 271 */
-=======
 /* 270 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	
@@ -32903,11 +32632,7 @@
 	};
 
 /***/ },
-<<<<<<< HEAD
-/* 272 */
-=======
 /* 271 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -32945,11 +32670,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-<<<<<<< HEAD
-/* 273 */
-=======
 /* 272 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -32958,21 +32679,12 @@
 	 */
 	
 	var parser = __webpack_require__(237);
-<<<<<<< HEAD
-	var Emitter = __webpack_require__(274);
-	var toArray = __webpack_require__(275);
-	var on = __webpack_require__(276);
-	var bind = __webpack_require__(277);
-	var debug = __webpack_require__(234)('socket.io-client:socket');
-	var hasBin = __webpack_require__(278);
-=======
 	var Emitter = __webpack_require__(273);
 	var toArray = __webpack_require__(274);
 	var on = __webpack_require__(275);
 	var bind = __webpack_require__(276);
 	var debug = __webpack_require__(234)('socket.io-client:socket');
 	var hasBin = __webpack_require__(277);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	/**
 	 * Module exports.
@@ -33376,11 +33088,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 274 */
-=======
 /* 273 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	
@@ -33547,11 +33255,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 275 */
-=======
 /* 274 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	module.exports = toArray
@@ -33570,11 +33274,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 276 */
-=======
 /* 275 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	
@@ -33604,11 +33304,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 277 */
-=======
 /* 276 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	/**
@@ -33637,11 +33333,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 278 */
-=======
 /* 277 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -33649,11 +33341,7 @@
 	 * Module requirements.
 	 */
 	
-<<<<<<< HEAD
-	var isArray = __webpack_require__(279);
-=======
 	var isArray = __webpack_require__(278);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	/**
 	 * Module exports.
@@ -33711,11 +33399,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-<<<<<<< HEAD
-/* 279 */
-=======
 /* 278 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	module.exports = Array.isArray || function (arr) {
@@ -33724,11 +33408,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 280 */
-=======
 /* 279 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	
@@ -33819,11 +33499,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 281 */
-=======
 /* 280 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33894,11 +33570,7 @@
 	exports.default = Player;
 
 /***/ },
-<<<<<<< HEAD
-/* 282 */
-=======
 /* 281 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33912,6 +33584,18 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(285);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	var _game_play = __webpack_require__(287);
+	
+	var _game_play2 = _interopRequireDefault(_game_play);
+	
+	var _grid = __webpack_require__(286);
+	
+	var _grid2 = _interopRequireDefault(_grid);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -33935,23 +33619,36 @@
 	    value: function render() {
 	      var _this2 = this;
 	
+	      var IPiece = [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]];
+	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'allPage' },
+	        { className: 'queuedPage' },
 	        _react2.default.createElement(
-	          'h1',
-	          { className: 'waiting-h1' },
-	          'Waiting for all players'
-	        ),
-	        _react2.default.createElement(
-	          'div',
+	          'header',
 	          null,
-	          _react2.default.createElement('img', { src: '/img/loading.gif' })
+	          _react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
+	          _react2.default.createElement(
+	            'h1',
+	            null,
+	            'BOMBTRIS'
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'h2',
-	          { className: 'connected-title' },
-	          'Connected players'
+	          null,
+	          'WAITING FOR PLAYERS'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'loadingImageContainer' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'loadingImage' },
+	            IPiece.map(function (row, index) {
+	              return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+	            })
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'ul',
@@ -33959,7 +33656,7 @@
 	          Object.keys(this.props.players).map(function (player, i) {
 	            return _react2.default.createElement(
 	              'li',
-	              { className: 'player-list-waiting', key: _this2.props.players[player].socketId },
+	              { key: _this2.props.players[player].socketId },
 	              _this2.props.players[player].playerName
 	            );
 	          })
@@ -33974,11 +33671,7 @@
 	exports.default = Queued;
 
 /***/ },
-<<<<<<< HEAD
-/* 283 */
-=======
 /* 282 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -33997,25 +33690,6 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-<<<<<<< HEAD
-	var _reactHammerjs = __webpack_require__(284);
-	
-	var _reactHammerjs2 = _interopRequireDefault(_reactHammerjs);
-	
-	var _constants = __webpack_require__(286);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	var _grid = __webpack_require__(287);
-	
-	var _grid2 = _interopRequireDefault(_grid);
-	
-	var _game_play = __webpack_require__(288);
-	
-	var _game_play2 = _interopRequireDefault(_game_play);
-	
-	var _handicaps = __webpack_require__(289);
-=======
 	var _reactHammerjs = __webpack_require__(283);
 	
 	var _reactHammerjs2 = _interopRequireDefault(_reactHammerjs);
@@ -34033,7 +33707,6 @@
 	var _game_play2 = _interopRequireDefault(_game_play);
 	
 	var _handicaps = __webpack_require__(288);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	var _handicaps2 = _interopRequireDefault(_handicaps);
 	
@@ -34479,11 +34152,7 @@
 	exports.default = Game;
 
 /***/ },
-<<<<<<< HEAD
-/* 284 */
-=======
 /* 283 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -34491,11 +34160,7 @@
 	
 	// require('hammerjs') when in a browser. This is safe because Hammer is only
 	// invoked in componentDidMount, which is not executed on the server.
-<<<<<<< HEAD
-	var Hammer = (typeof window !== 'undefined') ? __webpack_require__(285) : undefined;
-=======
 	var Hammer = (typeof window !== 'undefined') ? __webpack_require__(284) : undefined;
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	var privateProps = {
 		children: true,
@@ -34628,11 +34293,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 285 */
-=======
 /* 284 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*! Hammer.JS - v2.0.7 - 2016-04-22
@@ -36700,7 +36361,6 @@
 	        var validPointers = input.pointers.length === options.pointers;
 	        var validMovement = input.distance < options.threshold;
 	        var validTouchTime = input.deltaTime < options.time;
-<<<<<<< HEAD
 	
 	        this.reset();
 	
@@ -36721,28 +36381,6 @@
 	            this.pTime = input.timeStamp;
 	            this.pCenter = input.center;
 	
-=======
-	
-	        this.reset();
-	
-	        if ((input.eventType & INPUT_START) && (this.count === 0)) {
-	            return this.failTimeout();
-	        }
-	
-	        // we only allow little movement
-	        // and we've reached an end event, so a tap is possible
-	        if (validMovement && validTouchTime && validPointers) {
-	            if (input.eventType != INPUT_END) {
-	                return this.failTimeout();
-	            }
-	
-	            var validInterval = this.pTime ? (input.timeStamp - this.pTime < options.interval) : true;
-	            var validMultiTap = !this.pCenter || getDistance(this.pCenter, input.center) < options.posThreshold;
-	
-	            this.pTime = input.timeStamp;
-	            this.pCenter = input.center;
-	
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	            if (!validMultiTap || !validInterval) {
 	                this.count = 1;
 	            } else {
@@ -37304,11 +36942,7 @@
 
 
 /***/ },
-<<<<<<< HEAD
-/* 286 */
-=======
 /* 285 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37341,11 +36975,7 @@
 	};
 
 /***/ },
-<<<<<<< HEAD
-/* 287 */
-=======
 /* 286 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37354,11 +36984,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-<<<<<<< HEAD
-	var _constants = __webpack_require__(286);
-=======
 	var _constants = __webpack_require__(285);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
@@ -37485,11 +37111,7 @@
 	};
 
 /***/ },
-<<<<<<< HEAD
-/* 288 */
-=======
 /* 287 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	'use strict';
@@ -37760,11 +37382,7 @@
 	};
 
 /***/ },
-<<<<<<< HEAD
-/* 289 */
-=======
 /* 288 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	"use strict";
@@ -37804,11 +37422,7 @@
 	};
 
 /***/ },
-<<<<<<< HEAD
-/* 290 */
-=======
 /* 289 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37819,11 +37433,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-<<<<<<< HEAD
-	var _reactHowler = __webpack_require__(291);
-=======
 	var _reactHowler = __webpack_require__(290);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	var _reactHowler2 = _interopRequireDefault(_reactHowler);
 	
@@ -37911,26 +37521,15 @@
 	module.exports = Admin;
 
 /***/ },
-<<<<<<< HEAD
-/* 291 */
-=======
 /* 290 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-<<<<<<< HEAD
-	module.exports = __webpack_require__(292).default;
-
-/***/ },
-/* 292 */
-=======
 	module.exports = __webpack_require__(291).default;
 
 /***/ },
 /* 291 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -37945,15 +37544,9 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-<<<<<<< HEAD
-	var _howler3 = __webpack_require__(293);
-	
-	var _utils = __webpack_require__(295);
-=======
 	var _howler3 = __webpack_require__(292);
 	
 	var _utils = __webpack_require__(294);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -38022,42 +37615,6 @@
 	    /**
 	     * Stop, unload and destroy howler object
 	     */
-<<<<<<< HEAD
-	
-	  }, {
-	    key: 'destroyHowler',
-	    value: function destroyHowler() {
-	      if (this.howler) {
-	        this.howler.off(); // Remove event listener
-	        this.howler.stop(); // Stop playback
-	        this.howler.unload(); // Remove sound from pool
-	        this.howler = null; // Destroy it
-	      }
-	    }
-	  }, {
-	    key: 'toggleHowler',
-	    value: function toggleHowler(props) {
-	      props.playing ? this.play() : this.pause();
-	      (0, _utils.runIfSet)(props.mute, this.mute(props.mute));
-	      (0, _utils.runIfSet)(props.loop, this.loop(props.loop));
-	
-	      if (props.seek !== this.seek()) {
-	        this.seek(props.seek);
-	      }
-	    }
-	  }, {
-	    key: 'play',
-	
-	
-	    /**
-	     * Begins playback of a sound when not playing
-	     */
-	    value: function play() {
-	      var playing = this.howler.playing();
-	
-	      if (!playing) {
-	        this.howler.play();
-=======
 	
 	  }, {
 	    key: 'destroyHowler',
@@ -38110,26 +37667,6 @@
 	        this.howler.pause(id);
 	      } else {
 	        this.howler.pause();
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
-	      }
-	    }
-	
-	    /**
-<<<<<<< HEAD
-	     * Pauses playback of sound or group
-	     * If no id given, pauses all playback
-	     * @param {Number} id = undefined [sound of group to pause]
-	     */
-	
-	  }, {
-	    key: 'pause',
-	    value: function pause() {
-	      var id = arguments.length <= 0 || arguments[0] === undefined ? undefined : arguments[0];
-	
-	      if (id) {
-	        this.howler.pause(id);
-	      } else {
-	        this.howler.pause();
 	      }
 	    }
 	
@@ -38158,32 +37695,6 @@
 	    value: function loop() {
 	      var _howler2;
 	
-=======
-	     * Mutes the sound, but doesn't pause the playback.
-	     * @param {Boolean} [muted] [True to mute and false to unmute]
-	     * @param {Number} [id] [The sound ID. If none is passed, all sounds in group are muted]
-	     */
-	
-	  }, {
-	    key: 'mute',
-	    value: function mute() {
-	      var _howler;
-	
-	      (_howler = this.howler).mute.apply(_howler, arguments);
-	    }
-	
-	    /**
-	     * Get/set whether to loop the sound or group. This method can optionally take 0, 1 or 2 arguments.
-	     * @param {Boolean} [loop] [To loop or not to loop, that is the question]
-	     * @param {Number} [id] [The sound ID. If none is passed, all sounds in group will have their loop property updated]
-	     */
-	
-	  }, {
-	    key: 'loop',
-	    value: function loop() {
-	      var _howler2;
-	
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	      return (_howler2 = this.howler).loop.apply(_howler2, arguments);
 	    }
 	
@@ -38273,11 +37784,7 @@
 	exports.default = ReactHowler;
 
 /***/ },
-<<<<<<< HEAD
-/* 293 */
-=======
 /* 292 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38285,21 +37792,13 @@
 	var Howler = void 0;
 	
 	if (typeof window !== 'undefined') {
-<<<<<<< HEAD
-	  Howler = __webpack_require__(294);
-=======
 	  Howler = __webpack_require__(293);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	}
 	
 	module.exports = Howler;
 
 /***/ },
-<<<<<<< HEAD
-/* 294 */
-=======
 /* 293 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*! howler.js v2.0.0-beta10 | (c) 2013-2016, James Simpson of GoldFire Studios | MIT License | howlerjs.com */
@@ -38309,11 +37808,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-<<<<<<< HEAD
-/* 295 */
-=======
 /* 294 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports) {
 
 	"use strict";
@@ -38338,11 +37833,7 @@
 	};
 
 /***/ },
-<<<<<<< HEAD
-/* 296 */
-=======
 /* 295 */
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -38353,17 +37844,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-<<<<<<< HEAD
-	var _grid = __webpack_require__(287);
-	
-	var _grid2 = _interopRequireDefault(_grid);
-	
-	var _game_play = __webpack_require__(288);
-	
-	var _game_play2 = _interopRequireDefault(_game_play);
-	
-	var _reactHowler = __webpack_require__(291);
-=======
 	var _grid = __webpack_require__(286);
 	
 	var _grid2 = _interopRequireDefault(_grid);
@@ -38373,7 +37853,6 @@
 	var _game_play2 = _interopRequireDefault(_game_play);
 	
 	var _reactHowler = __webpack_require__(290);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
 	
 	var _reactHowler2 = _interopRequireDefault(_reactHowler);
 	
