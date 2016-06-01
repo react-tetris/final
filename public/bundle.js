@@ -25872,7 +25872,7 @@
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -25906,161 +25906,145 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var App = function (_React$Component) {
-		_inherits(App, _React$Component);
+	  _inherits(App, _React$Component);
 	
-		function App() {
-			_classCallCheck(this, App);
+	  function App() {
+	    _classCallCheck(this, App);
 	
-			var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this));
 	
-			_this.state = {
-				playState: 'STOPPED',
-				players: {},
-				nameTaken: false
-			};
+	    _this.state = {
+	      playState: 'STOPPED',
+	      players: {},
+	      nameTaken: false
+	    };
 	
-			_this.scores = {};
-			return _this;
-		}
+	    _this.scores = {};
+	    return _this;
+	  }
 	
-		_createClass(App, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				var that = this;
-				_socket2.default.emit('entering_game');
+	  _createClass(App, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var that = this;
+	      _socket2.default.emit('entering_game');
 	
-				_socket2.default.on('game_status', function (newGameState) {
-					that.setState({
-						playState: newGameState
-					});
-				});
+	      _socket2.default.on('game_status', function (newGameState) {
+	        that.setState({
+	          playState: newGameState
+	        });
+	      });
 	
-				_socket2.default.on('dropPlayers', function (newGameState) {
-					console.log(newGameState);
-					that.setState({
-						playState: newGameState
-					});
-				});
+	      _socket2.default.on('dropPlayers', function (newGameState) {
+	        console.log(newGameState);
+	        that.setState({
+	          playState: newGameState
+	        });
+	      });
 	
-				_socket2.default.on('start_game', function (state) {
-					that.setState({
-						playState: 'PLAYING',
-						pieces: state.pieces,
-						isPlayer: true,
-						playerName: state.name
-					});
-				});
+	      _socket2.default.on('start_game', function (state) {
+	        that.setState({
+	          playState: 'PLAYING',
+	          pieces: state.pieces,
+	          isPlayer: true,
+	          playerName: state.name
+	        });
+	      });
 	
-				_socket2.default.on('update_players', function (players) {
-					that.setState({
-						players: players
-					});
-				});
+	      _socket2.default.on('update_players', function (players) {
+	        that.setState({
+	          players: players
+	        });
+	      });
 	
-				_socket2.default.on('score_update', function (scoreData) {
-					that.scores[scoreData.name] = scoreData.score;
+	      // //Retrieving score from each player Waiting for the girls for merge
+	      // socket.on('update_score', function(score) {
+	      // 	console.log(score);
+	      // 	that.setState({
+	      // 		scores: score
+	      // 	})
+	      // })
 	
-					var rank = Object.keys(that.scores).map(function (playerName) {
-						return { name: playerName, score: that.scores[playerName] };
-					}).sort(function (a, b) {
-						return b.score - a.score;
-					}).findIndex(function (scoreData) {
-						return scoreData.name === that.state.playerName;
-					}) + 1;
+	      // socket.on('name_taken', function() {
+	      //     that.setState({
+	      //     	nameTaken: true
+	      //     })
+	      // })
 	
-					that.setState({
-						rank: rank
-					});
-				});
+	      // socket.on('create_ok', function(name) {
+	      //     that.setState({
+	      //     	playerName: name
+	      //     })
+	      // })
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      if (this.state.playState === "STOPPED") {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'alert' },
+	          'loading...'
+	        );
+	      }
 	
-				// //Retrieving score from each player Waiting for the girls for merge
-				// socket.on('update_score', function(score) {
-				// 	console.log(score);
-				// 	that.setState({
-				// 		scores: score
-				// 	})
-				// })
+	      if (this.state.playState === 'ACCEPTING_PLAYERS') {
+	        return _react2.default.createElement(_Player2.default, null);
+	      }
 	
-				// socket.on('name_taken', function() {
-				//     that.setState({
-				//     	nameTaken: true
-				//     })
-				// })
+	      if (this.state.playState === 'PLAYING') {
+	        if (this.state.isPlayer === true) {
+	          return _react2.default.createElement(_Game2.default, { playerName: this.state.playerName, gameBag: this.state.pieces });
+	        } else {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'alert' },
+	            _react2.default.createElement(
+	              'header',
+	              null,
+	              _react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
+	              _react2.default.createElement(
+	                'h1',
+	                null,
+	                'BOMBTRIS'
+	              )
+	            ),
+	            'Game in session, please wait for the next game...'
+	          );
+	        }
+	      }
 	
-				// socket.on('create_ok', function(name) {
-				//     that.setState({
-				//     	playerName: name
-				//     })
-				// })
-			}
-		}, {
-			key: 'render',
-			value: function render() {
-				if (this.state.playState === "STOPPED") {
-					return _react2.default.createElement(
-						'div',
-						{ className: 'alert' },
-						'loading...'
-					);
-				}
+	      if (this.state.playState === 'QUEUED') {
+	        return _react2.default.createElement(_Queued2.default, { players: this.state.players });
+	      }
 	
-				if (this.state.playState === 'ACCEPTING_PLAYERS') {
-					return _react2.default.createElement(_Player2.default, null);
-				}
+	      if (this.state.playState === 'TOO_MANY_PLAYERS') {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'alert' },
+	          _react2.default.createElement(
+	            'header',
+	            null,
+	            _react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'BOMBTRIS'
+	            )
+	          ),
+	          'Game is full, please wait for the next game...'
+	        );
+	      }
 	
-				if (this.state.playState === 'PLAYING') {
-					if (this.state.isPlayer === true) {
-						return _react2.default.createElement(_Game2.default, { rank: this.state.rank, playerName: this.state.playerName, gameBag: this.state.pieces });
-					} else {
-						return _react2.default.createElement(
-							'div',
-							{ className: 'alert' },
-							_react2.default.createElement(
-								'header',
-								null,
-								_react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
-								_react2.default.createElement(
-									'h1',
-									null,
-									'BOMBTRIS'
-								)
-							),
-							'Game in session, please wait for the next game...'
-						);
-					}
-				}
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'you have reached an unreachable state!'
+	      );
+	    }
+	  }]);
 	
-				if (this.state.playState === 'QUEUED') {
-					return _react2.default.createElement(_Queued2.default, { players: this.state.players });
-				}
-	
-				if (this.state.playState === 'TOO_MANY_PLAYERS') {
-					return _react2.default.createElement(
-						'div',
-						{ className: 'alert' },
-						_react2.default.createElement(
-							'header',
-							null,
-							_react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
-							_react2.default.createElement(
-								'h1',
-								null,
-								'BOMBTRIS'
-							)
-						),
-						'Game is full, please wait for the next game...'
-					);
-				}
-	
-				return _react2.default.createElement(
-					'div',
-					null,
-					'you have reached an unreachable state!'
-				);
-			}
-		}]);
-	
-		return App;
+	  return App;
 	}(_react2.default.Component);
 	
 	exports.default = App;
@@ -34503,7 +34487,8 @@
 				score: 0,
 				handicapsAcc: [],
 				handicapBombs: [],
-				gameMessage: 1
+				gameMessage: 1,
+				rank: '?'
 			};
 			_this.serverTimer = 0;
 			_this.updateGameState = _this.updateGameState.bind(_this);
@@ -34517,7 +34502,11 @@
 			_this.handleBombClick = _this.handleBombClick.bind(_this);
 	
 			_this.handleSwipe = _this.handleSwipe.bind(_this);
-			_this.goFS = _this.goFS.bind(_this);
+	
+			_this.setRank = _this.setRank.bind(_this);
+			_this.scoreUpdate = _this.scoreUpdate.bind(_this);
+	
+			_this.scores = {};
 			return _this;
 		}
 	
@@ -34554,12 +34543,30 @@
 				// setTimeout(function(){
 				// 	that.state.handicapBombs.push({name: 'flip', maxTime: 5000});
 				// }, 5000)
+	
+				_socket2.default.on('score_update', this.scoreUpdate);
+			}
+		}, {
+			key: 'scoreUpdate',
+			value: function scoreUpdate(scoreData) {
+				console.log(scoreData, this.scores);
+				var that = this;
+				this.scores[scoreData.name] = scoreData.score;
+	
+				this.state.rank = Object.keys(this.scores).map(function (playerName) {
+					return { name: playerName, score: that.scores[playerName] };
+				}).sort(function (a, b) {
+					return b.score - a.score;
+				}).findIndex(function (scoreData) {
+					return scoreData.name === that.props.playerName;
+				}) + 1;
 			}
 		}, {
 			key: 'componentWillUnmount',
 			value: function componentWillUnmount() {
 				document.removeEventListener('keydown', this.handleKeydown);
 				document.removeEventListener('keyup', this.handleKeyup);
+				_socket2.default.off('score_update', this.scoreUpdate);
 			}
 	
 			//display 3, 2, 1 countdown before starting game
@@ -34581,11 +34588,6 @@
 					}, 1000);
 					this.updateGameState();
 				}
-			}
-		}, {
-			key: 'goFS',
-			value: function goFS() {
-				document.requestFullScreen();
 			}
 		}, {
 			key: 'handleSwipe',
@@ -34697,6 +34699,11 @@
 				this.state.handicapsAcc.splice(0, 1);
 			}
 		}, {
+			key: 'setRank',
+			value: function setRank(rank) {
+				this.state.rank = rank;
+			}
+		}, {
 			key: 'updateGameState',
 			value: function updateGameState() {
 	
@@ -34750,6 +34757,7 @@
 								});
 								return;
 							} else {
+								_socket2.default.emit('score_update', { name: this.props.playerName, score: newScore });
 								this.setState({
 									grid: clearedGrid,
 									nextPiece: _constants2.default.SHAPES[this.state.gameBag[this.pieceCounter + 1]],
@@ -34784,7 +34792,7 @@
 						score: this.state.score,
 						hardDrop: this.hardDrop,
 						playerName: this.props.playerName,
-						rank: this.props.rank,
+						rank: this.state.rank,
 						handicapsAcc: this.state.handicapsAcc,
 						handicapBombs: this.state.handicapBombs
 					};
@@ -34879,7 +34887,7 @@
 									null,
 									this.state.score,
 									' (',
-									this.props.rank,
+									this.state.rank,
 									')'
 								)
 							)
@@ -38231,7 +38239,8 @@
 	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Megatron).call(this, props));
 	
 	        _this.state = {
-	            activePlayers: {}
+	            activePlayers: {},
+	            playing: false
 	        };
 	
 	        return _this;
@@ -38244,12 +38253,15 @@
 	            _socket2.default.emit('megatron_activated');
 	            _socket2.default.on('update_megatron', function (data) {
 	                that.state.activePlayers[data.playerName] = data;
+	                that.state.playing = true;
 	            });
+	
 	            this.timer = setInterval(function () {
 	                that.forceUpdate();
 	            }, 250);
 	
 	            _socket2.default.on('dropPlayers', function (data) {
+	                console.log(data);
 	                that.setState({
 	                    activePlayers: {}
 	                });
