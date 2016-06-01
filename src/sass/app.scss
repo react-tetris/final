@@ -4,6 +4,7 @@
      font-family: 'Orbitron', sans-serif;
 }
 
+// ----------STYLING FOR GAME APP------------
 .gamePage{
 
     width: 100vw;
@@ -499,8 +500,7 @@ h3 {
 
 }
 
-//--------------------------------------ADMIN PAGE----------
-
+//---------------ADMIN PAGE-----------------
 .adminPage {
     background: url('/background.png');
     color: white;
@@ -578,7 +578,7 @@ h3 {
     transition: 0.1s ease-out;
 }
 
-//----------------------------------------ALERTS
+//---------------------------------ALERTS----------
 
 .alert {
     background: url('/background.png');
@@ -590,4 +590,98 @@ h3 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+    
+//------------------QUEUED-------------------
+
+.queuedPage {
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    background: url('/background.png'); 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    .loadingImageContainer{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+    .loadingImage{
+
+        margin: auto;
+        animation: queuedRotate 1s infinite;
+        
+        .I {
+            height: 4vh;
+            width: 4vh;
+            background-image: url('/graphics/cyanBlock.png');
+            background-size: contain;
+            z-index: 100;
+        }
+        
+        .emptyCell {
+            height: 4vh;
+            width: 4vh;
+        }
+        
+        .row {
+            display: flex;
+            justify-content: center;
+            height: 4vh;
+            pointer-events: none;
+        }
+    }
+    
+    }
+    
+    ul{
+        list-style-type: none;
+        margin: 0;
+        margin-top: 2em;
+        padding: 0;
+        font-size: 2.5vw;
+        min-height: 30vh;
+    }   
+    
+    h2{
+        margin: 0.6em;
+        font-size: 3.5vw;
+        font-weight: 500;
+        margin-top: 0;
+    }
+    
+    header{
+        font-size: 1em;
+        font-size: 5vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 1em;
+        
+        img{
+            height: 3em;
+            width: 3em;
+        }
+        h1{
+            margin: 0;
+            padding: 0;
+           -webkit-margin-before: 0;
+           -webkit-margin-after: 0;
+        }
+    }
+    
+    @keyframes queuedRotate {
+        0% {
+            transform: rotateZ(0deg);
+        }
+        100%{
+            transform: rotateZ(180deg);
+        }   
+    }
 }

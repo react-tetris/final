@@ -443,4 +443,70 @@
   flex-direction: column;
   justify-content: center; }
 
+.queuedPage {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  color: white;
+  height: 100vh;
+  width: 100vw;
+  background: url("/background.png");
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+  .queuedPage .loadingImageContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .queuedPage .loadingImageContainer .loadingImage {
+      margin: auto;
+      animation: queuedRotate 1s infinite; }
+      .queuedPage .loadingImageContainer .loadingImage .I {
+        height: 4vh;
+        width: 4vh;
+        background-image: url("/graphics/cyanBlock.png");
+        background-size: contain;
+        z-index: 100; }
+      .queuedPage .loadingImageContainer .loadingImage .emptyCell {
+        height: 4vh;
+        width: 4vh; }
+      .queuedPage .loadingImageContainer .loadingImage .row {
+        display: flex;
+        justify-content: center;
+        height: 4vh;
+        pointer-events: none; }
+  .queuedPage ul {
+    list-style-type: none;
+    margin: 0;
+    margin-top: 2em;
+    padding: 0;
+    font-size: 2.5vw;
+    min-height: 30vh; }
+  .queuedPage h2 {
+    margin: 0.6em;
+    font-size: 3.5vw;
+    font-weight: 500;
+    margin-top: 0; }
+  .queuedPage header {
+    font-size: 1em;
+    font-size: 5vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 1em; }
+    .queuedPage header img {
+      height: 3em;
+      width: 3em; }
+    .queuedPage header h1 {
+      margin: 0;
+      padding: 0;
+      -webkit-margin-before: 0;
+      -webkit-margin-after: 0; }
+@keyframes queuedRotate {
+  0% {
+    transform: rotateZ(0deg); }
+  100% {
+    transform: rotateZ(180deg); } }
+
 /*# sourceMappingURL=app.css.map */
