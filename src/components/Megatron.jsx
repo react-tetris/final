@@ -52,7 +52,7 @@ class Megatron extends React.Component {
     render() {
         // console.log(this.state.activePlayers, "THIS IS THE STATE")
         var that = this;
-        var TO_RENDER = (<div className="megatronWaiting">Waiting for Admin to start game</div>);
+        var TO_RENDER = (<div className='megatronWaiting'>Waiting for Admin to start game</div>);
 
         var players = this.state.activePlayers;
         var playerNames = Object.keys(players);
@@ -62,7 +62,7 @@ class Megatron extends React.Component {
                 var player = players[playerName]
                 if (player.grid) {
                     return (
-                        <div key={player.playerName}>
+                        <div className='' key={player.playerName}>
                             <MegatronDisplay {...player}/>
 
                         </div>
@@ -75,15 +75,14 @@ class Megatron extends React.Component {
         }
 
         return (
-            <div className="megatron">
+            <div className='megatron'>
                   <ReactHowler
                     src={'../sound/videoplayback.m4a'}
                     playing={this.state.playing}
-            />
-        {TO_RENDER}
-
-        <div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
-        </div>
+                   />
+                {TO_RENDER}
+                <div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
+            </div>
         )
     }
 }
