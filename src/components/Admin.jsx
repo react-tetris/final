@@ -31,12 +31,12 @@ class Admin extends React.Component {
 
     return (
       <div className='adminPage'>
-            <h1 className='adminH1'>Admin page</h1>
+            <h1 className='adminH1'>ADMIN</h1>
             <div className='adminButtons'>
-              <button className='adminButton' type='button' onClick={this.clearPlayers}>Restart Game</button>
-              <button className='adminButton' type='button' onClick={this.startGame}>Start Game</button>
-              <button className='adminButton' type='button' onClick={this.handleSound}>Test Sound</button>
+              <button className='adminButton' type='button' onClick={this.clearPlayers}>RESTART</button>
+              <button className='adminButton' type='button' onClick={this.startGame}>START</button>
             </div>  
+            <button className='adminButton' type='button' onClick={this.handleSound}>Test Sound</button>
       </div>
     )
   }

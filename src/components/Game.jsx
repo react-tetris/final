@@ -57,9 +57,9 @@ export default class Game extends React.Component {
 		// setTimeout(function(){
 		// 	that.state.handicapBombs.push({name: 'extraLines'})
 		// }, 4000);
-		setTimeout(function(){
-			that.state.handicapBombs.push({name: 'blur', maxTime: 5000})
-		}, 6000)
+		// setTimeout(function(){
+		// 	that.state.handicapBombs.push({name: 'blur', maxTime: 5000})
+		// }, 6000)
 		// setTimeout(function(){
 		// 	that.state.handicapBombs.push({name: 'cat', maxTime: 5000})
 		// }, 2000)
@@ -342,7 +342,7 @@ export default class Game extends React.Component {
 							<div className="handicaps">
 								<h2>BOMBS</h2>
 								<Hammer onTap={this.handleBombClick}>
-								<h3 className="bombsButton" type="button" disabled={disabled} ref="the_bomb">{this.state.handicapsAcc.length}</h3>
+								<h2 className="bombsButton" type="button" disabled={disabled} ref="the_bomb">{this.state.handicapsAcc.length}</h2>
 								</Hammer>
 							</div>
 					</div>

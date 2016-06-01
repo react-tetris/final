@@ -86,7 +86,7 @@ export default class App extends React.Component {
 	}
 	render() {
 		if (this.state.playState === "STOPPED") {
-      return <div>loading...</div>;
+      return <div className='alert'>loading...</div>;
     }
 
     if (this.state.playState === 'ACCEPTING_PLAYERS') {
@@ -98,7 +98,7 @@ export default class App extends React.Component {
         return <Game rank={this.state.rank} playerName={this.state.playerName} gameBag={this.state.pieces}/>;
       }
       else {
-        return <div>A game is being played, please wait for the next game</div>;
+        return <div className='alert'>Game in session, please wait for the next game...</div>;
       }
     }
 
@@ -107,7 +107,7 @@ export default class App extends React.Component {
     }
 
     if (this.state.playState === 'TOO_MANY_PLAYERS') {
-      return <div>There are too many players right now, wait for the next game</div>;
+      return <div className='alert'>Game is full, please wait for the next game...</div>;
     }
 
 		return <div>you have reached an unreachable state!</div>;

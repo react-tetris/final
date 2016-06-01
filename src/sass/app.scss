@@ -1,11 +1,7 @@
 * {
      box-sizing: border-box;
-<<<<<<< HEAD
-=======
-     margin: 50px;
-     box-sizing: border-box;
->>>>>>> bd46e7ea5793c38694e94b1df4e86f71672a96c0
      margin: 0;
+     font-family: 'Orbitron', sans-serif;
 }
 
 .gamePage{
@@ -249,7 +245,7 @@ h3 {
 .controlButton{
     height: 80vh;
     /*background-color: rgba(255, 255, 255, 0.2);*/
-    border-radius: 5px;
+    // border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.2);
     width: 100%;
 }
@@ -403,14 +399,13 @@ h3 {
     }
 }
 
-
 .message{
     position: absolute;
     left: 50%;
     transform: translate(-50%);
     top: 40%;
     z-index: 200;
-    text-shadow: 6px 6px 4px lightgrey;
+    text-shadow: 2px 2px 4px lightgrey;
 }
 
 .handicaps {
@@ -423,6 +418,8 @@ h3 {
 }
 
 .bombsButton{
+    width: 80px;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -430,7 +427,7 @@ h3 {
     background: #3A3E41;
     padding: 20px;
     text-align: center;
-    border-radius: 999px;
+    border-radius: 50%;
     color: rgba(155,155,155,1);
     text-shadow: -1px -1px 0px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,1);
     box-shadow: inset 3px 1px 2px rgba(255,255,255,0.3),
@@ -483,6 +480,7 @@ h3 {
 @media only screen and (orientation: landscape) {
     body::after {
         content: "PLEASE FLIP YOUR DEVICE";
+        text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -501,8 +499,11 @@ h3 {
 
 }
 
+//--------------------------------------ADMIN PAGE----------
+
 .adminPage {
     background: url('/background.png');
+    color: white;
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -512,27 +513,81 @@ h3 {
 
 
 .adminH1 {
+    font-size: 5em;
     text-align: center;
 }
 
-.adminButton {
+.adminButtons {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .adminButton {
+    font-size: 2em;
     background: #3A3E41;
-    padding: 10px;
+    padding: 0.75em;
+    margin: 0.75em;
     text-align: center;
     border-radius: 999px;
-    color: rgba(155,155,155,1);
+    color: white;
     text-shadow: -1px -1px 0px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,1);
     box-shadow: inset 3px 1px 2px rgba(255,255,255,0.3),
                 inset 3px 15px 45px rgba(255,255,255,0.1),
                 inset -3px -1px 2px rgba(0,0,0,0.5),
                 inset -3px -15px 45px rgba(0,0,0,0.2),
                 1px 5px 30px -4px rgba(0,0,0,1);
-    transition:         0.1s ease-out;
+    transition: 0.1s ease-out;
 }
+}
+
+//----------------------------------ENTER SCREEN-------------
+
+.enterScreen {
+    background: url('/background.png');
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.enterForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.enterButton {
+    font-size: 1em;
+    background: #3A3E41;
+    padding: 0.75em;
+    margin: 0.75em;
+    text-align: center;
+    border-radius: 999px;
+    color: white;
+    text-shadow: -1px -1px 0px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,1);
+    box-shadow: inset 3px 1px 2px rgba(255,255,255,0.3),
+                inset 3px 15px 45px rgba(255,255,255,0.1),
+                inset -3px -1px 2px rgba(0,0,0,0.5),
+                inset -3px -15px 45px rgba(0,0,0,0.2),
+                1px 5px 30px -4px rgba(0,0,0,1);
+    transition: 0.1s ease-out;
+}
+
+//----------------------------------------ALERTS
+
+.alert {
+    background: url('/background.png');
+    color: white;
+    font-size: 2em;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

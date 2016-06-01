@@ -1,20 +1,7 @@
 node_modules/
-<<<<<<< HEAD
 public/css/
 public/bundle.js
 public/bundle.js.map
 .DS_Store
 .sass-cache
-=======
-.sass-cache
-.DS_Store
-bundle.js
-bundle.js.map
-bundle.js
-npm-debug.log
-.sass-cache
-app.css.map
-app.css
 
-
->>>>>>> bd46e7ea5793c38694e94b1df4e86f71672a96c0

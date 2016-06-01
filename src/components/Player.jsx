@@ -17,10 +17,9 @@ export default class Player extends React.Component {
   render() {
     return (
       <div className='enterScreen'>
-
           <form className='enterForm' onSubmit={this.handleSubmit}>
-          <input className='formInput' type='text' ref='userName' placeholder='Enter your Name'/>
-          <button className='enterButton' type='submit'>Enter the GAME!</button>
+            <input className='enterInput' type='text' ref='userName' placeholder='Enter your Name'/>
+            <button className='enterButton' type='submit'>ENTER</button>
         </form>
       </div>
     );
