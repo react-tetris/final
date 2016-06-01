@@ -60,19 +60,18 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-<<<<<<< HEAD
-	var _Admin = __webpack_require__(290);
+
+	// var _Admin = __webpack_require__(290);
 	
-	var _Admin2 = _interopRequireDefault(_Admin);
+	// var _Admin2 = _interopRequireDefault(_Admin);
 	
-	var _Megatron = __webpack_require__(296);
-=======
+
 	var _Admin = __webpack_require__(289);
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
 	var _Megatron = __webpack_require__(295);
->>>>>>> be7437f8703c8908f718ea218f535549bdd5f522
+
 	
 	var _Megatron2 = _interopRequireDefault(_Megatron);
 	

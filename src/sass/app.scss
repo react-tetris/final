@@ -1,7 +1,6 @@
 * {
      box-sizing: border-box;
      margin: 50px;
-     background: url('/background.png');
      box-sizing: border-box;
      margin: 0;
 }
@@ -500,6 +499,9 @@ h3 {
 }
 
 .adminPage {
+    background: url('/background.png');
+    height: 100vh;
+    width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
