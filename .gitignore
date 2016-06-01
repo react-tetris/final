@@ -5,3 +5,4 @@ bundle.js.map
 npm-debug.log
 .sass-cache
 app.css.map
+app.css

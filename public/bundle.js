@@ -60,11 +60,11 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _Admin = __webpack_require__(278);
+	var _Admin = __webpack_require__(290);
 	
 	var _Admin2 = _interopRequireDefault(_Admin);
 	
-	var _Megatron = __webpack_require__(284);
+	var _Megatron = __webpack_require__(296);
 	
 	var _Megatron2 = _interopRequireDefault(_Megatron);
 	
@@ -25885,15 +25885,15 @@
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
-	var _Player = __webpack_require__(288);
+	var _Player = __webpack_require__(281);
 	
 	var _Player2 = _interopRequireDefault(_Player);
 	
-	var _Queued = __webpack_require__(289);
+	var _Queued = __webpack_require__(282);
 	
 	var _Queued2 = _interopRequireDefault(_Queued);
 	
-	var _Game = __webpack_require__(290);
+	var _Game = __webpack_require__(283);
 	
 	var _Game2 = _interopRequireDefault(_Game);
 	
@@ -26150,7 +26150,7 @@
 	 */
 	
 	exports.Manager = __webpack_require__(245);
-	exports.Socket = __webpack_require__(271);
+	exports.Socket = __webpack_require__(273);
 
 
 /***/ },
@@ -28485,14 +28485,14 @@
 	 */
 	
 	var eio = __webpack_require__(246);
-	var Socket = __webpack_require__(271);
-	var Emitter = __webpack_require__(272);
+	var Socket = __webpack_require__(273);
+	var Emitter = __webpack_require__(274);
 	var parser = __webpack_require__(237);
-	var on = __webpack_require__(274);
-	var bind = __webpack_require__(275);
+	var on = __webpack_require__(276);
+	var bind = __webpack_require__(277);
 	var debug = __webpack_require__(234)('socket.io-client:manager');
-	var indexOf = __webpack_require__(269);
-	var Backoff = __webpack_require__(277);
+	var indexOf = __webpack_require__(271);
+	var Backoff = __webpack_require__(280);
 	
 	/**
 	 * IE6+ hasOwnProperty
@@ -29071,13 +29071,13 @@
 	 */
 	
 	var transports = __webpack_require__(249);
-	var Emitter = __webpack_require__(242);
+	var Emitter = __webpack_require__(264);
 	var debug = __webpack_require__(234)('engine.io-client:socket');
-	var index = __webpack_require__(269);
+	var index = __webpack_require__(271);
 	var parser = __webpack_require__(255);
 	var parseuri = __webpack_require__(233);
-	var parsejson = __webpack_require__(270);
-	var parseqs = __webpack_require__(263);
+	var parsejson = __webpack_require__(272);
+	var parseqs = __webpack_require__(265);
 	
 	/**
 	 * Module exports.
@@ -29807,8 +29807,8 @@
 	
 	var XMLHttpRequest = __webpack_require__(250);
 	var XHR = __webpack_require__(252);
-	var JSONP = __webpack_require__(266);
-	var websocket = __webpack_require__(267);
+	var JSONP = __webpack_require__(268);
+	var websocket = __webpack_require__(269);
 	
 	/**
 	 * Export transports.
@@ -29932,8 +29932,8 @@
 	
 	var XMLHttpRequest = __webpack_require__(250);
 	var Polling = __webpack_require__(253);
-	var Emitter = __webpack_require__(242);
-	var inherit = __webpack_require__(264);
+	var Emitter = __webpack_require__(264);
+	var inherit = __webpack_require__(266);
 	var debug = __webpack_require__(234)('engine.io-client:polling-xhr');
 	
 	/**
@@ -30350,10 +30350,10 @@
 	 */
 	
 	var Transport = __webpack_require__(254);
-	var parseqs = __webpack_require__(263);
+	var parseqs = __webpack_require__(265);
 	var parser = __webpack_require__(255);
-	var inherit = __webpack_require__(264);
-	var yeast = __webpack_require__(265);
+	var inherit = __webpack_require__(266);
+	var yeast = __webpack_require__(267);
 	var debug = __webpack_require__(234)('engine.io-client:polling');
 	
 	/**
@@ -30603,7 +30603,7 @@
 	 */
 	
 	var parser = __webpack_require__(255);
-	var Emitter = __webpack_require__(242);
+	var Emitter = __webpack_require__(264);
 	
 	/**
 	 * Module exports.
@@ -30765,10 +30765,10 @@
 	
 	var keys = __webpack_require__(256);
 	var hasBinary = __webpack_require__(257);
-	var sliceBuffer = __webpack_require__(258);
-	var base64encoder = __webpack_require__(259);
-	var after = __webpack_require__(260);
-	var utf8 = __webpack_require__(261);
+	var sliceBuffer = __webpack_require__(259);
+	var base64encoder = __webpack_require__(260);
+	var after = __webpack_require__(261);
+	var utf8 = __webpack_require__(262);
 	
 	/**
 	 * Check if we are running an android browser. That requires us to use
@@ -30825,7 +30825,7 @@
 	 * Create a blob api even for blob builder when vendor prefixes exist
 	 */
 	
-	var Blob = __webpack_require__(262);
+	var Blob = __webpack_require__(263);
 	
 	/**
 	 * Encodes a packet.
@@ -31390,7 +31390,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(241);
+	var isArray = __webpack_require__(258);
 	
 	/**
 	 * Module exports.
@@ -31450,6 +31450,15 @@
 /* 258 */
 /***/ function(module, exports) {
 
+	module.exports = Array.isArray || function (arr) {
+	  return Object.prototype.toString.call(arr) == '[object Array]';
+	};
+
+
+/***/ },
+/* 259 */
+/***/ function(module, exports) {
+
 	/**
 	 * An abstraction for slicing an arraybuffer even when
 	 * ArrayBuffer.prototype.slice is not supported
@@ -31482,7 +31491,7 @@
 
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports) {
 
 	/*
@@ -31547,7 +31556,7 @@
 
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports) {
 
 	module.exports = after
@@ -31581,7 +31590,7 @@
 
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/*! https://mths.be/utf8js v2.0.0 by @mathias */
@@ -31830,7 +31839,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(239)(module), (function() { return this; }())))
 
 /***/ },
-/* 262 */
+/* 263 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -31933,7 +31942,177 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 263 */
+/* 264 */
+/***/ function(module, exports) {
+
+	
+	/**
+	 * Expose `Emitter`.
+	 */
+	
+	module.exports = Emitter;
+	
+	/**
+	 * Initialize a new `Emitter`.
+	 *
+	 * @api public
+	 */
+	
+	function Emitter(obj) {
+	  if (obj) return mixin(obj);
+	};
+	
+	/**
+	 * Mixin the emitter properties.
+	 *
+	 * @param {Object} obj
+	 * @return {Object}
+	 * @api private
+	 */
+	
+	function mixin(obj) {
+	  for (var key in Emitter.prototype) {
+	    obj[key] = Emitter.prototype[key];
+	  }
+	  return obj;
+	}
+	
+	/**
+	 * Listen on the given `event` with `fn`.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+	
+	Emitter.prototype.on =
+	Emitter.prototype.addEventListener = function(event, fn){
+	  this._callbacks = this._callbacks || {};
+	  (this._callbacks[event] = this._callbacks[event] || [])
+	    .push(fn);
+	  return this;
+	};
+	
+	/**
+	 * Adds an `event` listener that will be invoked a single
+	 * time then automatically removed.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+	
+	Emitter.prototype.once = function(event, fn){
+	  var self = this;
+	  this._callbacks = this._callbacks || {};
+	
+	  function on() {
+	    self.off(event, on);
+	    fn.apply(this, arguments);
+	  }
+	
+	  on.fn = fn;
+	  this.on(event, on);
+	  return this;
+	};
+	
+	/**
+	 * Remove the given callback for `event` or all
+	 * registered callbacks.
+	 *
+	 * @param {String} event
+	 * @param {Function} fn
+	 * @return {Emitter}
+	 * @api public
+	 */
+	
+	Emitter.prototype.off =
+	Emitter.prototype.removeListener =
+	Emitter.prototype.removeAllListeners =
+	Emitter.prototype.removeEventListener = function(event, fn){
+	  this._callbacks = this._callbacks || {};
+	
+	  // all
+	  if (0 == arguments.length) {
+	    this._callbacks = {};
+	    return this;
+	  }
+	
+	  // specific event
+	  var callbacks = this._callbacks[event];
+	  if (!callbacks) return this;
+	
+	  // remove all handlers
+	  if (1 == arguments.length) {
+	    delete this._callbacks[event];
+	    return this;
+	  }
+	
+	  // remove specific handler
+	  var cb;
+	  for (var i = 0; i < callbacks.length; i++) {
+	    cb = callbacks[i];
+	    if (cb === fn || cb.fn === fn) {
+	      callbacks.splice(i, 1);
+	      break;
+	    }
+	  }
+	  return this;
+	};
+	
+	/**
+	 * Emit `event` with the given args.
+	 *
+	 * @param {String} event
+	 * @param {Mixed} ...
+	 * @return {Emitter}
+	 */
+	
+	Emitter.prototype.emit = function(event){
+	  this._callbacks = this._callbacks || {};
+	  var args = [].slice.call(arguments, 1)
+	    , callbacks = this._callbacks[event];
+	
+	  if (callbacks) {
+	    callbacks = callbacks.slice(0);
+	    for (var i = 0, len = callbacks.length; i < len; ++i) {
+	      callbacks[i].apply(this, args);
+	    }
+	  }
+	
+	  return this;
+	};
+	
+	/**
+	 * Return array of callbacks for `event`.
+	 *
+	 * @param {String} event
+	 * @return {Array}
+	 * @api public
+	 */
+	
+	Emitter.prototype.listeners = function(event){
+	  this._callbacks = this._callbacks || {};
+	  return this._callbacks[event] || [];
+	};
+	
+	/**
+	 * Check if this emitter has `event` handlers.
+	 *
+	 * @param {String} event
+	 * @return {Boolean}
+	 * @api public
+	 */
+	
+	Emitter.prototype.hasListeners = function(event){
+	  return !! this.listeners(event).length;
+	};
+
+
+/***/ },
+/* 265 */
 /***/ function(module, exports) {
 
 	/**
@@ -31976,7 +32155,7 @@
 
 
 /***/ },
-/* 264 */
+/* 266 */
 /***/ function(module, exports) {
 
 	
@@ -31988,7 +32167,7 @@
 	};
 
 /***/ },
-/* 265 */
+/* 267 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32062,7 +32241,7 @@
 
 
 /***/ },
-/* 266 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -32071,7 +32250,7 @@
 	 */
 	
 	var Polling = __webpack_require__(253);
-	var inherit = __webpack_require__(264);
+	var inherit = __webpack_require__(266);
 	
 	/**
 	 * Module exports.
@@ -32307,7 +32486,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 267 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -32316,9 +32495,9 @@
 	
 	var Transport = __webpack_require__(254);
 	var parser = __webpack_require__(255);
-	var parseqs = __webpack_require__(263);
-	var inherit = __webpack_require__(264);
-	var yeast = __webpack_require__(265);
+	var parseqs = __webpack_require__(265);
+	var inherit = __webpack_require__(266);
+	var yeast = __webpack_require__(267);
 	var debug = __webpack_require__(234)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	
@@ -32331,7 +32510,7 @@
 	var WebSocket = BrowserWebSocket;
 	if (!WebSocket && typeof window === 'undefined') {
 	  try {
-	    WebSocket = __webpack_require__(268);
+	    WebSocket = __webpack_require__(270);
 	  } catch (e) { }
 	}
 	
@@ -32602,13 +32781,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 268 */
+/* 270 */
 /***/ function(module, exports) {
 
 	/* (ignored) */
 
 /***/ },
-/* 269 */
+/* 271 */
 /***/ function(module, exports) {
 
 	
@@ -32623,7 +32802,7 @@
 	};
 
 /***/ },
-/* 270 */
+/* 272 */
 /***/ function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -32661,7 +32840,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 271 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -32670,12 +32849,12 @@
 	 */
 	
 	var parser = __webpack_require__(237);
-	var Emitter = __webpack_require__(272);
-	var toArray = __webpack_require__(273);
-	var on = __webpack_require__(274);
-	var bind = __webpack_require__(275);
+	var Emitter = __webpack_require__(274);
+	var toArray = __webpack_require__(275);
+	var on = __webpack_require__(276);
+	var bind = __webpack_require__(277);
 	var debug = __webpack_require__(234)('socket.io-client:socket');
-	var hasBin = __webpack_require__(276);
+	var hasBin = __webpack_require__(278);
 	
 	/**
 	 * Module exports.
@@ -33079,7 +33258,7 @@
 
 
 /***/ },
-/* 272 */
+/* 274 */
 /***/ function(module, exports) {
 
 	
@@ -33246,7 +33425,7 @@
 
 
 /***/ },
-/* 273 */
+/* 275 */
 /***/ function(module, exports) {
 
 	module.exports = toArray
@@ -33265,7 +33444,7 @@
 
 
 /***/ },
-/* 274 */
+/* 276 */
 /***/ function(module, exports) {
 
 	
@@ -33295,7 +33474,7 @@
 
 
 /***/ },
-/* 275 */
+/* 277 */
 /***/ function(module, exports) {
 
 	/**
@@ -33324,7 +33503,7 @@
 
 
 /***/ },
-/* 276 */
+/* 278 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -33332,7 +33511,7 @@
 	 * Module requirements.
 	 */
 	
-	var isArray = __webpack_require__(241);
+	var isArray = __webpack_require__(279);
 	
 	/**
 	 * Module exports.
@@ -33390,7 +33569,16 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
-/* 277 */
+/* 279 */
+/***/ function(module, exports) {
+
+	module.exports = Array.isArray || function (arr) {
+	  return Object.prototype.toString.call(arr) == '[object Array]';
+	};
+
+
+/***/ },
+/* 280 */
 /***/ function(module, exports) {
 
 	
@@ -33481,998 +33669,7 @@
 
 
 /***/ },
-/* 278 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactHowler = __webpack_require__(279);
-	
-	var _reactHowler2 = _interopRequireDefault(_reactHowler);
-	
-	var _socket = __webpack_require__(230);
-	
-	var _socket2 = _interopRequireDefault(_socket);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Admin = function (_React$Component) {
-	  _inherits(Admin, _React$Component);
-	
-	  function Admin(props) {
-	    _classCallCheck(this, Admin);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Admin).call(this, props));
-	
-	    _this.clearPlayers = _this.clearPlayers.bind(_this);
-	    _this.startGame = _this.startGame.bind(_this);
-	    _this.handleSound = _this.handleSound.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Admin, [{
-	    key: 'clearPlayers',
-	    value: function clearPlayers() {
-	      this.state.socket.emit('dropPlayers');
-	    }
-	  }, {
-	    key: 'startGame',
-	    value: function startGame() {
-	      _socket2.default.emit('start_game');
-	    }
-	  }, {
-	    key: 'handleSound',
-	    value: function handleSound() {
-	      this.setState({
-	        playing: true
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'admin-page' },
-	        _react2.default.createElement(
-	          'h1',
-	          { className: 'admin-h1' },
-	          'Admin page'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'arcade-button', type: 'button', onClick: this.clearPlayers },
-	          'Restart Game'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { className: 'arcade-button', type: 'button', onClick: this.startGame },
-	          'Start Game'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'button', onClick: this.handleSound },
-	          'Test Sound'
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Admin;
-	}(_react2.default.Component);
-	
-	module.exports = Admin;
-
-/***/ },
-/* 279 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	module.exports = __webpack_require__(280).default;
-
-/***/ },
-/* 280 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _howler3 = __webpack_require__(281);
-	
-	var _utils = __webpack_require__(283);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ReactHowler = function (_Component) {
-	  _inherits(ReactHowler, _Component);
-	
-	  function ReactHowler(props) {
-	    _classCallCheck(this, ReactHowler);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactHowler).call(this, props));
-	
-	    _this.initHowler = _this.initHowler.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(ReactHowler, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.initHowler();
-	    }
-	  }, {
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(props) {
-	      if (props.src !== this.props.src) {
-	        this.initHowler(props);
-	      }
-	      this.toggleHowler(props);
-	    }
-	  }, {
-	    key: 'componentWillUnmount',
-	    value: function componentWillUnmount() {
-	      this.destroyHowler();
-	    }
-	    /**
-	     * Create howler object with given props
-	     */
-	
-	  }, {
-	    key: 'initHowler',
-	    value: function initHowler() {
-	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
-	
-	      this.destroyHowler();
-	      if (typeof _howler3.Howl !== 'undefined') {
-	        // Check if window is available
-	        this.howler = new _howler3.Howl({
-	          src: props.src,
-	          autoplay: props.playing,
-	          mute: props.mute,
-	          loop: props.loop,
-	          onend: props.onEnd,
-	          onplay: props.onPlay,
-	          onpause: props.onPause,
-	          onload: props.onLoad,
-	          onloaderror: props.onLoadError
-	        });
-	      }
-	    }
-	
-	    /**
-	     * Stop, unload and destroy howler object
-	     */
-	
-	  }, {
-	    key: 'destroyHowler',
-	    value: function destroyHowler() {
-	      if (this.howler) {
-	        this.howler.off(); // Remove event listener
-	        this.howler.stop(); // Stop playback
-	        this.howler.unload(); // Remove sound from pool
-	        this.howler = null; // Destroy it
-	      }
-	    }
-	  }, {
-	    key: 'toggleHowler',
-	    value: function toggleHowler(props) {
-	      props.playing ? this.play() : this.pause();
-	      (0, _utils.runIfSet)(props.mute, this.mute(props.mute));
-	      (0, _utils.runIfSet)(props.loop, this.loop(props.loop));
-	
-	      if (props.seek !== this.seek()) {
-	        this.seek(props.seek);
-	      }
-	    }
-	  }, {
-	    key: 'play',
-	
-	
-	    /**
-	     * Begins playback of a sound when not playing
-	     */
-	    value: function play() {
-	      var playing = this.howler.playing();
-	
-	      if (!playing) {
-	        this.howler.play();
-	      }
-	    }
-	
-	    /**
-	     * Pauses playback of sound or group
-	     * If no id given, pauses all playback
-	     * @param {Number} id = undefined [sound of group to pause]
-	     */
-	
-	  }, {
-	    key: 'pause',
-	    value: function pause() {
-	      var id = arguments.length <= 0 || arguments[0] === undefined ? undefined : arguments[0];
-	
-	      if (id) {
-	        this.howler.pause(id);
-	      } else {
-	        this.howler.pause();
-	      }
-	    }
-	
-	    /**
-	     * Mutes the sound, but doesn't pause the playback.
-	     * @param {Boolean} [muted] [True to mute and false to unmute]
-	     * @param {Number} [id] [The sound ID. If none is passed, all sounds in group are muted]
-	     */
-	
-	  }, {
-	    key: 'mute',
-	    value: function mute() {
-	      var _howler;
-	
-	      (_howler = this.howler).mute.apply(_howler, arguments);
-	    }
-	
-	    /**
-	     * Get/set whether to loop the sound or group. This method can optionally take 0, 1 or 2 arguments.
-	     * @param {Boolean} [loop] [To loop or not to loop, that is the question]
-	     * @param {Number} [id] [The sound ID. If none is passed, all sounds in group will have their loop property updated]
-	     */
-	
-	  }, {
-	    key: 'loop',
-	    value: function loop() {
-	      var _howler2;
-	
-	      return (_howler2 = this.howler).loop.apply(_howler2, arguments);
-	    }
-	
-	    /**
-	     * Set/get current position of player
-	     * @param  {Number} pos [seek player to position]
-	     * @return {Number}     [return current position]
-	     */
-	
-	  }, {
-	    key: 'seek',
-	    value: function seek() {
-	      var pos = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
-	
-	      if (!this.howler) {
-	        return 0;
-	      }
-	
-	      if (!pos) {
-	        return this.howler.seek();
-	      }
-	
-	      if (pos) {
-	        this.howler.seek(pos);
-	        return pos;
-	      }
-	    }
-	
-	    /**
-	     * Get the duration of the audio source
-	     * @return {Number} [Audio length in seconds. Will return 0 until after the load event fires]
-	     */
-	
-	  }, {
-	    key: 'duration',
-	    value: function duration() {
-	      return this.howler.duration();
-	    }
-	
-	    /**
-	     * Only render a placeholder
-	     */
-	
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement('div', null);
-	    }
-	  }, {
-	    key: 'howler',
-	    set: function set(howl) {
-	      if (howl) {
-	        this._howler = howl;
-	      }
-	    },
-	    get: function get() {
-	      return this._howler;
-	    }
-	  }]);
-	
-	  return ReactHowler;
-	}(_react.Component);
-	
-	ReactHowler.propTypes = {
-	  src: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]).isRequired,
-	  playing: _react.PropTypes.bool,
-	  mute: _react.PropTypes.bool,
-	  loop: _react.PropTypes.bool,
-	  onEnd: _react.PropTypes.func,
-	  onPause: _react.PropTypes.func,
-	  onPlay: _react.PropTypes.func,
-	  onLoad: _react.PropTypes.func,
-	  onLoadError: _react.PropTypes.func
-	};
-	
-	ReactHowler.defaultProps = {
-	  playing: true, // Enable autoplay by default
-	  mute: false,
-	  loop: false,
-	  onEnd: _utils.noop,
-	  onPause: _utils.noop,
-	  onPlay: _utils.noop,
-	  onLoad: _utils.noop,
-	  onLoadError: _utils.noop
-	};
-	
-	exports.default = ReactHowler;
-
-/***/ },
 /* 281 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var Howler = void 0;
-	
-	if (typeof window !== 'undefined') {
-	  Howler = __webpack_require__(282);
-	}
-	
-	module.exports = Howler;
-
-/***/ },
-/* 282 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*! howler.js v2.0.0-beta10 | (c) 2013-2016, James Simpson of GoldFire Studios | MIT License | howlerjs.com */
-	!function(){"use strict";function e(){try{"undefined"!=typeof AudioContext?o=new AudioContext:"undefined"!=typeof webkitAudioContext?o=new webkitAudioContext:t=!1}catch(e){t=!1}if(!t)if("undefined"!=typeof Audio)try{var a=new Audio;"undefined"==typeof a.oncanplaythrough&&(d="canplay")}catch(e){r=!0}else r=!0;try{var a=new Audio;a.muted&&(r=!0)}catch(e){}var i=/iP(hone|od|ad)/.test(n&&n.platform),_=n&&n.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/),s=_?parseInt(_[1],10):null;if(i&&s&&9>s){var l=/safari/.test(n&&n.userAgent.toLowerCase());(n&&n.standalone&&!l||n&&!n.standalone&&!l)&&(t=!1)}t&&(u="undefined"==typeof o.createGain?o.createGainNode():o.createGain(),u.gain.value=1,u.connect(o.destination))}var n=window&&window.navigator?window.navigator:null,o=null,t=!0,r=!1,u=null,d="canplaythrough";e();var a=function(){this.init()};a.prototype={init:function(){var e=this||i;return e._codecs={},e._howls=[],e._muted=!1,e._volume=1,e.state=o?o.state||"running":"running",e.autoSuspend=!0,e._autoSuspend(),e.mobileAutoEnable=!0,e.noAudio=r,e.usingWebAudio=t,e.ctx=o,e.masterGain=u,r||e._setupCodecs(),e},volume:function(e){var n=this||i;if(e=parseFloat(e),"undefined"!=typeof e&&e>=0&&1>=e){n._volume=e,t&&(u.gain.value=e);for(var o=0;o<n._howls.length;o++)if(!n._howls[o]._webAudio)for(var r=n._howls[o]._getSoundIds(),d=0;d<r.length;d++){var a=n._howls[o]._soundById(r[d]);a&&a._node&&(a._node.volume=a._volume*e)}return n}return n._volume},mute:function(e){var n=this||i;n._muted=e,t&&(u.gain.value=e?0:n._volume);for(var o=0;o<n._howls.length;o++)if(!n._howls[o]._webAudio)for(var r=n._howls[o]._getSoundIds(),d=0;d<r.length;d++){var a=n._howls[o]._soundById(r[d]);a&&a._node&&(a._node.muted=e?!0:a._muted)}return n},unload:function(){for(var n=this||i,t=n._howls.length-1;t>=0;t--)n._howls[t].unload();return n.usingWebAudio&&"undefined"!=typeof o.close&&(n.ctx=null,o.close(),e(),n.ctx=o),n},codecs:function(e){return(this||i)._codecs[e]},_setupCodecs:function(){var e=this||i,o=new Audio,t=o.canPlayType("audio/mpeg;").replace(/^no$/,""),r=n&&n.userAgent.match(/OPR\/([0-6].)/g),u=r&&parseInt(r[0].split("/")[1],10)<33;return e._codecs={mp3:!(u||!t&&!o.canPlayType("audio/mp3;").replace(/^no$/,"")),mpeg:!!t,opus:!!o.canPlayType('audio/ogg; codecs="opus"').replace(/^no$/,""),ogg:!!o.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),oga:!!o.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),wav:!!o.canPlayType('audio/wav; codecs="1"').replace(/^no$/,""),aac:!!o.canPlayType("audio/aac;").replace(/^no$/,""),caf:!!o.canPlayType("audio/x-caf;").replace(/^no$/,""),m4a:!!(o.canPlayType("audio/x-m4a;")||o.canPlayType("audio/m4a;")||o.canPlayType("audio/aac;")).replace(/^no$/,""),mp4:!!(o.canPlayType("audio/x-mp4;")||o.canPlayType("audio/mp4;")||o.canPlayType("audio/aac;")).replace(/^no$/,""),weba:!!o.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/,""),webm:!!o.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/,""),dolby:!!o.canPlayType('audio/mp4; codecs="ec-3"').replace(/^no$/,"")},e},_enableMobileAudio:function(){var e=this||i,t=/iPhone|iPad|iPod|Android|BlackBerry|BB10|Silk|Mobi/i.test(n&&n.userAgent),r=!!("ontouchend"in window||n&&n.maxTouchPoints>0||n&&n.msMaxTouchPoints>0);if(!o||!e._mobileEnabled&&t&&r){e._mobileEnabled=!1,i.unload(),e._scratchBuffer=o.createBuffer(1,1,22050);var u=function(){var n=o.createBufferSource();n.buffer=e._scratchBuffer,n.connect(o.destination),"undefined"==typeof n.start?n.noteOn(0):n.start(0),n.onended=function(){n.disconnect(0),e._mobileEnabled=!0,e.mobileAutoEnable=!1,document.removeEventListener("touchend",u,!0)}};return document.addEventListener("touchend",u,!0),e}},_autoSuspend:function(){var e=this;if(e.autoSuspend&&o&&"undefined"!=typeof o.suspend&&t){for(var n=0;n<e._howls.length;n++)if(e._howls[n]._webAudio)for(var r=0;r<e._howls[n]._sounds.length;r++)if(!e._howls[n]._sounds[r]._paused)return e;return e._suspendTimer=setTimeout(function(){e.autoSuspend&&(e._suspendTimer=null,e.state="suspending",o.suspend().then(function(){e.state="suspended",e._resumeAfterSuspend&&(delete e._resumeAfterSuspend,e._autoResume())}))},3e4),e}},_autoResume:function(){var e=this;if(o&&"undefined"!=typeof o.resume&&t)return"running"===e.state&&e._suspendTimer?(clearTimeout(e._suspendTimer),e._suspendTimer=null):"suspended"===e.state?(e.state="resuming",o.resume().then(function(){e.state="running"}),e._suspendTimer&&(clearTimeout(e._suspendTimer),e._suspendTimer=null)):"suspending"===e.state&&(e._resumeAfterSuspend=!0),e}};var i=new a,_=function(e){var n=this;return e.src&&0!==e.src.length?void n.init(e):void console.error("An array of source files must be passed with any new Howl.")};_.prototype={init:function(e){var n=this;return n._autoplay=e.autoplay||!1,n._format="string"!=typeof e.format?e.format:[e.format],n._html5=e.html5||!1,n._muted=e.mute||!1,n._loop=e.loop||!1,n._pool=e.pool||5,n._preload="boolean"==typeof e.preload?e.preload:!0,n._rate=e.rate||1,n._sprite=e.sprite||{},n._src="string"!=typeof e.src?e.src:[e.src],n._volume=void 0!==e.volume?e.volume:1,n._duration=0,n._state="unloaded",n._sounds=[],n._endTimers={},n._queue=[],n._onend=e.onend?[{fn:e.onend}]:[],n._onfade=e.onfade?[{fn:e.onfade}]:[],n._onload=e.onload?[{fn:e.onload}]:[],n._onloaderror=e.onloaderror?[{fn:e.onloaderror}]:[],n._onpause=e.onpause?[{fn:e.onpause}]:[],n._onplay=e.onplay?[{fn:e.onplay}]:[],n._onstop=e.onstop?[{fn:e.onstop}]:[],n._onmute=e.onmute?[{fn:e.onmute}]:[],n._onvolume=e.onvolume?[{fn:e.onvolume}]:[],n._onrate=e.onrate?[{fn:e.onrate}]:[],n._onseek=e.onseek?[{fn:e.onseek}]:[],n._webAudio=t&&!n._html5,"undefined"!=typeof o&&o&&i.mobileAutoEnable&&i._enableMobileAudio(),i._howls.push(n),n._preload&&n.load(),n},load:function(){var e=this,n=null;if(r)return void e._emit("loaderror",null,"No audio support.");"string"==typeof e._src&&(e._src=[e._src]);for(var o=0;o<e._src.length;o++){var t,u;if(e._format&&e._format[o]?t=e._format[o]:(u=e._src[o],t=/^data:audio\/([^;,]+);/i.exec(u),t||(t=/\.([^.]+)$/.exec(u.split("?",1)[0])),t&&(t=t[1].toLowerCase())),i.codecs(t)){n=e._src[o];break}}return n?(e._src=n,e._state="loading","https:"===window.location.protocol&&"http:"===n.slice(0,5)&&(e._html5=!0,e._webAudio=!1),new s(e),e._webAudio&&f(e),e):void e._emit("loaderror",null,"No codec support for selected audio sources.")},play:function(e){var t=this,r=arguments,u=null;if("number"==typeof e)u=e,e=null;else if("undefined"==typeof e){e="__default";for(var a=0,_=0;_<t._sounds.length;_++)t._sounds[_]._paused&&!t._sounds[_]._ended&&(a++,u=t._sounds[_]._id);1===a?e=null:u=null}var s=u?t._soundById(u):t._inactiveSound();if(!s)return null;if(u&&!e&&(e=s._sprite||"__default"),"loaded"!==t._state&&!t._sprite[e])return t._queue.push({event:"play",action:function(){t.play(t._soundById(s._id)?s._id:void 0)}}),s._id;if(u&&!s._paused)return r[1]||setTimeout(function(){t._emit("play",s._id)},0),s._id;t._webAudio&&i._autoResume();var l=s._seek>0?s._seek:t._sprite[e][0]/1e3,f=(t._sprite[e][0]+t._sprite[e][1])/1e3-l,c=1e3*f/Math.abs(s._rate);c!==1/0&&(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),s._paused=!1,s._ended=!1,s._sprite=e,s._seek=l,s._start=t._sprite[e][0]/1e3,s._stop=(t._sprite[e][0]+t._sprite[e][1])/1e3,s._loop=!(!s._loop&&!t._sprite[e][2]);var p=s._node;if(t._webAudio){var m=function(){t._refreshBuffer(s);var e=s._muted||t._muted?0:s._volume*i.volume();p.gain.setValueAtTime(e,o.currentTime),s._playStart=o.currentTime,"undefined"==typeof p.bufferSource.start?s._loop?p.bufferSource.noteGrainOn(0,l,86400):p.bufferSource.noteGrainOn(0,l,f):s._loop?p.bufferSource.start(0,l,86400):p.bufferSource.start(0,l,f),t._endTimers[s._id]||c===1/0||(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),r[1]||setTimeout(function(){t._emit("play",s._id)},0)};"loaded"===t._state?m():(t.once("load",m,s._id),t._clearTimer(s._id))}else{var v=function(){p.currentTime=l,p.muted=s._muted||t._muted||i._muted||p.muted,p.volume=s._volume*i.volume(),p.playbackRate=s._rate,setTimeout(function(){p.play(),r[1]||t._emit("play",s._id)},0)},h="loaded"===t._state&&(window&&window.ejecta||!p.readyState&&n.isCocoonJS);if(4===p.readyState||h)v();else{var y=function(){c!==1/0&&(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),v(),p.removeEventListener(d,y,!1)};p.addEventListener(d,y,!1),t._clearTimer(s._id)}}return s._id},pause:function(e){var n=this;if("loaded"!==n._state)return n._queue.push({event:"pause",action:function(){n.pause(e)}}),n;for(var o=n._getSoundIds(e),t=0;t<o.length;t++){n._clearTimer(o[t]);var r=n._soundById(o[t]);if(r&&!r._paused){if(r._seek=n.seek(o[t]),r._paused=!0,n._stopFade(o[t]),r._node)if(n._webAudio){if(!r._node.bufferSource)return n;"undefined"==typeof r._node.bufferSource.stop?r._node.bufferSource.noteOff(0):r._node.bufferSource.stop(0),n._cleanBuffer(r._node)}else isNaN(r._node.duration)&&r._node.duration!==1/0||r._node.pause();arguments[1]||n._emit("pause",r._id)}}return n},stop:function(e){var n=this;if("loaded"!==n._state)return n._queue.push({event:"stop",action:function(){n.stop(e)}}),n;for(var o=n._getSoundIds(e),t=0;t<o.length;t++){n._clearTimer(o[t]);var r=n._soundById(o[t]);if(r&&!r._paused&&(r._seek=r._start||0,r._paused=!0,r._ended=!0,n._stopFade(o[t]),r._node))if(n._webAudio){if(!r._node.bufferSource)return n;"undefined"==typeof r._node.bufferSource.stop?r._node.bufferSource.noteOff(0):r._node.bufferSource.stop(0),n._cleanBuffer(r._node)}else isNaN(r._node.duration)&&r._node.duration!==1/0||(r._node.pause(),r._node.currentTime=r._start||0);r&&n._emit("stop",r._id)}return n},mute:function(e,n){var t=this;if("loaded"!==t._state)return t._queue.push({event:"mute",action:function(){t.mute(e,n)}}),t;if("undefined"==typeof n){if("boolean"!=typeof e)return t._muted;t._muted=e}for(var r=t._getSoundIds(n),u=0;u<r.length;u++){var d=t._soundById(r[u]);d&&(d._muted=e,t._webAudio&&d._node?d._node.gain.setValueAtTime(e?0:d._volume*i.volume(),o.currentTime):d._node&&(d._node.muted=i._muted?!0:e),t._emit("mute",d._id))}return t},volume:function(){var e,n,t=this,r=arguments;if(0===r.length)return t._volume;if(1===r.length){var u=t._getSoundIds(),d=u.indexOf(r[0]);d>=0?n=parseInt(r[0],10):e=parseFloat(r[0])}else r.length>=2&&(e=parseFloat(r[0]),n=parseInt(r[1],10));var a;if(!("undefined"!=typeof e&&e>=0&&1>=e))return a=n?t._soundById(n):t._sounds[0],a?a._volume:0;if("loaded"!==t._state)return t._queue.push({event:"volume",action:function(){t.volume.apply(t,r)}}),t;"undefined"==typeof n&&(t._volume=e),n=t._getSoundIds(n);for(var _=0;_<n.length;_++)a=t._soundById(n[_]),a&&(a._volume=e,r[2]||t._stopFade(n[_]),t._webAudio&&a._node&&!a._muted?a._node.gain.setValueAtTime(e*i.volume(),o.currentTime):a._node&&!a._muted&&(a._node.volume=e*i.volume()),t._emit("volume",a._id));return t},fade:function(e,n,t,r){var u=this;if("loaded"!==u._state)return u._queue.push({event:"fade",action:function(){u.fade(e,n,t,r)}}),u;u.volume(e,r);for(var d=u._getSoundIds(r),a=0;a<d.length;a++){var i=u._soundById(d[a]);if(i)if(r||u._stopFade(d[a]),u._webAudio&&!i._muted){var _=o.currentTime,s=_+t/1e3;i._volume=e,i._node.gain.setValueAtTime(e,_),i._node.gain.linearRampToValueAtTime(n,s),i._timeout=setTimeout(function(e,t){delete t._timeout,setTimeout(function(){t._volume=n,u._emit("fade",e)},s-o.currentTime>0?Math.ceil(1e3*(s-o.currentTime)):0)}.bind(u,d[a],i),t)}else{var l=Math.abs(e-n),f=e>n?"out":"in",c=l/.01,p=t/c;!function(){var o=e;i._interval=setInterval(function(e,t){o+="in"===f?.01:-.01,o=Math.max(0,o),o=Math.min(1,o),o=Math.round(100*o)/100,u.volume(o,e,!0),o===n&&(clearInterval(t._interval),delete t._interval,u._emit("fade",e))}.bind(u,d[a],i),p)}()}}return u},_stopFade:function(e){var n=this,t=n._soundById(e);return t._interval?(clearInterval(t._interval),delete t._interval,n._emit("fade",e)):t._timeout&&(clearTimeout(t._timeout),delete t._timeout,t._node.gain.cancelScheduledValues(o.currentTime),n._emit("fade",e)),n},loop:function(){var e,n,o,t=this,r=arguments;if(0===r.length)return t._loop;if(1===r.length){if("boolean"!=typeof r[0])return o=t._soundById(parseInt(r[0],10)),o?o._loop:!1;e=r[0],t._loop=e}else 2===r.length&&(e=r[0],n=parseInt(r[1],10));for(var u=t._getSoundIds(n),d=0;d<u.length;d++)o=t._soundById(u[d]),o&&(o._loop=e,t._webAudio&&o._node&&o._node.bufferSource&&(o._node.bufferSource.loop=e));return t},rate:function(){var e,n,o=this,t=arguments;if(0===t.length)n=o._sounds[0]._id;else if(1===t.length){var r=o._getSoundIds(),u=r.indexOf(t[0]);u>=0?n=parseInt(t[0],10):e=parseFloat(t[0])}else 2===t.length&&(e=parseFloat(t[0]),n=parseInt(t[1],10));var d;if("number"!=typeof e)return d=o._soundById(n),d?d._rate:o._rate;if("loaded"!==o._state)return o._queue.push({event:"rate",action:function(){o.rate.apply(o,t)}}),o;"undefined"==typeof n&&(o._rate=e),n=o._getSoundIds(n);for(var a=0;a<n.length;a++)if(d=o._soundById(n[a])){d._rate=e,o._webAudio&&d._node&&d._node.bufferSource?d._node.bufferSource.playbackRate.value=e:d._node&&(d._node.playbackRate=e);var i=o.seek(n[a]),_=(o._sprite[d._sprite][0]+o._sprite[d._sprite][1])/1e3-i,s=1e3*_/Math.abs(d._rate);o._clearTimer(n[a]),o._endTimers[n[a]]=setTimeout(o._ended.bind(o,d),s),o._emit("rate",d._id)}return o},seek:function(){var e,n,t=this,r=arguments;if(0===r.length)n=t._sounds[0]._id;else if(1===r.length){var u=t._getSoundIds(),d=u.indexOf(r[0]);d>=0?n=parseInt(r[0],10):(n=t._sounds[0]._id,e=parseFloat(r[0]))}else 2===r.length&&(e=parseFloat(r[0]),n=parseInt(r[1],10));if("undefined"==typeof n)return t;if("loaded"!==t._state)return t._queue.push({event:"seek",action:function(){t.seek.apply(t,r)}}),t;var a=t._soundById(n);if(a){if(!(e>=0))return t._webAudio?a._seek+(t.playing(n)?o.currentTime-a._playStart:0):a._node.currentTime;var i=t.playing(n);i&&t.pause(n,!0),a._seek=e,t._clearTimer(n),i&&t.play(n,!0),t._emit("seek",n)}return t},playing:function(e){var n=this,o=n._soundById(e)||n._sounds[0];return o?!o._paused:!1},duration:function(e){var n=this,o=n._soundById(e)||n._sounds[0];return n._duration/o._rate},state:function(){return this._state},unload:function(){for(var e=this,n=e._sounds,o=0;o<n.length;o++){n[o]._paused||(e.stop(n[o]._id),e._emit("end",n[o]._id)),e._webAudio||(n[o]._node.src="",n[o]._node.removeEventListener("error",n[o]._errorFn,!1),n[o]._node.removeEventListener(d,n[o]._loadFn,!1)),delete n[o]._node,e._clearTimer(n[o]._id);var t=i._howls.indexOf(e);t>=0&&i._howls.splice(t,1)}return l&&delete l[e._src],e._state="unloaded",e._sounds=[],e=null,null},on:function(e,n,o,t){var r=this,u=r["_on"+e];return"function"==typeof n&&u.push(t?{id:o,fn:n,once:t}:{id:o,fn:n}),r},off:function(e,n,o){var t=this,r=t["_on"+e];if(n){for(var u=0;u<r.length;u++)if(n===r[u].fn&&o===r[u].id){r.splice(u,1);break}}else if(e)t["_on"+e]=[];else for(var d=Object.keys(t),u=0;u<d.length;u++)0===d[u].indexOf("_on")&&Array.isArray(t[d[u]])&&(t[d[u]]=[]);return t},once:function(e,n,o){var t=this;return t.on(e,n,o,1),t},_emit:function(e,n,o){for(var t=this,r=t["_on"+e],u=r.length-1;u>=0;u--)r[u].id&&r[u].id!==n&&"load"!==e||(setTimeout(function(e){e.call(this,n,o)}.bind(t,r[u].fn),0),r[u].once&&t.off(e,r[u].fn,r[u].id));return t},_loadQueue:function(){var e=this;if(e._queue.length>0){var n=e._queue[0];e.once(n.event,function(){e._queue.shift(),e._loadQueue()}),n.action()}return e},_ended:function(e){var n=this,t=e._sprite,r=!(!e._loop&&!n._sprite[t][2]);if(n._emit("end",e._id),!n._webAudio&&r&&n.stop(e._id).play(e._id),n._webAudio&&r){n._emit("play",e._id),e._seek=e._start||0,e._playStart=o.currentTime;var u=1e3*(e._stop-e._start)/Math.abs(e._rate);n._endTimers[e._id]=setTimeout(n._ended.bind(n,e),u)}return n._webAudio&&!r&&(e._paused=!0,e._ended=!0,e._seek=e._start||0,n._clearTimer(e._id),n._cleanBuffer(e._node),i._autoSuspend()),n._webAudio||r||n.stop(e._id),n},_clearTimer:function(e){var n=this;return n._endTimers[e]&&(clearTimeout(n._endTimers[e]),delete n._endTimers[e]),n},_soundById:function(e){for(var n=this,o=0;o<n._sounds.length;o++)if(e===n._sounds[o]._id)return n._sounds[o];return null},_inactiveSound:function(){var e=this;e._drain();for(var n=0;n<e._sounds.length;n++)if(e._sounds[n]._ended)return e._sounds[n].reset();return new s(e)},_drain:function(){var e=this,n=e._pool,o=0,t=0;if(!(e._sounds.length<n)){for(t=0;t<e._sounds.length;t++)e._sounds[t]._ended&&o++;for(t=e._sounds.length-1;t>=0;t--){if(n>=o)return;e._sounds[t]._ended&&(e._webAudio&&e._sounds[t]._node&&e._sounds[t]._node.disconnect(0),e._sounds.splice(t,1),o--)}}},_getSoundIds:function(e){var n=this;if("undefined"==typeof e){for(var o=[],t=0;t<n._sounds.length;t++)o.push(n._sounds[t]._id);return o}return[e]},_refreshBuffer:function(e){var n=this;return e._node.bufferSource=o.createBufferSource(),e._node.bufferSource.buffer=l[n._src],e._panner?e._node.bufferSource.connect(e._panner):e._node.bufferSource.connect(e._node),e._node.bufferSource.loop=e._loop,e._loop&&(e._node.bufferSource.loopStart=e._start||0,e._node.bufferSource.loopEnd=e._stop),e._node.bufferSource.playbackRate.value=n._rate,n},_cleanBuffer:function(e){var n=this;if(n._scratchBuffer){e.bufferSource.onended=null,e.bufferSource.disconnect(0);try{e.bufferSource.buffer=n._scratchBuffer}catch(o){}}return e.bufferSource=null,n}};var s=function(e){this._parent=e,this.init()};if(s.prototype={init:function(){var e=this,n=e._parent;return e._muted=n._muted,e._loop=n._loop,e._volume=n._volume,e._muted=n._muted,e._rate=n._rate,e._seek=0,e._paused=!0,e._ended=!0,e._sprite="__default",e._id=Math.round(Date.now()*Math.random()),n._sounds.push(e),e.create(),e},create:function(){var e=this,n=e._parent,t=i._muted||e._muted||e._parent._muted?0:e._volume*i.volume();return n._webAudio?(e._node="undefined"==typeof o.createGain?o.createGainNode():o.createGain(),e._node.gain.setValueAtTime(t,o.currentTime),e._node.paused=!0,e._node.connect(u)):(e._node=new Audio,e._errorFn=e._errorListener.bind(e),e._node.addEventListener("error",e._errorFn,!1),e._loadFn=e._loadListener.bind(e),e._node.addEventListener(d,e._loadFn,!1),e._node.src=n._src,e._node.preload="auto",e._node.volume=t,e._node.load()),e},reset:function(){var e=this,n=e._parent;return e._muted=n._muted,e._loop=n._loop,e._volume=n._volume,e._muted=n._muted,e._rate=n._rate,e._seek=0,e._paused=!0,e._ended=!0,e._sprite="__default",e._id=Math.round(Date.now()*Math.random()),e},_errorListener:function(){var e=this;e._node.error&&4===e._node.error.code&&(i.noAudio=!0),e._parent._emit("loaderror",e._id,e._node.error?e._node.error.code:0),e._node.removeEventListener("error",e._errorListener,!1)},_loadListener:function(){var e=this,n=e._parent;n._duration=Math.ceil(10*e._node.duration)/10,0===Object.keys(n._sprite).length&&(n._sprite={__default:[0,1e3*n._duration]}),"loaded"!==n._state&&(n._state="loaded",n._emit("load"),n._loadQueue()),n._autoplay&&n.play(),e._node.removeEventListener(d,e._loadFn,!1)}},t)var l={},f=function(e){var n=e._src;if(l[n])return e._duration=l[n].duration,void m(e);if(/^data:[^;]+;base64,/.test(n)){window.atob=window.atob||function(e){for(var n,o,t="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",r=String(e).replace(/=+$/,""),u=0,d=0,a="";o=r.charAt(d++);~o&&(n=u%4?64*n+o:o,u++%4)?a+=String.fromCharCode(255&n>>(-2*u&6)):0)o=t.indexOf(o);return a};for(var o=atob(n.split(",")[1]),t=new Uint8Array(o.length),r=0;r<o.length;++r)t[r]=o.charCodeAt(r);p(t.buffer,e)}else{var u=new XMLHttpRequest;u.open("GET",n,!0),u.responseType="arraybuffer",u.onload=function(){var n=(u.status+"")[0];return"0"!==n&&"2"!==n&&"3"!==n?void e._emit("loaderror",null,"Failed loading audio file with status: "+u.status+"."):void p(u.response,e)},u.onerror=function(){e._webAudio&&(e._html5=!0,e._webAudio=!1,e._sounds=[],delete l[n],e.load())},c(u)}},c=function(e){try{e.send()}catch(n){e.onerror()}},p=function(e,n){o.decodeAudioData(e,function(e){e&&n._sounds.length>0&&(l[n._src]=e,m(n,e))},function(){n._emit("loaderror",null,"Decoding audio data failed.")})},m=function(e,n){n&&!e._duration&&(e._duration=n.duration),0===Object.keys(e._sprite).length&&(e._sprite={__default:[0,1e3*e._duration]}),"loaded"!==e._state&&(e._state="loaded",e._emit("load"),e._loadQueue()),e._autoplay&&e.play()};"function"=="function"&&__webpack_require__(240)&&!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function(){return{Howler:i,Howl:_}}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)),"undefined"!=typeof exports&&(exports.Howler=i,exports.Howl=_),"undefined"!=typeof window?(window.HowlerGlobal=a,window.Howler=i,window.Howl=_,window.Sound=s):"undefined"!=typeof global&&(global.HowlerGlobal=a,global.Howler=i,global.Howl=_,global.Sound=s)}();
-	/*! Effects Plugin */
-	!function(){"use strict";HowlerGlobal.prototype._pos=[0,0,0],HowlerGlobal.prototype._orientation=[0,0,-1,0,1,0],HowlerGlobal.prototype._velocity=[0,0,0],HowlerGlobal.prototype._listenerAttr={dopplerFactor:1,speedOfSound:343.3},HowlerGlobal.prototype.pos=function(e,n,t){var o=this;return o.ctx&&o.ctx.listener?(n="number"!=typeof n?o._pos[1]:n,t="number"!=typeof t?o._pos[2]:t,"number"!=typeof e?o._pos:(o._pos=[e,n,t],o.ctx.listener.setPosition(o._pos[0],o._pos[1],o._pos[2]),o)):o},HowlerGlobal.prototype.orientation=function(e,n,t,o,r,i){var a=this;if(!a.ctx||!a.ctx.listener)return a;var p=a._orientation;return n="number"!=typeof n?p[1]:n,t="number"!=typeof t?p[2]:t,o="number"!=typeof o?p[3]:o,r="number"!=typeof r?p[4]:r,i="number"!=typeof i?p[5]:i,"number"!=typeof e?p:(a._orientation=[e,n,t,o,r,i],a.ctx.listener.setOrientation(e,n,t,o,r,i),a)},HowlerGlobal.prototype.velocity=function(e,n,t){var o=this;return o.ctx&&o.ctx.listener?(n="number"!=typeof n?o._velocity[1]:n,t="number"!=typeof t?o._velocity[2]:t,"number"!=typeof e?o._velocity:(o._velocity=[e,n,t],o.ctx.listener.setVelocity(o._velocity[0],o._velocity[1],o._velocity[2]),o)):o},HowlerGlobal.prototype.listenerAttr=function(e){var n=this;if(!n.ctx||!n.ctx.listener)return n;var t=n._listenerAttr;return e?(n._listenerAttr={dopplerFactor:"undefined"!=typeof e.dopplerFactor?e.dopplerFactor:t.dopplerFactor,speedOfSound:"undefined"!=typeof e.speedOfSound?e.speedOfSound:t.speedOfSound},n.ctx.listener.dopplerFactor=t.dopplerFactor,n.ctx.listener.speedOfSound=t.speedOfSound,n):t},Howl.prototype.init=function(e){return function(n){var t=this;return t._orientation=n.orientation||[1,0,0],t._pos=n.pos||null,t._velocity=n.velocity||[0,0,0],t._pannerAttr={coneInnerAngle:"undefined"!=typeof n.coneInnerAngle?n.coneInnerAngle:360,coneOuterAngle:"undefined"!=typeof n.coneOuterAngle?n.coneOuterAngle:360,coneOuterGain:"undefined"!=typeof n.coneOuterGain?n.coneOuterGain:0,distanceModel:"undefined"!=typeof n.distanceModel?n.distanceModel:"inverse",maxDistance:"undefined"!=typeof n.maxDistance?n.maxDistance:1e4,panningModel:"undefined"!=typeof n.panningModel?n.panningModel:"HRTF",refDistance:"undefined"!=typeof n.refDistance?n.refDistance:1,rolloffFactor:"undefined"!=typeof n.rolloffFactor?n.rolloffFactor:1},t._onpos=n.onpos?[{fn:n.onpos}]:[],t._onorientation=n.onorientation?[{fn:n.onorientation}]:[],t._onvelocity=n.onvelocity?[{fn:n.onvelocity}]:[],e.call(this,n)}}(Howl.prototype.init),Howl.prototype.pos=function(n,t,o,r){var i=this;if(!i._webAudio)return i;if("loaded"!==i._state)return i._queue.push({event:"pos",action:function(){i.pos(n,t,o,r)}}),i;if(t="number"!=typeof t?0:t,o="number"!=typeof o?-.5:o,"undefined"==typeof r){if("number"!=typeof n)return i._pos;i._pos=[n,t,o]}for(var a=i._getSoundIds(r),p=0;p<a.length;p++){var l=i._soundById(a[p]);if(l){if("number"!=typeof n)return l._pos;l._pos=[n,t,o],l._node&&(l._panner||e(l),l._panner.setPosition(n,t,o)),i._emit("pos",l._id)}}return i},Howl.prototype.orientation=function(n,t,o,r){var i=this;if(!i._webAudio)return i;if("loaded"!==i._state)return i._queue.push({event:"orientation",action:function(){i.orientation(n,t,o,r)}}),i;if(t="number"!=typeof t?i._orientation[1]:t,o="number"!=typeof o?i._orientation[2]:o,"undefined"==typeof r){if("number"!=typeof n)return i._orientation;i._orientation=[n,t,o]}for(var a=i._getSoundIds(r),p=0;p<a.length;p++){var l=i._soundById(a[p]);if(l){if("number"!=typeof n)return l._orientation;l._orientation=[n,t,o],l._node&&(l._panner||(l._pos||(l._pos=i._pos||[0,0,-.5]),e(l)),l._panner.setOrientation(n,t,o)),i._emit("orientation",l._id)}}return i},Howl.prototype.velocity=function(n,t,o,r){var i=this;if(!i._webAudio)return i;if("loaded"!==i._state)return i._queue.push({event:"velocity",action:function(){i.velocity(n,t,o,r)}}),i;if(t="number"!=typeof t?i._velocity[1]:t,o="number"!=typeof o?i._velocity[2]:o,"undefined"==typeof r){if("number"!=typeof n)return i._velocity;i._velocity=[n,t,o]}for(var a=i._getSoundIds(r),p=0;p<a.length;p++){var l=i._soundById(a[p]);if(l){if("number"!=typeof n)return l._velocity;l._velocity=[n,t,o],l._node&&(l._pos||(l._pos=i._pos||[0,0,-.5]),l._panner||e(l),l._panner.setVelocity(n,t,o)),i._emit("velocity",l._id)}}return i},Howl.prototype.pannerAttr=function(){var n,t,o,r=this,i=arguments;if(!r._webAudio)return r;if(0===i.length)return r._pannerAttr;if(1===i.length){if("object"!=typeof i[0])return o=r._soundById(parseInt(i[0],10)),o?o._pannerAttr:r._pannerAttr;n=i[0],"undefined"==typeof t&&(r._pannerAttr={coneInnerAngle:"undefined"!=typeof n.coneInnerAngle?n.coneInnerAngle:r._coneInnerAngle,coneOuterAngle:"undefined"!=typeof n.coneOuterAngle?n.coneOuterAngle:r._coneOuterAngle,coneOuterGain:"undefined"!=typeof n.coneOuterGain?n.coneOuterGain:r._coneOuterGain,distanceModel:"undefined"!=typeof n.distanceModel?n.distanceModel:r._distanceModel,maxDistance:"undefined"!=typeof n.maxDistance?n.maxDistance:r._maxDistance,panningModel:"undefined"!=typeof n.panningModel?n.panningModel:r._panningModel,refDistance:"undefined"!=typeof n.refDistance?n.refDistance:r._refDistance,rolloffFactor:"undefined"!=typeof n.rolloffFactor?n.rolloffFactor:r._rolloffFactor})}else 2===i.length&&(n=i[0],t=parseInt(i[1],10));for(var a=r._getSoundIds(t),p=0;p<a.length;p++)if(o=r._soundById(a[p])){var l=o._pannerAttr;l={coneInnerAngle:"undefined"!=typeof n.coneInnerAngle?n.coneInnerAngle:l.coneInnerAngle,coneOuterAngle:"undefined"!=typeof n.coneOuterAngle?n.coneOuterAngle:l.coneOuterAngle,coneOuterGain:"undefined"!=typeof n.coneOuterGain?n.coneOuterGain:l.coneOuterGain,distanceModel:"undefined"!=typeof n.distanceModel?n.distanceModel:l.distanceModel,maxDistance:"undefined"!=typeof n.maxDistance?n.maxDistance:l.maxDistance,panningModel:"undefined"!=typeof n.panningModel?n.panningModel:l.panningModel,refDistance:"undefined"!=typeof n.refDistance?n.refDistance:l.refDistance,rolloffFactor:"undefined"!=typeof n.rolloffFactor?n.rolloffFactor:l.rolloffFactor};var c=o._panner;c?(c.coneInnerAngle=l.coneInnerAngle,c.coneOuterAngle=l.coneOuterAngle,c.coneOuterGain=l.coneOuterGain,c.distanceModel=l.distanceModel,c.maxDistance=l.maxDistance,c.panningModel=l.panningModel,c.refDistance=l.refDistance,c.rolloffFactor=l.rolloffFactor):(o._pos||(o._pos=r._pos||[0,0,-.5]),e(o))}return r},Sound.prototype.init=function(e){return function(){var n=this,t=n._parent;n._orientation=t._orientation,n._pos=t._pos,n._velocity=t._velocity,n._pannerAttr=t._pannerAttr,e.call(this),n._pos&&t.pos(n._pos[0],n._pos[1],n._pos[2],n._id)}}(Sound.prototype.init),Sound.prototype.reset=function(e){return function(){var n=this,t=n._parent;return n._orientation=t._orientation,n._pos=t._pos,n._velocity=t._velocity,n._pannerAttr=t._pannerAttr,e.call(this)}}(Sound.prototype.reset);var e=function(e){e._panner=Howler.ctx.createPanner(),e._panner.coneInnerAngle=e._pannerAttr.coneInnerAngle,e._panner.coneOuterAngle=e._pannerAttr.coneOuterAngle,e._panner.coneOuterGain=e._pannerAttr.coneOuterGain,e._panner.distanceModel=e._pannerAttr.distanceModel,e._panner.maxDistance=e._pannerAttr.maxDistance,e._panner.panningModel=e._pannerAttr.panningModel,e._panner.refDistance=e._pannerAttr.refDistance,e._panner.rolloffFactor=e._pannerAttr.rolloffFactor,e._panner.setPosition(e._pos[0],e._pos[1],e._pos[2]),e._panner.setOrientation(e._orientation[0],e._orientation[1],e._orientation[2]),e._panner.setVelocity(e._velocity[0],e._velocity[1],e._velocity[2]),e._panner.connect(e._node),e._paused||e._parent.pause(e._id,!0).play(e._id)}}();
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 283 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Noop function (do nothing)
-	 */
-	var noop = exports.noop = function noop() {};
-	
-	/**
-	 * Excute callback if value is not undefined
-	 * @param  {any} value [value to check]
-	 * @param  {Function} callback [function to be excuted]
-	 */
-	var runIfSet = exports.runIfSet = function runIfSet(value, callback) {
-	  if (value !== undefined) {
-	    callback;
-	  }
-	};
-
-/***/ },
-/* 284 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _grid = __webpack_require__(285);
-	
-	var _grid2 = _interopRequireDefault(_grid);
-	
-	var _game_play = __webpack_require__(287);
-	
-	var _game_play2 = _interopRequireDefault(_game_play);
-	
-	var _reactHowler = __webpack_require__(279);
-	
-	var _reactHowler2 = _interopRequireDefault(_reactHowler);
-	
-	var _socket = __webpack_require__(230);
-	
-	var _socket2 = _interopRequireDefault(_socket);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	function MegatronDisplay(props) {
-	    return _react2.default.createElement(_grid2.default.Grid, { grid: props.grid, hardDrop: props.hardDrop ? _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null, activePiece: { activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) });
-	}
-	
-	function MegatronScoreBoard(players) {
-	    console.log(players);
-	    return _react2.default.createElement(
-	        'div',
-	        { className: 'scoreBoard' },
-	        Object.keys(players).map(function (player) {
-	            return _react2.default.createElement(
-	                'div',
-	                null,
-	                players[player].playerName + ': ' + players[player].score
-	            );
-	        })
-	    );
-	}
-	
-	var Megatron = function (_React$Component) {
-	    _inherits(Megatron, _React$Component);
-	
-	    function Megatron(props) {
-	        _classCallCheck(this, Megatron);
-	
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Megatron).call(this, props));
-	
-	        _this.state = {
-	            activePlayers: {}
-	        };
-	
-	        // this.handleSound = this.handleSound.bind(this)
-	        return _this;
-	    }
-	
-	    _createClass(Megatron, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            var that = this;
-	            _socket2.default.emit('megatron_activated');
-	            _socket2.default.on('update_megatron', function (data) {
-	                that.state.activePlayers[data.playerName] = data;
-	            });
-	            this.timer = setInterval(function () {
-	                that.forceUpdate();
-	            }, 250);
-	        }
-	    }, {
-	        key: 'componentWillUnmount',
-	        value: function componentWillUnmount() {
-	            this.state.socket.emit('megatron_deactivated');
-	            clearInterval(this.timer);
-	        }
-	    }, {
-	        key: 'render',
-	        value: function render() {
-	            // console.log(this.state.activePlayers, "THIS IS THE STATE")
-	            var that = this;
-	            var TO_RENDER = _react2.default.createElement(
-	                'div',
-	                { className: 'admin-wait' },
-	                'Waiting for Admin to start game'
-	            );
-	
-	            var players = this.state.activePlayers;
-	            var playerNames = Object.keys(players);
-	
-	            if (playerNames.length > 0) {
-	                TO_RENDER = playerNames.map(function (playerName) {
-	                    var player = players[playerName];
-	                    if (player.grid) {
-	                        return _react2.default.createElement(
-	                            'div',
-	                            { key: player.playerName },
-	                            _react2.default.createElement(MegatronDisplay, player)
-	                        );
-	                    }
-	                });
-	            } else {
-	                TO_RENDER = _react2.default.createElement(
-	                    'div',
-	                    { className: 'admin-wait' },
-	                    'Waiting for Admin to start game'
-	                );
-	            }
-	
-	            return _react2.default.createElement(
-	                'div',
-	                { className: 'megatron' },
-	                _react2.default.createElement(_reactHowler2.default, {
-	                    src: '../sound/videoplayback.m4a',
-	                    playing: this.state.playing
-	                }),
-	                TO_RENDER,
-	                _react2.default.createElement(
-	                    'div',
-	                    { className: 'scoreboard' },
-	                    MegatronScoreBoard(that.state.activePlayers)
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Megatron;
-	}(_react2.default.Component);
-	
-	module.exports = Megatron;
-
-/***/ },
-/* 285 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _constants = __webpack_require__(286);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function Row(props) {
-	
-	    function giveClass(num) {
-	        var theClass;
-	        switch (num) {
-	            case 0:
-	                theClass = "emptyCell";
-	                break;
-	            case 1:
-	                theClass = "I";
-	                break;
-	            case 2:
-	                theClass = "J";
-	                break;
-	            case 3:
-	                theClass = "L";
-	                break;
-	            case 4:
-	                theClass = "O";
-	                break;
-	            case 5:
-	                theClass = "S";
-	                break;
-	            case 6:
-	                theClass = "T";
-	                break;
-	            case 7:
-	                theClass = "Z";
-	                break;
-	            case 8:
-	                theClass = "addedLines";
-	                break;
-	        }
-	        if (props.shadow) {
-	            theClass += " shadow";
-	        }
-	
-	        return theClass;
-	    }
-	
-	    return _react2.default.createElement(
-	        'div',
-	        { className: 'row' },
-	        props.row.map(function (cell, index) {
-	            return cell === 0 ? _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) }) : _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) });
-	        })
-	    );
-	}
-	
-	function Grid(props) {
-	    // var currentPieceLength = props.activePiece.length;
-	    // var currentPieceWidth = currentPieceLength/constants.GRID_COLS * 100;
-	    // var currentPieceHeight = currentPieceLength/constants.GRID_ROWS * 100;
-	    // var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
-	    var currentX = props.activePiece.activePiecePosition.x * 4;
-	    var currentY;
-	    //currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
-	    currentY = Math.floor(props.activePiece.activePiecePosition.y) * 4;
-	    //var shadowY = props.shadowY / constants.GRID_ROWS * 100;
-	    var shadowY = props.shadowY * 4;
-	    return _react2.default.createElement(
-	        'div',
-	        { className: props.handicap === 'shake' ? 'shake container' : props.handicap === 'blur' ? 'blur container' : props.handicap === 'flip' ? 'flipdiv container' : 'container' },
-	        props.handicap === 'troll' ? _react2.default.createElement(
-	            'div',
-	            { className: 'troll' },
-	            _react2.default.createElement('img', { src: 'http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' })
-	        ) : '',
-	        props.message ? _react2.default.createElement(
-	            'h1',
-	            { className: 'message' },
-	            props.message
-	        ) : '',
-	        props.handicap === 'reverse' ? _react2.default.createElement(
-	            'h1',
-	            { className: 'message' },
-	            'REVERSE'
-	        ) : '',
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'grid', id: 'grid' },
-	            props.grid.map(function (row, index) {
-	                return _react2.default.createElement(Row, { row: row, key: "r" + index });
-	            })
-	        ),
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'currentPiece', style: { position: 'absolute', top: currentY + 'vh', left: currentX + 'vh' } },
-	            props.activePiece.activePiece.map(function (row, index) {
-	                return _react2.default.createElement(Row, { row: row, key: "pr" + index });
-	            })
-	        ),
-	        _react2.default.createElement(
-	            'div',
-	            { className: 'shadowPiece', style: { position: 'absolute', top: shadowY + 'vh', left: currentX + 'vh' } },
-	            props.activePiece.activePiece.map(function (row, index) {
-	                return _react2.default.createElement(Row, { row: row, shadow: true, key: "sr" + index });
-	            })
-	        )
-	    );
-	}
-	
-	//get initial grid of 0s for any given height/width
-	function getInitialGrid(rows, cols) {
-	    var grid = [];
-	    for (var row = 0; row < rows; row++) {
-	        grid[row] = [];
-	        for (var col = 0; col < cols; col++) {
-	            grid[row][col] = 0;
-	        }
-	    }
-	    return grid;
-	}
-	
-	module.exports = {
-	    getInitialGrid: getInitialGrid,
-	    Grid: Grid,
-	    Row: Row
-	};
-
-/***/ },
-/* 286 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	module.exports = {
-	    COLORS: {
-	        I: 'cyan',
-	        J: 'blue',
-	        L: 'orange',
-	        O: 'yellow',
-	        S: 'green',
-	        T: 'purple',
-	        Z: 'red'
-	    },
-	    SHAPES: {
-	        I: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
-	        J: [[2, 0, 0], [2, 2, 2], [0, 0, 0]],
-	        L: [[0, 0, 3], [3, 3, 3], [0, 0, 0]],
-	        O: [[4, 4], [4, 4]],
-	        S: [[0, 5, 5], [5, 5, 0], [0, 0, 0]],
-	        T: [[0, 6, 0], [6, 6, 6], [0, 0, 0]],
-	        Z: [[7, 7, 0], [0, 7, 7], [0, 0, 0]]
-	    },
-	    GRID_ROWS: 20,
-	    GRID_COLS: 10,
-	    Y_START: -1,
-	    X_START: 3,
-	    HARD_DROP: 60,
-	    DEFAULT_YSPEED: 8
-	};
-
-/***/ },
-/* 287 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	function getTetLength(tet) {
-		return tet.filter(function (row) {
-			return row.some(function (block) {
-				return block > 0;
-			});
-		}).length;
-	}
-	
-	function checkGameOver(grid) {
-		if (grid[0].some(function (block) {
-			return block > 0;
-		})) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	function canMoveLeft(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var floorCurrTetY = Math.floor(currTetY);
-		var tetYMax = floorCurrTetY + tetLength;
-	
-		var leftCells = [];
-		var canMove = true;
-	
-		if (floorCurrTetY < 0) {
-			canMove = false;
-		} else {
-			currTet.forEach(function (row, rowIndex) {
-				row.forEach(function (cell, cellIndex) {
-					if (cell != 0 && (!currTet[rowIndex][cellIndex - 1] ? true : currTet[rowIndex][cellIndex - 1] === 0 ? true : false)) {
-						leftCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
-					}
-				});
-			});
-			leftCells.forEach(function (leftCell) {
-				if (leftCell.x - 1 < 0 ? true : currGrid[leftCell.y][leftCell.x - 1] != 0 ? true : false) {
-					canMove = false;
-				}
-			});
-		}
-		return canMove;
-	}
-	
-	function canMoveRight(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var floorCurrTetY = Math.floor(currTetY);
-		var tetYMax = floorCurrTetY + tetLength;
-	
-		var rightCells = [];
-		var canMove = true;
-	
-		if (floorCurrTetY < 0) {
-			canMove = false;
-		} else {
-			currTet.forEach(function (row, rowIndex) {
-				row.forEach(function (cell, cellIndex) {
-					if (cell != 0 && (!currTet[rowIndex][cellIndex + 1] ? true : currTet[rowIndex][cellIndex + 1] === 0 ? true : false)) {
-						rightCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
-					}
-				});
-			});
-			rightCells.forEach(function (rightCell) {
-				if (rightCell.x + 1 > 19 ? true : currGrid[rightCell.y][rightCell.x + 1] != 0 ? true : false) {
-					canMove = false;
-				}
-			});
-		}
-		return canMove;
-	}
-	
-	function canMoveDown(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var floorCurrTetY = Math.floor(currTetY);
-		var tetYMax = floorCurrTetY + tetLength;
-	
-		var bottomCells = [];
-		var canMove = true;
-		if (tetYMax > 0) {
-			currTet.forEach(function (row, rowIndex) {
-				row.forEach(function (cell, cellIndex) {
-					if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
-						bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
-					}
-				});
-			});
-			bottomCells.forEach(function (bottomCell) {
-				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
-					canMove = false;
-				}
-			});
-		}
-		return canMove;
-	}
-	
-	function getBottomMostPosition(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = getTetLength(currTet);
-		var canMove = true;
-		var bottomMostY = currTetY;
-		var floorCurrTetY = Math.floor(currTetY);
-		var bottomCells = [];
-	
-		currTet.forEach(function (row, rowIndex) {
-			row.forEach(function (cell, cellIndex) {
-				if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
-					bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex, colHeight: rowIndex });
-				}
-			});
-		});
-	
-		while (canMove) {
-			bottomCells.forEach(function (bottomCell) {
-				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
-					canMove = false;
-					bottomMostY = bottomCell.y - bottomCell.colHeight;
-				} else {
-					bottomCell.y += 1;
-				}
-			});
-		}
-		return bottomMostY;
-	}
-	
-	function mergeGrid(currGrid, currTet, currTetX, currTetY) {
-		var tetLength = currTet.length;
-		var relGridRow = 0;
-		var relGridCol = 0;
-		var newGrid = [];
-		for (var row = 0; row < tetLength; row++) {
-			for (var col = 0; col < tetLength; col++) {
-				if (currTet[row][col] === 0) {
-					continue;
-				}
-				relGridRow = Math.floor(currTetY) + row;
-				relGridCol = currTetX + col;
-				if (currGrid[relGridRow]) {
-					currGrid[relGridRow][relGridCol] = currTet[row][col];
-				}
-			}
-		}
-		return currGrid;
-	}
-	
-	function canRotate(currGrid, currTet, currTetY, currTetX) {
-		var tetLength = currTet.length;
-		var tetXMax = currTetX + getTetLength(currTet);
-		var rotatedTet = rotateRight(currTet);
-		var rotationAllowed = true;
-		var relGridRow = 0;
-		var relGridCol = 0;
-		//only allow rotation once whole piece is on board
-		if (currTetY < 0) {
-			return true;
-		}
-		//check if whole tetrimino array is inside grid bounds
-		//if yes can rotate
-		else if (tetXMax > 19 && currTetX < 0) {
-				return false;
-			}
-			//if tetrimino is in bounds, check if overlapping grid pieces are empty or full
-			else {
-					for (var row = 0; row < tetLength; row++) {
-						for (var col = 0; col < tetLength; col++) {
-							//if empty cell in tetrimino, doesnt matter
-							if (rotatedTet[row][col] === 0) {
-								continue;
-							}
-							relGridRow = Math.floor(currTetY) + row;
-							relGridCol = currTetX + col;
-							if (currGrid[relGridRow][relGridCol] != 0) {
-								rotationAllowed = false;
-							}
-						}
-					}
-					return rotationAllowed;
-				}
-	}
-	
-	function clearLines(grid) {
-		var fullRows = 0;
-		grid.map(function (row, index) {
-			if (row.every(function (cell) {
-				return cell > 0;
-			})) {
-				fullRows++;
-				grid.splice(index, 1);
-				grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-			}
-		});
-	
-		var gameOver = checkGameOver(grid);
-	
-		return { clearedGrid: grid, clearedLines: fullRows, gameOver: gameOver };
-	}
-	
-	function rotateRight(array) {
-		var n = array.length;
-		var rotated = [];
-		array.map(function (row, i) {
-			rotated[i] = [];
-			row.map(function (cell, j) {
-				rotated[i][j] = array[n - j - 1][i];
-			});
-		});
-		return rotated;
-	}
-	
-	function getPoints(clearedLines) {
-		var points;
-		switch (clearedLines) {
-			case 0:
-				points = 0;
-				break;
-			case 1:
-				points = 40;
-				break;
-			case 2:
-				points = 100;
-				break;
-			case 3:
-				points = 300;
-				break;
-			case 4:
-				points = 800;
-				break;
-		}
-		return points;
-	}
-	
-	function combos(prevLines, currLines) {
-		if (!prevLines || prevLines === 0) {
-			return getPoints(currLines);
-		}
-		return getPoints(currLines) * 1.5;
-	}
-	
-	function getRandomBomb(handicapArr, clearedLines) {
-		var bombs = [{ name: 'extraLines' }, { name: 'speedUp', maxTime: 8000 }, { name: 'shake', maxTime: 2000 }, { name: 'reverse', maxTime: 5000 }, { name: 'blur', maxTime: 5000 }, { name: 'flip', maxTime: 8000 }, { name: 'troll', maxTime: 5000 }];
-	
-		// {name: 'cat', maxTime: 5000}
-		var randomBomb = bombs[Math.floor(Math.random() * bombs.length)];
-	
-		if (clearedLines > 0) {
-			handicapArr.push(randomBomb);
-		}
-		return handicapArr;
-	}
-	
-	module.exports = {
-		getTetLength: getTetLength,
-		checkGameOver: checkGameOver,
-		canMoveLeft: canMoveLeft,
-		canMoveRight: canMoveRight,
-		canMoveDown: canMoveDown,
-		getBottomMostPosition: getBottomMostPosition,
-		mergeGrid: mergeGrid,
-		canRotate: canRotate,
-		clearLines: clearLines,
-		rotateRight: rotateRight,
-		getPoints: getPoints,
-		combos: combos,
-		getRandomBomb: getRandomBomb
-	};
-
-/***/ },
-/* 288 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34543,7 +33740,7 @@
 	exports.default = Player;
 
 /***/ },
-/* 289 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34619,7 +33816,7 @@
 	exports.default = Queued;
 
 /***/ },
-/* 290 */
+/* 283 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -34638,7 +33835,7 @@
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactHammerjs = __webpack_require__(291);
+	var _reactHammerjs = __webpack_require__(284);
 	
 	var _reactHammerjs2 = _interopRequireDefault(_reactHammerjs);
 	
@@ -34646,15 +33843,15 @@
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
-	var _grid = __webpack_require__(285);
+	var _grid = __webpack_require__(287);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
-	var _game_play = __webpack_require__(287);
+	var _game_play = __webpack_require__(288);
 	
 	var _game_play2 = _interopRequireDefault(_game_play);
 	
-	var _handicaps = __webpack_require__(293);
+	var _handicaps = __webpack_require__(289);
 	
 	var _handicaps2 = _interopRequireDefault(_handicaps);
 	
@@ -34992,104 +34189,100 @@
 				var options = { preventDefault: true, swipe: { threshold: 0.5, velocity: 0, dragBlockHorizontal: true } };
 	
 				return _react2.default.createElement(
-					_reactHammerjs2.default,
-					{ onTap: this.goFS },
+					'div',
+					{ className: 'gamePage' },
 					_react2.default.createElement(
 						'div',
-						{ className: 'page' },
+						{ className: 'main' },
 						_react2.default.createElement(
 							'div',
-							{ className: 'main' },
+							{ className: 'leftSideBar' },
+							_react2.default.createElement(
+								_reactHammerjs2.default,
+								{ onTap: this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleRightMove : this.handleLeftMove },
+								_react2.default.createElement('div', { className: 'controlButton leftButton' })
+							)
+						),
+						_react2.default.createElement(
+							_reactHammerjs2.default,
+							{ onSwipe: this.handleSwipe, onTap: this.handleRotate, vertical: true, options: options },
+							_react2.default.createElement(_grid2.default.Grid, { message: this.state.gameMessage ? typeof this.state.gameMessage === "number" ? 4 - this.state.gameMessage : this.state.gameMessage : null, handicap: this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null, grid: this.state.grid, hardDrop: this.hardDrop ? _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null, activePiece: { activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) })
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'rightSideBar' },
+							_react2.default.createElement(
+								_reactHammerjs2.default,
+								{ onTap: this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleLeftMove : this.handleRightMove },
+								_react2.default.createElement('div', { className: 'controlButton rightButton' })
+							)
+						)
+					),
+					_react2.default.createElement(
+						'div',
+						{ className: 'footer' },
+						_react2.default.createElement(
+							'div',
+							{ className: 'nextPiece' },
+							_react2.default.createElement(
+								'h2',
+								{ className: 'nextTitle' },
+								'NEXT'
+							),
+							this.state.nextPiece.map(function (row, index) {
+								return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+							})
+						),
+						_react2.default.createElement(
+							'div',
+							{ className: 'sidebarElement' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'leftSideBar' },
+								{ className: 'lines' },
 								_react2.default.createElement(
-									_reactHammerjs2.default,
-									{ onTap: this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleRightMove : this.handleLeftMove },
-									_react2.default.createElement('div', { className: 'controlButton leftButton' })
+									'h2',
+									null,
+									'LINES'
+								),
+								_react2.default.createElement(
+									'h3',
+									null,
+									this.state.totalLines
 								)
 							),
 							_react2.default.createElement(
-								_reactHammerjs2.default,
-								{ onSwipe: this.handleSwipe, onTap: this.handleRotate, vertical: true, options: options },
-								_react2.default.createElement(_grid2.default.Grid, { message: this.state.gameMessage ? typeof this.state.gameMessage === "number" ? 4 - this.state.gameMessage : this.state.gameMessage : null, handicap: this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null, grid: this.state.grid, hardDrop: this.hardDrop ? _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null, activePiece: { activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) })
-							),
-							_react2.default.createElement(
 								'div',
-								{ className: 'rightSideBar' },
+								{ className: 'score' },
 								_react2.default.createElement(
-									_reactHammerjs2.default,
-									{ onTap: this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleLeftMove : this.handleRightMove },
-									_react2.default.createElement('div', { className: 'controlButton rightButton' })
+									'h2',
+									null,
+									'SCORE'
+								),
+								_react2.default.createElement(
+									'h3',
+									null,
+									this.state.score,
+									' (',
+									this.props.rank,
+									')'
 								)
 							)
 						),
 						_react2.default.createElement(
 							'div',
-							{ className: 'footer' },
+							{ className: 'handicaps' },
 							_react2.default.createElement(
-								'div',
-								{ className: 'nextPiece' },
-								_react2.default.createElement(
-									'h2',
-									{ className: 'nextTitle' },
-									'NEXT'
-								),
-								this.state.nextPiece.map(function (row, index) {
-									return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
-								})
+								'h2',
+								null,
+								'BOMBS'
 							),
 							_react2.default.createElement(
-								'div',
-								{ className: 'sidebarElement' },
+								_reactHammerjs2.default,
+								{ onTap: this.handleBombClick },
 								_react2.default.createElement(
-									'div',
-									{ className: 'lines' },
-									_react2.default.createElement(
-										'h2',
-										null,
-										'LINES'
-									),
-									_react2.default.createElement(
-										'h3',
-										null,
-										this.state.totalLines
-									)
-								),
-								_react2.default.createElement(
-									'div',
-									{ className: 'score' },
-									_react2.default.createElement(
-										'h2',
-										null,
-										'SCORE'
-									),
-									_react2.default.createElement(
-										'h3',
-										null,
-										this.state.score,
-										' (',
-										this.props.rank,
-										')'
-									)
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'handicaps' },
-								_react2.default.createElement(
-									'h2',
-									null,
-									'BOMBS'
-								),
-								_react2.default.createElement(
-									_reactHammerjs2.default,
-									{ onTap: this.handleBombClick },
-									_react2.default.createElement(
-										'h3',
-										{ className: 'bombsButton', type: 'button', disabled: disabled, ref: 'the_bomb' },
-										this.state.handicapsAcc.length
-									)
+									'h3',
+									{ className: 'bombsButton', type: 'button', disabled: disabled, ref: 'the_bomb' },
+									this.state.handicapsAcc.length
 								)
 							)
 						)
@@ -35104,7 +34297,7 @@
 	exports.default = Game;
 
 /***/ },
-/* 291 */
+/* 284 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(1);
@@ -35112,7 +34305,7 @@
 	
 	// require('hammerjs') when in a browser. This is safe because Hammer is only
 	// invoked in componentDidMount, which is not executed on the server.
-	var Hammer = (typeof window !== 'undefined') ? __webpack_require__(292) : undefined;
+	var Hammer = (typeof window !== 'undefined') ? __webpack_require__(285) : undefined;
 	
 	var privateProps = {
 		children: true,
@@ -35245,7 +34438,7 @@
 
 
 /***/ },
-/* 292 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*! Hammer.JS - v2.0.7 - 2016-04-22
@@ -37894,7 +37087,447 @@
 
 
 /***/ },
-/* 293 */
+/* 286 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	module.exports = {
+	    COLORS: {
+	        I: 'cyan',
+	        J: 'blue',
+	        L: 'orange',
+	        O: 'yellow',
+	        S: 'green',
+	        T: 'purple',
+	        Z: 'red'
+	    },
+	    SHAPES: {
+	        I: [[0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]],
+	        J: [[2, 0, 0], [2, 2, 2], [0, 0, 0]],
+	        L: [[0, 0, 3], [3, 3, 3], [0, 0, 0]],
+	        O: [[4, 4], [4, 4]],
+	        S: [[0, 5, 5], [5, 5, 0], [0, 0, 0]],
+	        T: [[0, 6, 0], [6, 6, 6], [0, 0, 0]],
+	        Z: [[7, 7, 0], [0, 7, 7], [0, 0, 0]]
+	    },
+	    GRID_ROWS: 20,
+	    GRID_COLS: 10,
+	    Y_START: -1,
+	    X_START: 3,
+	    HARD_DROP: 60,
+	    DEFAULT_YSPEED: 8
+	};
+
+/***/ },
+/* 287 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _constants = __webpack_require__(286);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function Row(props) {
+	
+	    function giveClass(num) {
+	        var theClass;
+	        switch (num) {
+	            case 0:
+	                theClass = "emptyCell";
+	                break;
+	            case 1:
+	                theClass = "I";
+	                break;
+	            case 2:
+	                theClass = "J";
+	                break;
+	            case 3:
+	                theClass = "L";
+	                break;
+	            case 4:
+	                theClass = "O";
+	                break;
+	            case 5:
+	                theClass = "S";
+	                break;
+	            case 6:
+	                theClass = "T";
+	                break;
+	            case 7:
+	                theClass = "Z";
+	                break;
+	            case 8:
+	                theClass = "addedLines";
+	                break;
+	        }
+	        if (props.shadow) {
+	            theClass += " shadow";
+	        }
+	
+	        return theClass;
+	    }
+	
+	    return _react2.default.createElement(
+	        'div',
+	        { className: 'row' },
+	        props.row.map(function (cell, index) {
+	            return cell === 0 ? _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) }) : _react2.default.createElement('div', { className: giveClass(cell), key: "codrin" + index + Math.floor(Math.random() * 100) });
+	        })
+	    );
+	}
+	
+	function Grid(props) {
+	    // var currentPieceLength = props.activePiece.length;
+	    // var currentPieceWidth = currentPieceLength/constants.GRID_COLS * 100;
+	    // var currentPieceHeight = currentPieceLength/constants.GRID_ROWS * 100;
+	    // var currentX = props.activePiece.activePiecePosition.x / constants.GRID_COLS * 100;
+	    var currentX = props.activePiece.activePiecePosition.x * 4;
+	    var currentY;
+	    //currentY = Math.floor(props.activePiece.activePiecePosition.y) / constants.GRID_ROWS * 100;
+	    currentY = Math.floor(props.activePiece.activePiecePosition.y) * 4;
+	    //var shadowY = props.shadowY / constants.GRID_ROWS * 100;
+	    var shadowY = props.shadowY * 4;
+	    return _react2.default.createElement(
+	        'div',
+	        { className: props.handicap === 'shake' ? 'shake container' : props.handicap === 'blur' ? 'blur container' : props.handicap === 'flip' ? 'flipdiv container' : 'container' },
+	        props.handicap === 'troll' ? _react2.default.createElement(
+	            'div',
+	            { className: 'troll' },
+	            _react2.default.createElement('img', { src: 'http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' })
+	        ) : '',
+	        props.message ? _react2.default.createElement(
+	            'h1',
+	            { className: 'message' },
+	            props.message
+	        ) : '',
+	        props.handicap === 'reverse' ? _react2.default.createElement(
+	            'h1',
+	            { className: 'message' },
+	            'REVERSE'
+	        ) : '',
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'grid', id: 'grid' },
+	            props.grid.map(function (row, index) {
+	                return _react2.default.createElement(Row, { row: row, key: "r" + index });
+	            })
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'currentPiece', style: { position: 'absolute', top: currentY + 'vh', left: currentX + 'vh' } },
+	            props.activePiece.activePiece.map(function (row, index) {
+	                return _react2.default.createElement(Row, { row: row, key: "pr" + index });
+	            })
+	        ),
+	        _react2.default.createElement(
+	            'div',
+	            { className: 'shadowPiece', style: { position: 'absolute', top: shadowY + 'vh', left: currentX + 'vh' } },
+	            props.activePiece.activePiece.map(function (row, index) {
+	                return _react2.default.createElement(Row, { row: row, shadow: true, key: "sr" + index });
+	            })
+	        )
+	    );
+	}
+	
+	//get initial grid of 0s for any given height/width
+	function getInitialGrid(rows, cols) {
+	    var grid = [];
+	    for (var row = 0; row < rows; row++) {
+	        grid[row] = [];
+	        for (var col = 0; col < cols; col++) {
+	            grid[row][col] = 0;
+	        }
+	    }
+	    return grid;
+	}
+	
+	module.exports = {
+	    getInitialGrid: getInitialGrid,
+	    Grid: Grid,
+	    Row: Row
+	};
+
+/***/ },
+/* 288 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	function getTetLength(tet) {
+		return tet.filter(function (row) {
+			return row.some(function (block) {
+				return block > 0;
+			});
+		}).length;
+	}
+	
+	function checkGameOver(grid) {
+		if (grid[0].some(function (block) {
+			return block > 0;
+		})) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function canMoveLeft(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var floorCurrTetY = Math.floor(currTetY);
+		var tetYMax = floorCurrTetY + tetLength;
+	
+		var leftCells = [];
+		var canMove = true;
+	
+		if (floorCurrTetY < 0) {
+			canMove = false;
+		} else {
+			currTet.forEach(function (row, rowIndex) {
+				row.forEach(function (cell, cellIndex) {
+					if (cell != 0 && (!currTet[rowIndex][cellIndex - 1] ? true : currTet[rowIndex][cellIndex - 1] === 0 ? true : false)) {
+						leftCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
+					}
+				});
+			});
+			leftCells.forEach(function (leftCell) {
+				if (leftCell.x - 1 < 0 ? true : currGrid[leftCell.y][leftCell.x - 1] != 0 ? true : false) {
+					canMove = false;
+				}
+			});
+		}
+		return canMove;
+	}
+	
+	function canMoveRight(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var floorCurrTetY = Math.floor(currTetY);
+		var tetYMax = floorCurrTetY + tetLength;
+	
+		var rightCells = [];
+		var canMove = true;
+	
+		if (floorCurrTetY < 0) {
+			canMove = false;
+		} else {
+			currTet.forEach(function (row, rowIndex) {
+				row.forEach(function (cell, cellIndex) {
+					if (cell != 0 && (!currTet[rowIndex][cellIndex + 1] ? true : currTet[rowIndex][cellIndex + 1] === 0 ? true : false)) {
+						rightCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
+					}
+				});
+			});
+			rightCells.forEach(function (rightCell) {
+				if (rightCell.x + 1 > 19 ? true : currGrid[rightCell.y][rightCell.x + 1] != 0 ? true : false) {
+					canMove = false;
+				}
+			});
+		}
+		return canMove;
+	}
+	
+	function canMoveDown(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var floorCurrTetY = Math.floor(currTetY);
+		var tetYMax = floorCurrTetY + tetLength;
+	
+		var bottomCells = [];
+		var canMove = true;
+		if (tetYMax > 0) {
+			currTet.forEach(function (row, rowIndex) {
+				row.forEach(function (cell, cellIndex) {
+					if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
+						bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex });
+					}
+				});
+			});
+			bottomCells.forEach(function (bottomCell) {
+				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
+					canMove = false;
+				}
+			});
+		}
+		return canMove;
+	}
+	
+	function getBottomMostPosition(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = getTetLength(currTet);
+		var canMove = true;
+		var bottomMostY = currTetY;
+		var floorCurrTetY = Math.floor(currTetY);
+		var bottomCells = [];
+	
+		currTet.forEach(function (row, rowIndex) {
+			row.forEach(function (cell, cellIndex) {
+				if (cell != 0 && (!currTet[rowIndex + 1] ? true : currTet[rowIndex + 1][cellIndex] === 0 ? true : false)) {
+					bottomCells.push({ y: floorCurrTetY + rowIndex, x: currTetX + cellIndex, colHeight: rowIndex });
+				}
+			});
+		});
+	
+		while (canMove) {
+			bottomCells.forEach(function (bottomCell) {
+				if (!currGrid[bottomCell.y + 1] || currGrid[bottomCell.y + 1][bottomCell.x] != 0) {
+					canMove = false;
+					bottomMostY = bottomCell.y - bottomCell.colHeight;
+				} else {
+					bottomCell.y += 1;
+				}
+			});
+		}
+		return bottomMostY;
+	}
+	
+	function mergeGrid(currGrid, currTet, currTetX, currTetY) {
+		var tetLength = currTet.length;
+		var relGridRow = 0;
+		var relGridCol = 0;
+		var newGrid = [];
+		for (var row = 0; row < tetLength; row++) {
+			for (var col = 0; col < tetLength; col++) {
+				if (currTet[row][col] === 0) {
+					continue;
+				}
+				relGridRow = Math.floor(currTetY) + row;
+				relGridCol = currTetX + col;
+				if (currGrid[relGridRow]) {
+					currGrid[relGridRow][relGridCol] = currTet[row][col];
+				}
+			}
+		}
+		return currGrid;
+	}
+	
+	function canRotate(currGrid, currTet, currTetY, currTetX) {
+		var tetLength = currTet.length;
+		var tetXMax = currTetX + getTetLength(currTet);
+		var rotatedTet = rotateRight(currTet);
+		var rotationAllowed = true;
+		var relGridRow = 0;
+		var relGridCol = 0;
+		//only allow rotation once whole piece is on board
+		if (currTetY < 0) {
+			return true;
+		}
+		//check if whole tetrimino array is inside grid bounds
+		//if yes can rotate
+		else if (tetXMax > 19 && currTetX < 0) {
+				return false;
+			}
+			//if tetrimino is in bounds, check if overlapping grid pieces are empty or full
+			else {
+					for (var row = 0; row < tetLength; row++) {
+						for (var col = 0; col < tetLength; col++) {
+							//if empty cell in tetrimino, doesnt matter
+							if (rotatedTet[row][col] === 0) {
+								continue;
+							}
+							relGridRow = Math.floor(currTetY) + row;
+							relGridCol = currTetX + col;
+							if (currGrid[relGridRow][relGridCol] != 0) {
+								rotationAllowed = false;
+							}
+						}
+					}
+					return rotationAllowed;
+				}
+	}
+	
+	function clearLines(grid) {
+		var fullRows = 0;
+		grid.map(function (row, index) {
+			if (row.every(function (cell) {
+				return cell > 0;
+			})) {
+				fullRows++;
+				grid.splice(index, 1);
+				grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+			}
+		});
+	
+		var gameOver = checkGameOver(grid);
+	
+		return { clearedGrid: grid, clearedLines: fullRows, gameOver: gameOver };
+	}
+	
+	function rotateRight(array) {
+		var n = array.length;
+		var rotated = [];
+		array.map(function (row, i) {
+			rotated[i] = [];
+			row.map(function (cell, j) {
+				rotated[i][j] = array[n - j - 1][i];
+			});
+		});
+		return rotated;
+	}
+	
+	function getPoints(clearedLines) {
+		var points;
+		switch (clearedLines) {
+			case 0:
+				points = 0;
+				break;
+			case 1:
+				points = 40;
+				break;
+			case 2:
+				points = 100;
+				break;
+			case 3:
+				points = 300;
+				break;
+			case 4:
+				points = 800;
+				break;
+		}
+		return points;
+	}
+	
+	function combos(prevLines, currLines) {
+		if (!prevLines || prevLines === 0) {
+			return getPoints(currLines);
+		}
+		return getPoints(currLines) * 1.5;
+	}
+	
+	function getRandomBomb(handicapArr, clearedLines) {
+		var bombs = [{ name: 'extraLines' }, { name: 'speedUp', maxTime: 8000 }, { name: 'shake', maxTime: 2000 }, { name: 'reverse', maxTime: 5000 }, { name: 'blur', maxTime: 5000 }, { name: 'flip', maxTime: 8000 }, { name: 'troll', maxTime: 5000 }];
+	
+		// {name: 'cat', maxTime: 5000}
+		var randomBomb = bombs[Math.floor(Math.random() * bombs.length)];
+	
+		if (clearedLines > 0) {
+			handicapArr.push(randomBomb);
+		}
+		return handicapArr;
+	}
+	
+	module.exports = {
+		getTetLength: getTetLength,
+		checkGameOver: checkGameOver,
+		canMoveLeft: canMoveLeft,
+		canMoveRight: canMoveRight,
+		canMoveDown: canMoveDown,
+		getBottomMostPosition: getBottomMostPosition,
+		mergeGrid: mergeGrid,
+		canRotate: canRotate,
+		clearLines: clearLines,
+		rotateRight: rotateRight,
+		getPoints: getPoints,
+		combos: combos,
+		getRandomBomb: getRandomBomb
+	};
+
+/***/ },
+/* 289 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -37932,6 +37565,561 @@
 	    extraLines: extraLines,
 	    shake: shake
 	};
+
+/***/ },
+/* 290 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactHowler = __webpack_require__(291);
+	
+	var _reactHowler2 = _interopRequireDefault(_reactHowler);
+	
+	var _socket = __webpack_require__(230);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Admin = function (_React$Component) {
+	  _inherits(Admin, _React$Component);
+	
+	  function Admin(props) {
+	    _classCallCheck(this, Admin);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Admin).call(this, props));
+	
+	    _this.clearPlayers = _this.clearPlayers.bind(_this);
+	    _this.startGame = _this.startGame.bind(_this);
+	    _this.handleSound = _this.handleSound.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Admin, [{
+	    key: 'clearPlayers',
+	    value: function clearPlayers() {
+	      this.state.socket.emit('dropPlayers');
+	    }
+	  }, {
+	    key: 'startGame',
+	    value: function startGame() {
+	      _socket2.default.emit('start_game');
+	    }
+	  }, {
+	    key: 'handleSound',
+	    value: function handleSound() {
+	      this.setState({
+	        playing: true
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'adminPage' },
+	        _react2.default.createElement(
+	          'h1',
+	          { className: 'adminH1' },
+	          'Admin page'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'adminButtons' },
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'adminButton', type: 'button', onClick: this.clearPlayers },
+	            'Restart Game'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'adminButton', type: 'button', onClick: this.startGame },
+	            'Start Game'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'adminButton', type: 'button', onClick: this.handleSound },
+	            'Test Sound'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Admin;
+	}(_react2.default.Component);
+	
+	module.exports = Admin;
+
+/***/ },
+/* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	module.exports = __webpack_require__(292).default;
+
+/***/ },
+/* 292 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _howler3 = __webpack_require__(293);
+	
+	var _utils = __webpack_require__(295);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ReactHowler = function (_Component) {
+	  _inherits(ReactHowler, _Component);
+	
+	  function ReactHowler(props) {
+	    _classCallCheck(this, ReactHowler);
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactHowler).call(this, props));
+	
+	    _this.initHowler = _this.initHowler.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(ReactHowler, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.initHowler();
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(props) {
+	      if (props.src !== this.props.src) {
+	        this.initHowler(props);
+	      }
+	      this.toggleHowler(props);
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {
+	      this.destroyHowler();
+	    }
+	    /**
+	     * Create howler object with given props
+	     */
+	
+	  }, {
+	    key: 'initHowler',
+	    value: function initHowler() {
+	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	
+	      this.destroyHowler();
+	      if (typeof _howler3.Howl !== 'undefined') {
+	        // Check if window is available
+	        this.howler = new _howler3.Howl({
+	          src: props.src,
+	          autoplay: props.playing,
+	          mute: props.mute,
+	          loop: props.loop,
+	          onend: props.onEnd,
+	          onplay: props.onPlay,
+	          onpause: props.onPause,
+	          onload: props.onLoad,
+	          onloaderror: props.onLoadError
+	        });
+	      }
+	    }
+	
+	    /**
+	     * Stop, unload and destroy howler object
+	     */
+	
+	  }, {
+	    key: 'destroyHowler',
+	    value: function destroyHowler() {
+	      if (this.howler) {
+	        this.howler.off(); // Remove event listener
+	        this.howler.stop(); // Stop playback
+	        this.howler.unload(); // Remove sound from pool
+	        this.howler = null; // Destroy it
+	      }
+	    }
+	  }, {
+	    key: 'toggleHowler',
+	    value: function toggleHowler(props) {
+	      props.playing ? this.play() : this.pause();
+	      (0, _utils.runIfSet)(props.mute, this.mute(props.mute));
+	      (0, _utils.runIfSet)(props.loop, this.loop(props.loop));
+	
+	      if (props.seek !== this.seek()) {
+	        this.seek(props.seek);
+	      }
+	    }
+	  }, {
+	    key: 'play',
+	
+	
+	    /**
+	     * Begins playback of a sound when not playing
+	     */
+	    value: function play() {
+	      var playing = this.howler.playing();
+	
+	      if (!playing) {
+	        this.howler.play();
+	      }
+	    }
+	
+	    /**
+	     * Pauses playback of sound or group
+	     * If no id given, pauses all playback
+	     * @param {Number} id = undefined [sound of group to pause]
+	     */
+	
+	  }, {
+	    key: 'pause',
+	    value: function pause() {
+	      var id = arguments.length <= 0 || arguments[0] === undefined ? undefined : arguments[0];
+	
+	      if (id) {
+	        this.howler.pause(id);
+	      } else {
+	        this.howler.pause();
+	      }
+	    }
+	
+	    /**
+	     * Mutes the sound, but doesn't pause the playback.
+	     * @param {Boolean} [muted] [True to mute and false to unmute]
+	     * @param {Number} [id] [The sound ID. If none is passed, all sounds in group are muted]
+	     */
+	
+	  }, {
+	    key: 'mute',
+	    value: function mute() {
+	      var _howler;
+	
+	      (_howler = this.howler).mute.apply(_howler, arguments);
+	    }
+	
+	    /**
+	     * Get/set whether to loop the sound or group. This method can optionally take 0, 1 or 2 arguments.
+	     * @param {Boolean} [loop] [To loop or not to loop, that is the question]
+	     * @param {Number} [id] [The sound ID. If none is passed, all sounds in group will have their loop property updated]
+	     */
+	
+	  }, {
+	    key: 'loop',
+	    value: function loop() {
+	      var _howler2;
+	
+	      return (_howler2 = this.howler).loop.apply(_howler2, arguments);
+	    }
+	
+	    /**
+	     * Set/get current position of player
+	     * @param  {Number} pos [seek player to position]
+	     * @return {Number}     [return current position]
+	     */
+	
+	  }, {
+	    key: 'seek',
+	    value: function seek() {
+	      var pos = arguments.length <= 0 || arguments[0] === undefined ? null : arguments[0];
+	
+	      if (!this.howler) {
+	        return 0;
+	      }
+	
+	      if (!pos) {
+	        return this.howler.seek();
+	      }
+	
+	      if (pos) {
+	        this.howler.seek(pos);
+	        return pos;
+	      }
+	    }
+	
+	    /**
+	     * Get the duration of the audio source
+	     * @return {Number} [Audio length in seconds. Will return 0 until after the load event fires]
+	     */
+	
+	  }, {
+	    key: 'duration',
+	    value: function duration() {
+	      return this.howler.duration();
+	    }
+	
+	    /**
+	     * Only render a placeholder
+	     */
+	
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', null);
+	    }
+	  }, {
+	    key: 'howler',
+	    set: function set(howl) {
+	      if (howl) {
+	        this._howler = howl;
+	      }
+	    },
+	    get: function get() {
+	      return this._howler;
+	    }
+	  }]);
+	
+	  return ReactHowler;
+	}(_react.Component);
+	
+	ReactHowler.propTypes = {
+	  src: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]).isRequired,
+	  playing: _react.PropTypes.bool,
+	  mute: _react.PropTypes.bool,
+	  loop: _react.PropTypes.bool,
+	  onEnd: _react.PropTypes.func,
+	  onPause: _react.PropTypes.func,
+	  onPlay: _react.PropTypes.func,
+	  onLoad: _react.PropTypes.func,
+	  onLoadError: _react.PropTypes.func
+	};
+	
+	ReactHowler.defaultProps = {
+	  playing: true, // Enable autoplay by default
+	  mute: false,
+	  loop: false,
+	  onEnd: _utils.noop,
+	  onPause: _utils.noop,
+	  onPlay: _utils.noop,
+	  onLoad: _utils.noop,
+	  onLoadError: _utils.noop
+	};
+	
+	exports.default = ReactHowler;
+
+/***/ },
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var Howler = void 0;
+	
+	if (typeof window !== 'undefined') {
+	  Howler = __webpack_require__(294);
+	}
+	
+	module.exports = Howler;
+
+/***/ },
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global) {/*! howler.js v2.0.0-beta10 | (c) 2013-2016, James Simpson of GoldFire Studios | MIT License | howlerjs.com */
+	!function(){"use strict";function e(){try{"undefined"!=typeof AudioContext?o=new AudioContext:"undefined"!=typeof webkitAudioContext?o=new webkitAudioContext:t=!1}catch(e){t=!1}if(!t)if("undefined"!=typeof Audio)try{var a=new Audio;"undefined"==typeof a.oncanplaythrough&&(d="canplay")}catch(e){r=!0}else r=!0;try{var a=new Audio;a.muted&&(r=!0)}catch(e){}var i=/iP(hone|od|ad)/.test(n&&n.platform),_=n&&n.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/),s=_?parseInt(_[1],10):null;if(i&&s&&9>s){var l=/safari/.test(n&&n.userAgent.toLowerCase());(n&&n.standalone&&!l||n&&!n.standalone&&!l)&&(t=!1)}t&&(u="undefined"==typeof o.createGain?o.createGainNode():o.createGain(),u.gain.value=1,u.connect(o.destination))}var n=window&&window.navigator?window.navigator:null,o=null,t=!0,r=!1,u=null,d="canplaythrough";e();var a=function(){this.init()};a.prototype={init:function(){var e=this||i;return e._codecs={},e._howls=[],e._muted=!1,e._volume=1,e.state=o?o.state||"running":"running",e.autoSuspend=!0,e._autoSuspend(),e.mobileAutoEnable=!0,e.noAudio=r,e.usingWebAudio=t,e.ctx=o,e.masterGain=u,r||e._setupCodecs(),e},volume:function(e){var n=this||i;if(e=parseFloat(e),"undefined"!=typeof e&&e>=0&&1>=e){n._volume=e,t&&(u.gain.value=e);for(var o=0;o<n._howls.length;o++)if(!n._howls[o]._webAudio)for(var r=n._howls[o]._getSoundIds(),d=0;d<r.length;d++){var a=n._howls[o]._soundById(r[d]);a&&a._node&&(a._node.volume=a._volume*e)}return n}return n._volume},mute:function(e){var n=this||i;n._muted=e,t&&(u.gain.value=e?0:n._volume);for(var o=0;o<n._howls.length;o++)if(!n._howls[o]._webAudio)for(var r=n._howls[o]._getSoundIds(),d=0;d<r.length;d++){var a=n._howls[o]._soundById(r[d]);a&&a._node&&(a._node.muted=e?!0:a._muted)}return n},unload:function(){for(var n=this||i,t=n._howls.length-1;t>=0;t--)n._howls[t].unload();return n.usingWebAudio&&"undefined"!=typeof o.close&&(n.ctx=null,o.close(),e(),n.ctx=o),n},codecs:function(e){return(this||i)._codecs[e]},_setupCodecs:function(){var e=this||i,o=new Audio,t=o.canPlayType("audio/mpeg;").replace(/^no$/,""),r=n&&n.userAgent.match(/OPR\/([0-6].)/g),u=r&&parseInt(r[0].split("/")[1],10)<33;return e._codecs={mp3:!(u||!t&&!o.canPlayType("audio/mp3;").replace(/^no$/,"")),mpeg:!!t,opus:!!o.canPlayType('audio/ogg; codecs="opus"').replace(/^no$/,""),ogg:!!o.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),oga:!!o.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/,""),wav:!!o.canPlayType('audio/wav; codecs="1"').replace(/^no$/,""),aac:!!o.canPlayType("audio/aac;").replace(/^no$/,""),caf:!!o.canPlayType("audio/x-caf;").replace(/^no$/,""),m4a:!!(o.canPlayType("audio/x-m4a;")||o.canPlayType("audio/m4a;")||o.canPlayType("audio/aac;")).replace(/^no$/,""),mp4:!!(o.canPlayType("audio/x-mp4;")||o.canPlayType("audio/mp4;")||o.canPlayType("audio/aac;")).replace(/^no$/,""),weba:!!o.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/,""),webm:!!o.canPlayType('audio/webm; codecs="vorbis"').replace(/^no$/,""),dolby:!!o.canPlayType('audio/mp4; codecs="ec-3"').replace(/^no$/,"")},e},_enableMobileAudio:function(){var e=this||i,t=/iPhone|iPad|iPod|Android|BlackBerry|BB10|Silk|Mobi/i.test(n&&n.userAgent),r=!!("ontouchend"in window||n&&n.maxTouchPoints>0||n&&n.msMaxTouchPoints>0);if(!o||!e._mobileEnabled&&t&&r){e._mobileEnabled=!1,i.unload(),e._scratchBuffer=o.createBuffer(1,1,22050);var u=function(){var n=o.createBufferSource();n.buffer=e._scratchBuffer,n.connect(o.destination),"undefined"==typeof n.start?n.noteOn(0):n.start(0),n.onended=function(){n.disconnect(0),e._mobileEnabled=!0,e.mobileAutoEnable=!1,document.removeEventListener("touchend",u,!0)}};return document.addEventListener("touchend",u,!0),e}},_autoSuspend:function(){var e=this;if(e.autoSuspend&&o&&"undefined"!=typeof o.suspend&&t){for(var n=0;n<e._howls.length;n++)if(e._howls[n]._webAudio)for(var r=0;r<e._howls[n]._sounds.length;r++)if(!e._howls[n]._sounds[r]._paused)return e;return e._suspendTimer=setTimeout(function(){e.autoSuspend&&(e._suspendTimer=null,e.state="suspending",o.suspend().then(function(){e.state="suspended",e._resumeAfterSuspend&&(delete e._resumeAfterSuspend,e._autoResume())}))},3e4),e}},_autoResume:function(){var e=this;if(o&&"undefined"!=typeof o.resume&&t)return"running"===e.state&&e._suspendTimer?(clearTimeout(e._suspendTimer),e._suspendTimer=null):"suspended"===e.state?(e.state="resuming",o.resume().then(function(){e.state="running"}),e._suspendTimer&&(clearTimeout(e._suspendTimer),e._suspendTimer=null)):"suspending"===e.state&&(e._resumeAfterSuspend=!0),e}};var i=new a,_=function(e){var n=this;return e.src&&0!==e.src.length?void n.init(e):void console.error("An array of source files must be passed with any new Howl.")};_.prototype={init:function(e){var n=this;return n._autoplay=e.autoplay||!1,n._format="string"!=typeof e.format?e.format:[e.format],n._html5=e.html5||!1,n._muted=e.mute||!1,n._loop=e.loop||!1,n._pool=e.pool||5,n._preload="boolean"==typeof e.preload?e.preload:!0,n._rate=e.rate||1,n._sprite=e.sprite||{},n._src="string"!=typeof e.src?e.src:[e.src],n._volume=void 0!==e.volume?e.volume:1,n._duration=0,n._state="unloaded",n._sounds=[],n._endTimers={},n._queue=[],n._onend=e.onend?[{fn:e.onend}]:[],n._onfade=e.onfade?[{fn:e.onfade}]:[],n._onload=e.onload?[{fn:e.onload}]:[],n._onloaderror=e.onloaderror?[{fn:e.onloaderror}]:[],n._onpause=e.onpause?[{fn:e.onpause}]:[],n._onplay=e.onplay?[{fn:e.onplay}]:[],n._onstop=e.onstop?[{fn:e.onstop}]:[],n._onmute=e.onmute?[{fn:e.onmute}]:[],n._onvolume=e.onvolume?[{fn:e.onvolume}]:[],n._onrate=e.onrate?[{fn:e.onrate}]:[],n._onseek=e.onseek?[{fn:e.onseek}]:[],n._webAudio=t&&!n._html5,"undefined"!=typeof o&&o&&i.mobileAutoEnable&&i._enableMobileAudio(),i._howls.push(n),n._preload&&n.load(),n},load:function(){var e=this,n=null;if(r)return void e._emit("loaderror",null,"No audio support.");"string"==typeof e._src&&(e._src=[e._src]);for(var o=0;o<e._src.length;o++){var t,u;if(e._format&&e._format[o]?t=e._format[o]:(u=e._src[o],t=/^data:audio\/([^;,]+);/i.exec(u),t||(t=/\.([^.]+)$/.exec(u.split("?",1)[0])),t&&(t=t[1].toLowerCase())),i.codecs(t)){n=e._src[o];break}}return n?(e._src=n,e._state="loading","https:"===window.location.protocol&&"http:"===n.slice(0,5)&&(e._html5=!0,e._webAudio=!1),new s(e),e._webAudio&&f(e),e):void e._emit("loaderror",null,"No codec support for selected audio sources.")},play:function(e){var t=this,r=arguments,u=null;if("number"==typeof e)u=e,e=null;else if("undefined"==typeof e){e="__default";for(var a=0,_=0;_<t._sounds.length;_++)t._sounds[_]._paused&&!t._sounds[_]._ended&&(a++,u=t._sounds[_]._id);1===a?e=null:u=null}var s=u?t._soundById(u):t._inactiveSound();if(!s)return null;if(u&&!e&&(e=s._sprite||"__default"),"loaded"!==t._state&&!t._sprite[e])return t._queue.push({event:"play",action:function(){t.play(t._soundById(s._id)?s._id:void 0)}}),s._id;if(u&&!s._paused)return r[1]||setTimeout(function(){t._emit("play",s._id)},0),s._id;t._webAudio&&i._autoResume();var l=s._seek>0?s._seek:t._sprite[e][0]/1e3,f=(t._sprite[e][0]+t._sprite[e][1])/1e3-l,c=1e3*f/Math.abs(s._rate);c!==1/0&&(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),s._paused=!1,s._ended=!1,s._sprite=e,s._seek=l,s._start=t._sprite[e][0]/1e3,s._stop=(t._sprite[e][0]+t._sprite[e][1])/1e3,s._loop=!(!s._loop&&!t._sprite[e][2]);var p=s._node;if(t._webAudio){var m=function(){t._refreshBuffer(s);var e=s._muted||t._muted?0:s._volume*i.volume();p.gain.setValueAtTime(e,o.currentTime),s._playStart=o.currentTime,"undefined"==typeof p.bufferSource.start?s._loop?p.bufferSource.noteGrainOn(0,l,86400):p.bufferSource.noteGrainOn(0,l,f):s._loop?p.bufferSource.start(0,l,86400):p.bufferSource.start(0,l,f),t._endTimers[s._id]||c===1/0||(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),r[1]||setTimeout(function(){t._emit("play",s._id)},0)};"loaded"===t._state?m():(t.once("load",m,s._id),t._clearTimer(s._id))}else{var v=function(){p.currentTime=l,p.muted=s._muted||t._muted||i._muted||p.muted,p.volume=s._volume*i.volume(),p.playbackRate=s._rate,setTimeout(function(){p.play(),r[1]||t._emit("play",s._id)},0)},h="loaded"===t._state&&(window&&window.ejecta||!p.readyState&&n.isCocoonJS);if(4===p.readyState||h)v();else{var y=function(){c!==1/0&&(t._endTimers[s._id]=setTimeout(t._ended.bind(t,s),c)),v(),p.removeEventListener(d,y,!1)};p.addEventListener(d,y,!1),t._clearTimer(s._id)}}return s._id},pause:function(e){var n=this;if("loaded"!==n._state)return n._queue.push({event:"pause",action:function(){n.pause(e)}}),n;for(var o=n._getSoundIds(e),t=0;t<o.length;t++){n._clearTimer(o[t]);var r=n._soundById(o[t]);if(r&&!r._paused){if(r._seek=n.seek(o[t]),r._paused=!0,n._stopFade(o[t]),r._node)if(n._webAudio){if(!r._node.bufferSource)return n;"undefined"==typeof r._node.bufferSource.stop?r._node.bufferSource.noteOff(0):r._node.bufferSource.stop(0),n._cleanBuffer(r._node)}else isNaN(r._node.duration)&&r._node.duration!==1/0||r._node.pause();arguments[1]||n._emit("pause",r._id)}}return n},stop:function(e){var n=this;if("loaded"!==n._state)return n._queue.push({event:"stop",action:function(){n.stop(e)}}),n;for(var o=n._getSoundIds(e),t=0;t<o.length;t++){n._clearTimer(o[t]);var r=n._soundById(o[t]);if(r&&!r._paused&&(r._seek=r._start||0,r._paused=!0,r._ended=!0,n._stopFade(o[t]),r._node))if(n._webAudio){if(!r._node.bufferSource)return n;"undefined"==typeof r._node.bufferSource.stop?r._node.bufferSource.noteOff(0):r._node.bufferSource.stop(0),n._cleanBuffer(r._node)}else isNaN(r._node.duration)&&r._node.duration!==1/0||(r._node.pause(),r._node.currentTime=r._start||0);r&&n._emit("stop",r._id)}return n},mute:function(e,n){var t=this;if("loaded"!==t._state)return t._queue.push({event:"mute",action:function(){t.mute(e,n)}}),t;if("undefined"==typeof n){if("boolean"!=typeof e)return t._muted;t._muted=e}for(var r=t._getSoundIds(n),u=0;u<r.length;u++){var d=t._soundById(r[u]);d&&(d._muted=e,t._webAudio&&d._node?d._node.gain.setValueAtTime(e?0:d._volume*i.volume(),o.currentTime):d._node&&(d._node.muted=i._muted?!0:e),t._emit("mute",d._id))}return t},volume:function(){var e,n,t=this,r=arguments;if(0===r.length)return t._volume;if(1===r.length){var u=t._getSoundIds(),d=u.indexOf(r[0]);d>=0?n=parseInt(r[0],10):e=parseFloat(r[0])}else r.length>=2&&(e=parseFloat(r[0]),n=parseInt(r[1],10));var a;if(!("undefined"!=typeof e&&e>=0&&1>=e))return a=n?t._soundById(n):t._sounds[0],a?a._volume:0;if("loaded"!==t._state)return t._queue.push({event:"volume",action:function(){t.volume.apply(t,r)}}),t;"undefined"==typeof n&&(t._volume=e),n=t._getSoundIds(n);for(var _=0;_<n.length;_++)a=t._soundById(n[_]),a&&(a._volume=e,r[2]||t._stopFade(n[_]),t._webAudio&&a._node&&!a._muted?a._node.gain.setValueAtTime(e*i.volume(),o.currentTime):a._node&&!a._muted&&(a._node.volume=e*i.volume()),t._emit("volume",a._id));return t},fade:function(e,n,t,r){var u=this;if("loaded"!==u._state)return u._queue.push({event:"fade",action:function(){u.fade(e,n,t,r)}}),u;u.volume(e,r);for(var d=u._getSoundIds(r),a=0;a<d.length;a++){var i=u._soundById(d[a]);if(i)if(r||u._stopFade(d[a]),u._webAudio&&!i._muted){var _=o.currentTime,s=_+t/1e3;i._volume=e,i._node.gain.setValueAtTime(e,_),i._node.gain.linearRampToValueAtTime(n,s),i._timeout=setTimeout(function(e,t){delete t._timeout,setTimeout(function(){t._volume=n,u._emit("fade",e)},s-o.currentTime>0?Math.ceil(1e3*(s-o.currentTime)):0)}.bind(u,d[a],i),t)}else{var l=Math.abs(e-n),f=e>n?"out":"in",c=l/.01,p=t/c;!function(){var o=e;i._interval=setInterval(function(e,t){o+="in"===f?.01:-.01,o=Math.max(0,o),o=Math.min(1,o),o=Math.round(100*o)/100,u.volume(o,e,!0),o===n&&(clearInterval(t._interval),delete t._interval,u._emit("fade",e))}.bind(u,d[a],i),p)}()}}return u},_stopFade:function(e){var n=this,t=n._soundById(e);return t._interval?(clearInterval(t._interval),delete t._interval,n._emit("fade",e)):t._timeout&&(clearTimeout(t._timeout),delete t._timeout,t._node.gain.cancelScheduledValues(o.currentTime),n._emit("fade",e)),n},loop:function(){var e,n,o,t=this,r=arguments;if(0===r.length)return t._loop;if(1===r.length){if("boolean"!=typeof r[0])return o=t._soundById(parseInt(r[0],10)),o?o._loop:!1;e=r[0],t._loop=e}else 2===r.length&&(e=r[0],n=parseInt(r[1],10));for(var u=t._getSoundIds(n),d=0;d<u.length;d++)o=t._soundById(u[d]),o&&(o._loop=e,t._webAudio&&o._node&&o._node.bufferSource&&(o._node.bufferSource.loop=e));return t},rate:function(){var e,n,o=this,t=arguments;if(0===t.length)n=o._sounds[0]._id;else if(1===t.length){var r=o._getSoundIds(),u=r.indexOf(t[0]);u>=0?n=parseInt(t[0],10):e=parseFloat(t[0])}else 2===t.length&&(e=parseFloat(t[0]),n=parseInt(t[1],10));var d;if("number"!=typeof e)return d=o._soundById(n),d?d._rate:o._rate;if("loaded"!==o._state)return o._queue.push({event:"rate",action:function(){o.rate.apply(o,t)}}),o;"undefined"==typeof n&&(o._rate=e),n=o._getSoundIds(n);for(var a=0;a<n.length;a++)if(d=o._soundById(n[a])){d._rate=e,o._webAudio&&d._node&&d._node.bufferSource?d._node.bufferSource.playbackRate.value=e:d._node&&(d._node.playbackRate=e);var i=o.seek(n[a]),_=(o._sprite[d._sprite][0]+o._sprite[d._sprite][1])/1e3-i,s=1e3*_/Math.abs(d._rate);o._clearTimer(n[a]),o._endTimers[n[a]]=setTimeout(o._ended.bind(o,d),s),o._emit("rate",d._id)}return o},seek:function(){var e,n,t=this,r=arguments;if(0===r.length)n=t._sounds[0]._id;else if(1===r.length){var u=t._getSoundIds(),d=u.indexOf(r[0]);d>=0?n=parseInt(r[0],10):(n=t._sounds[0]._id,e=parseFloat(r[0]))}else 2===r.length&&(e=parseFloat(r[0]),n=parseInt(r[1],10));if("undefined"==typeof n)return t;if("loaded"!==t._state)return t._queue.push({event:"seek",action:function(){t.seek.apply(t,r)}}),t;var a=t._soundById(n);if(a){if(!(e>=0))return t._webAudio?a._seek+(t.playing(n)?o.currentTime-a._playStart:0):a._node.currentTime;var i=t.playing(n);i&&t.pause(n,!0),a._seek=e,t._clearTimer(n),i&&t.play(n,!0),t._emit("seek",n)}return t},playing:function(e){var n=this,o=n._soundById(e)||n._sounds[0];return o?!o._paused:!1},duration:function(e){var n=this,o=n._soundById(e)||n._sounds[0];return n._duration/o._rate},state:function(){return this._state},unload:function(){for(var e=this,n=e._sounds,o=0;o<n.length;o++){n[o]._paused||(e.stop(n[o]._id),e._emit("end",n[o]._id)),e._webAudio||(n[o]._node.src="",n[o]._node.removeEventListener("error",n[o]._errorFn,!1),n[o]._node.removeEventListener(d,n[o]._loadFn,!1)),delete n[o]._node,e._clearTimer(n[o]._id);var t=i._howls.indexOf(e);t>=0&&i._howls.splice(t,1)}return l&&delete l[e._src],e._state="unloaded",e._sounds=[],e=null,null},on:function(e,n,o,t){var r=this,u=r["_on"+e];return"function"==typeof n&&u.push(t?{id:o,fn:n,once:t}:{id:o,fn:n}),r},off:function(e,n,o){var t=this,r=t["_on"+e];if(n){for(var u=0;u<r.length;u++)if(n===r[u].fn&&o===r[u].id){r.splice(u,1);break}}else if(e)t["_on"+e]=[];else for(var d=Object.keys(t),u=0;u<d.length;u++)0===d[u].indexOf("_on")&&Array.isArray(t[d[u]])&&(t[d[u]]=[]);return t},once:function(e,n,o){var t=this;return t.on(e,n,o,1),t},_emit:function(e,n,o){for(var t=this,r=t["_on"+e],u=r.length-1;u>=0;u--)r[u].id&&r[u].id!==n&&"load"!==e||(setTimeout(function(e){e.call(this,n,o)}.bind(t,r[u].fn),0),r[u].once&&t.off(e,r[u].fn,r[u].id));return t},_loadQueue:function(){var e=this;if(e._queue.length>0){var n=e._queue[0];e.once(n.event,function(){e._queue.shift(),e._loadQueue()}),n.action()}return e},_ended:function(e){var n=this,t=e._sprite,r=!(!e._loop&&!n._sprite[t][2]);if(n._emit("end",e._id),!n._webAudio&&r&&n.stop(e._id).play(e._id),n._webAudio&&r){n._emit("play",e._id),e._seek=e._start||0,e._playStart=o.currentTime;var u=1e3*(e._stop-e._start)/Math.abs(e._rate);n._endTimers[e._id]=setTimeout(n._ended.bind(n,e),u)}return n._webAudio&&!r&&(e._paused=!0,e._ended=!0,e._seek=e._start||0,n._clearTimer(e._id),n._cleanBuffer(e._node),i._autoSuspend()),n._webAudio||r||n.stop(e._id),n},_clearTimer:function(e){var n=this;return n._endTimers[e]&&(clearTimeout(n._endTimers[e]),delete n._endTimers[e]),n},_soundById:function(e){for(var n=this,o=0;o<n._sounds.length;o++)if(e===n._sounds[o]._id)return n._sounds[o];return null},_inactiveSound:function(){var e=this;e._drain();for(var n=0;n<e._sounds.length;n++)if(e._sounds[n]._ended)return e._sounds[n].reset();return new s(e)},_drain:function(){var e=this,n=e._pool,o=0,t=0;if(!(e._sounds.length<n)){for(t=0;t<e._sounds.length;t++)e._sounds[t]._ended&&o++;for(t=e._sounds.length-1;t>=0;t--){if(n>=o)return;e._sounds[t]._ended&&(e._webAudio&&e._sounds[t]._node&&e._sounds[t]._node.disconnect(0),e._sounds.splice(t,1),o--)}}},_getSoundIds:function(e){var n=this;if("undefined"==typeof e){for(var o=[],t=0;t<n._sounds.length;t++)o.push(n._sounds[t]._id);return o}return[e]},_refreshBuffer:function(e){var n=this;return e._node.bufferSource=o.createBufferSource(),e._node.bufferSource.buffer=l[n._src],e._panner?e._node.bufferSource.connect(e._panner):e._node.bufferSource.connect(e._node),e._node.bufferSource.loop=e._loop,e._loop&&(e._node.bufferSource.loopStart=e._start||0,e._node.bufferSource.loopEnd=e._stop),e._node.bufferSource.playbackRate.value=n._rate,n},_cleanBuffer:function(e){var n=this;if(n._scratchBuffer){e.bufferSource.onended=null,e.bufferSource.disconnect(0);try{e.bufferSource.buffer=n._scratchBuffer}catch(o){}}return e.bufferSource=null,n}};var s=function(e){this._parent=e,this.init()};if(s.prototype={init:function(){var e=this,n=e._parent;return e._muted=n._muted,e._loop=n._loop,e._volume=n._volume,e._muted=n._muted,e._rate=n._rate,e._seek=0,e._paused=!0,e._ended=!0,e._sprite="__default",e._id=Math.round(Date.now()*Math.random()),n._sounds.push(e),e.create(),e},create:function(){var e=this,n=e._parent,t=i._muted||e._muted||e._parent._muted?0:e._volume*i.volume();return n._webAudio?(e._node="undefined"==typeof o.createGain?o.createGainNode():o.createGain(),e._node.gain.setValueAtTime(t,o.currentTime),e._node.paused=!0,e._node.connect(u)):(e._node=new Audio,e._errorFn=e._errorListener.bind(e),e._node.addEventListener("error",e._errorFn,!1),e._loadFn=e._loadListener.bind(e),e._node.addEventListener(d,e._loadFn,!1),e._node.src=n._src,e._node.preload="auto",e._node.volume=t,e._node.load()),e},reset:function(){var e=this,n=e._parent;return e._muted=n._muted,e._loop=n._loop,e._volume=n._volume,e._muted=n._muted,e._rate=n._rate,e._seek=0,e._paused=!0,e._ended=!0,e._sprite="__default",e._id=Math.round(Date.now()*Math.random()),e},_errorListener:function(){var e=this;e._node.error&&4===e._node.error.code&&(i.noAudio=!0),e._parent._emit("loaderror",e._id,e._node.error?e._node.error.code:0),e._node.removeEventListener("error",e._errorListener,!1)},_loadListener:function(){var e=this,n=e._parent;n._duration=Math.ceil(10*e._node.duration)/10,0===Object.keys(n._sprite).length&&(n._sprite={__default:[0,1e3*n._duration]}),"loaded"!==n._state&&(n._state="loaded",n._emit("load"),n._loadQueue()),n._autoplay&&n.play(),e._node.removeEventListener(d,e._loadFn,!1)}},t)var l={},f=function(e){var n=e._src;if(l[n])return e._duration=l[n].duration,void m(e);if(/^data:[^;]+;base64,/.test(n)){window.atob=window.atob||function(e){for(var n,o,t="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",r=String(e).replace(/=+$/,""),u=0,d=0,a="";o=r.charAt(d++);~o&&(n=u%4?64*n+o:o,u++%4)?a+=String.fromCharCode(255&n>>(-2*u&6)):0)o=t.indexOf(o);return a};for(var o=atob(n.split(",")[1]),t=new Uint8Array(o.length),r=0;r<o.length;++r)t[r]=o.charCodeAt(r);p(t.buffer,e)}else{var u=new XMLHttpRequest;u.open("GET",n,!0),u.responseType="arraybuffer",u.onload=function(){var n=(u.status+"")[0];return"0"!==n&&"2"!==n&&"3"!==n?void e._emit("loaderror",null,"Failed loading audio file with status: "+u.status+"."):void p(u.response,e)},u.onerror=function(){e._webAudio&&(e._html5=!0,e._webAudio=!1,e._sounds=[],delete l[n],e.load())},c(u)}},c=function(e){try{e.send()}catch(n){e.onerror()}},p=function(e,n){o.decodeAudioData(e,function(e){e&&n._sounds.length>0&&(l[n._src]=e,m(n,e))},function(){n._emit("loaderror",null,"Decoding audio data failed.")})},m=function(e,n){n&&!e._duration&&(e._duration=n.duration),0===Object.keys(e._sprite).length&&(e._sprite={__default:[0,1e3*e._duration]}),"loaded"!==e._state&&(e._state="loaded",e._emit("load"),e._loadQueue()),e._autoplay&&e.play()};"function"=="function"&&__webpack_require__(240)&&!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function(){return{Howler:i,Howl:_}}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)),"undefined"!=typeof exports&&(exports.Howler=i,exports.Howl=_),"undefined"!=typeof window?(window.HowlerGlobal=a,window.Howler=i,window.Howl=_,window.Sound=s):"undefined"!=typeof global&&(global.HowlerGlobal=a,global.Howler=i,global.Howl=_,global.Sound=s)}();
+	/*! Effects Plugin */
+	!function(){"use strict";HowlerGlobal.prototype._pos=[0,0,0],HowlerGlobal.prototype._orientation=[0,0,-1,0,1,0],HowlerGlobal.prototype._velocity=[0,0,0],HowlerGlobal.prototype._listenerAttr={dopplerFactor:1,speedOfSound:343.3},HowlerGlobal.prototype.pos=function(e,n,t){var o=this;return o.ctx&&o.ctx.listener?(n="number"!=typeof n?o._pos[1]:n,t="number"!=typeof t?o._pos[2]:t,"number"!=typeof e?o._pos:(o._pos=[e,n,t],o.ctx.listener.setPosition(o._pos[0],o._pos[1],o._pos[2]),o)):o},HowlerGlobal.prototype.orientation=function(e,n,t,o,r,i){var a=this;if(!a.ctx||!a.ctx.listener)return a;var p=a._orientation;return n="number"!=typeof n?p[1]:n,t="number"!=typeof t?p[2]:t,o="number"!=typeof o?p[3]:o,r="number"!=typeof r?p[4]:r,i="number"!=typeof i?p[5]:i,"number"!=typeof e?p:(a._orientation=[e,n,t,o,r,i],a.ctx.listener.setOrientation(e,n,t,o,r,i),a)},HowlerGlobal.prototype.velocity=function(e,n,t){var o=this;return o.ctx&&o.ctx.listener?(n="number"!=typeof n?o._velocity[1]:n,t="number"!=typeof t?o._velocity[2]:t,"number"!=typeof e?o._velocity:(o._velocity=[e,n,t],o.ctx.listener.setVelocity(o._velocity[0],o._velocity[1],o._velocity[2]),o)):o},HowlerGlobal.prototype.listenerAttr=function(e){var n=this;if(!n.ctx||!n.ctx.listener)return n;var t=n._listenerAttr;return e?(n._listenerAttr={dopplerFactor:"undefined"!=typeof e.dopplerFactor?e.dopplerFactor:t.dopplerFactor,speedOfSound:"undefined"!=typeof e.speedOfSound?e.speedOfSound:t.speedOfSound},n.ctx.listener.dopplerFactor=t.dopplerFactor,n.ctx.listener.speedOfSound=t.speedOfSound,n):t},Howl.prototype.init=function(e){return function(n){var t=this;return t._orientation=n.orientation||[1,0,0],t._pos=n.pos||null,t._velocity=n.velocity||[0,0,0],t._pannerAttr={coneInnerAngle:"undefined"!=typeof n.coneInnerAngle?n.coneInnerAngle:360,coneOuterAngle:"undefined"!=typeof n.coneOuterAngle?n.coneOuterAngle:360,coneOuterGain:"undefined"!=typeof n.coneOuterGain?n.coneOuterGain:0,distanceModel:"undefined"!=typeof n.distanceModel?n.distanceModel:"inverse",maxDistance:"undefined"!=typeof n.maxDistance?n.maxDistance:1e4,panningModel:"undefined"!=typeof n.panningModel?n.panningModel:"HRTF",refDistance:"undefined"!=typeof n.refDistance?n.refDistance:1,rolloffFactor:"undefined"!=typeof n.rolloffFactor?n.rolloffFactor:1},t._onpos=n.onpos?[{fn:n.onpos}]:[],t._onorientation=n.onorientation?[{fn:n.onorientation}]:[],t._onvelocity=n.onvelocity?[{fn:n.onvelocity}]:[],e.call(this,n)}}(Howl.prototype.init),Howl.prototype.pos=function(n,t,o,r){var i=this;if(!i._webAudio)return i;if("loaded"!==i._state)return i._queue.push({event:"pos",action:function(){i.pos(n,t,o,r)}}),i;if(t="number"!=typeof t?0:t,o="number"!=typeof o?-.5:o,"undefined"==typeof r){if("number"!=typeof n)return i._pos;i._pos=[n,t,o]}for(var a=i._getSoundIds(r),p=0;p<a.length;p++){var l=i._soundById(a[p]);if(l){if("number"!=typeof n)return l._pos;l._pos=[n,t,o],l._node&&(l._panner||e(l),l._panner.setPosition(n,t,o)),i._emit("pos",l._id)}}return i},Howl.prototype.orientation=function(n,t,o,r){var i=this;if(!i._webAudio)return i;if("loaded"!==i._state)return i._queue.push({event:"orientation",action:function(){i.orientation(n,t,o,r)}}),i;if(t="number"!=typeof t?i._orientation[1]:t,o="number"!=typeof o?i._orientation[2]:o,"undefined"==typeof r){if("number"!=typeof n)return i._orientation;i._orientation=[n,t,o]}for(var a=i._getSoundIds(r),p=0;p<a.length;p++){var l=i._soundById(a[p]);if(l){if("number"!=typeof n)return l._orientation;l._orientation=[n,t,o],l._node&&(l._panner||(l._pos||(l._pos=i._pos||[0,0,-.5]),e(l)),l._panner.setOrientation(n,t,o)),i._emit("orientation",l._id)}}return i},Howl.prototype.velocity=function(n,t,o,r){var i=this;if(!i._webAudio)return i;if("loaded"!==i._state)return i._queue.push({event:"velocity",action:function(){i.velocity(n,t,o,r)}}),i;if(t="number"!=typeof t?i._velocity[1]:t,o="number"!=typeof o?i._velocity[2]:o,"undefined"==typeof r){if("number"!=typeof n)return i._velocity;i._velocity=[n,t,o]}for(var a=i._getSoundIds(r),p=0;p<a.length;p++){var l=i._soundById(a[p]);if(l){if("number"!=typeof n)return l._velocity;l._velocity=[n,t,o],l._node&&(l._pos||(l._pos=i._pos||[0,0,-.5]),l._panner||e(l),l._panner.setVelocity(n,t,o)),i._emit("velocity",l._id)}}return i},Howl.prototype.pannerAttr=function(){var n,t,o,r=this,i=arguments;if(!r._webAudio)return r;if(0===i.length)return r._pannerAttr;if(1===i.length){if("object"!=typeof i[0])return o=r._soundById(parseInt(i[0],10)),o?o._pannerAttr:r._pannerAttr;n=i[0],"undefined"==typeof t&&(r._pannerAttr={coneInnerAngle:"undefined"!=typeof n.coneInnerAngle?n.coneInnerAngle:r._coneInnerAngle,coneOuterAngle:"undefined"!=typeof n.coneOuterAngle?n.coneOuterAngle:r._coneOuterAngle,coneOuterGain:"undefined"!=typeof n.coneOuterGain?n.coneOuterGain:r._coneOuterGain,distanceModel:"undefined"!=typeof n.distanceModel?n.distanceModel:r._distanceModel,maxDistance:"undefined"!=typeof n.maxDistance?n.maxDistance:r._maxDistance,panningModel:"undefined"!=typeof n.panningModel?n.panningModel:r._panningModel,refDistance:"undefined"!=typeof n.refDistance?n.refDistance:r._refDistance,rolloffFactor:"undefined"!=typeof n.rolloffFactor?n.rolloffFactor:r._rolloffFactor})}else 2===i.length&&(n=i[0],t=parseInt(i[1],10));for(var a=r._getSoundIds(t),p=0;p<a.length;p++)if(o=r._soundById(a[p])){var l=o._pannerAttr;l={coneInnerAngle:"undefined"!=typeof n.coneInnerAngle?n.coneInnerAngle:l.coneInnerAngle,coneOuterAngle:"undefined"!=typeof n.coneOuterAngle?n.coneOuterAngle:l.coneOuterAngle,coneOuterGain:"undefined"!=typeof n.coneOuterGain?n.coneOuterGain:l.coneOuterGain,distanceModel:"undefined"!=typeof n.distanceModel?n.distanceModel:l.distanceModel,maxDistance:"undefined"!=typeof n.maxDistance?n.maxDistance:l.maxDistance,panningModel:"undefined"!=typeof n.panningModel?n.panningModel:l.panningModel,refDistance:"undefined"!=typeof n.refDistance?n.refDistance:l.refDistance,rolloffFactor:"undefined"!=typeof n.rolloffFactor?n.rolloffFactor:l.rolloffFactor};var c=o._panner;c?(c.coneInnerAngle=l.coneInnerAngle,c.coneOuterAngle=l.coneOuterAngle,c.coneOuterGain=l.coneOuterGain,c.distanceModel=l.distanceModel,c.maxDistance=l.maxDistance,c.panningModel=l.panningModel,c.refDistance=l.refDistance,c.rolloffFactor=l.rolloffFactor):(o._pos||(o._pos=r._pos||[0,0,-.5]),e(o))}return r},Sound.prototype.init=function(e){return function(){var n=this,t=n._parent;n._orientation=t._orientation,n._pos=t._pos,n._velocity=t._velocity,n._pannerAttr=t._pannerAttr,e.call(this),n._pos&&t.pos(n._pos[0],n._pos[1],n._pos[2],n._id)}}(Sound.prototype.init),Sound.prototype.reset=function(e){return function(){var n=this,t=n._parent;return n._orientation=t._orientation,n._pos=t._pos,n._velocity=t._velocity,n._pannerAttr=t._pannerAttr,e.call(this)}}(Sound.prototype.reset);var e=function(e){e._panner=Howler.ctx.createPanner(),e._panner.coneInnerAngle=e._pannerAttr.coneInnerAngle,e._panner.coneOuterAngle=e._pannerAttr.coneOuterAngle,e._panner.coneOuterGain=e._pannerAttr.coneOuterGain,e._panner.distanceModel=e._pannerAttr.distanceModel,e._panner.maxDistance=e._pannerAttr.maxDistance,e._panner.panningModel=e._pannerAttr.panningModel,e._panner.refDistance=e._pannerAttr.refDistance,e._panner.rolloffFactor=e._pannerAttr.rolloffFactor,e._panner.setPosition(e._pos[0],e._pos[1],e._pos[2]),e._panner.setOrientation(e._orientation[0],e._orientation[1],e._orientation[2]),e._panner.setVelocity(e._velocity[0],e._velocity[1],e._velocity[2]),e._panner.connect(e._node),e._paused||e._parent.pause(e._id,!0).play(e._id)}}();
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ },
+/* 295 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	/**
+	 * Noop function (do nothing)
+	 */
+	var noop = exports.noop = function noop() {};
+	
+	/**
+	 * Excute callback if value is not undefined
+	 * @param  {any} value [value to check]
+	 * @param  {Function} callback [function to be excuted]
+	 */
+	var runIfSet = exports.runIfSet = function runIfSet(value, callback) {
+	  if (value !== undefined) {
+	    callback;
+	  }
+	};
+
+/***/ },
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _grid = __webpack_require__(287);
+	
+	var _grid2 = _interopRequireDefault(_grid);
+	
+	var _game_play = __webpack_require__(288);
+	
+	var _game_play2 = _interopRequireDefault(_game_play);
+	
+	var _reactHowler = __webpack_require__(291);
+	
+	var _reactHowler2 = _interopRequireDefault(_reactHowler);
+	
+	var _socket = __webpack_require__(230);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	function MegatronDisplay(props) {
+	    return _react2.default.createElement(_grid2.default.Grid, { grid: props.grid, hardDrop: props.hardDrop ? _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null, activePiece: { activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }, shadowY: _game_play2.default.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) });
+	}
+	
+	function MegatronScoreBoard(players) {
+	    console.log(players);
+	    return _react2.default.createElement(
+	        'div',
+	        { className: 'scoreBoard' },
+	        Object.keys(players).map(function (player) {
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                players[player].playerName + ': ' + players[player].score
+	            );
+	        })
+	    );
+	}
+	
+	var Megatron = function (_React$Component) {
+	    _inherits(Megatron, _React$Component);
+	
+	    function Megatron(props) {
+	        _classCallCheck(this, Megatron);
+	
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Megatron).call(this, props));
+	
+	        _this.state = {
+	            activePlayers: {}
+	        };
+	
+	        // this.handleSound = this.handleSound.bind(this)
+	        return _this;
+	    }
+	
+	    _createClass(Megatron, [{
+	        key: 'componentDidMount',
+	        value: function componentDidMount() {
+	            var that = this;
+	            _socket2.default.emit('megatron_activated');
+	            _socket2.default.on('update_megatron', function (data) {
+	                that.state.activePlayers[data.playerName] = data;
+	            });
+	            this.timer = setInterval(function () {
+	                that.forceUpdate();
+	            }, 250);
+	        }
+	    }, {
+	        key: 'componentWillUnmount',
+	        value: function componentWillUnmount() {
+	            this.state.socket.emit('megatron_deactivated');
+	            clearInterval(this.timer);
+	        }
+	    }, {
+	        key: 'render',
+	        value: function render() {
+	            // console.log(this.state.activePlayers, "THIS IS THE STATE")
+	            var that = this;
+	            var TO_RENDER = _react2.default.createElement(
+	                'div',
+	                { className: 'admin-wait' },
+	                'Waiting for Admin to start game'
+	            );
+	
+	            var players = this.state.activePlayers;
+	            var playerNames = Object.keys(players);
+	
+	            if (playerNames.length > 0) {
+	                TO_RENDER = playerNames.map(function (playerName) {
+	                    var player = players[playerName];
+	                    if (player.grid) {
+	                        return _react2.default.createElement(
+	                            'div',
+	                            { key: player.playerName },
+	                            _react2.default.createElement(MegatronDisplay, player)
+	                        );
+	                    }
+	                });
+	            } else {
+	                TO_RENDER = _react2.default.createElement(
+	                    'div',
+	                    { className: 'admin-wait' },
+	                    'Waiting for Admin to start game'
+	                );
+	            }
+	
+	            return _react2.default.createElement(
+	                'div',
+	                { className: 'megatron' },
+	                _react2.default.createElement(_reactHowler2.default, {
+	                    src: '../sound/videoplayback.m4a',
+	                    playing: this.state.playing
+	                }),
+	                TO_RENDER,
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'scoreboard' },
+	                    MegatronScoreBoard(that.state.activePlayers)
+	                )
+	            );
+	        }
+	    }]);
+	
+	    return Megatron;
+	}(_react2.default.Component);
+	
+	module.exports = Megatron;
 
 /***/ }
 /******/ ]);
