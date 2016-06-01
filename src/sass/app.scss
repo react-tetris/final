@@ -418,37 +418,6 @@
         padding: 0.8em;
     }
 
-    .bombsButton{
-        width: 80px;
-        height: 80px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /*background: #25292C;*/
-        background: #3A3E41;
-        padding: 20px;
-        text-align: center;
-        border-radius: 50%;
-        color: rgba(155,155,155,1);
-        text-shadow: -1px -1px 0px rgba(255,255,255,0.8), 1px 1px 2px rgba(0,0,0,1);
-        box-shadow: inset 3px 1px 2px rgba(255,255,255,0.3),
-                    inset 3px 15px 45px rgba(255,255,255,0.1),
-                    inset -3px -1px 2px rgba(0,0,0,0.5),
-                    inset -3px -15px 45px rgba(0,0,0,0.2),
-                    1px 5px 30px -4px rgba(0,0,0,1);
-        -webkit-transition: 0.1s ease-out;
-        -moz-transition:    0.1s ease-out;
-        -o-transition:      0.1s ease-out;
-        transition:         0.1s ease-out;
-    }
-
-    .bombsButton:focus {
-        outline: none;
-    }
-    .bombsButton:active {
-        transform: scale(1.1);
-    }
-
 .bombsButton{
     width: 80px;
     height: 80px;
@@ -544,10 +513,6 @@ header{
        align-items: center;
        padding: 1em;
        
-       img {
-           height: 1em;
-           width: 1em;
-       }
        h1{
            margin: 0;
            padding: 0;
@@ -632,28 +597,6 @@ header{
   box-shadow: 0px 0px 4.5px 2px white;
 }
 }
-// .circle{
-//   border-radius: 50%;
-//   position:absolute;  
-
-//    &.blue{
-//         width: 10px;
-//         height: 10px;
-//         left:25px;
-//         bottom:-25px; 
-//         background: SlateBlue;
-//         box-shadow: 0px 0px 15px 10px SlateBlue;
-//     }
-
-//     &.black{
-//         width: 40px;
-//         height: 40px;
-//         left:10px;
-//         bottom:-60px;  
-//         background: black;
-//         box-shadow: 0px 0px 15px 10px black;
-//     }
-// }
 @keyframes flicker{
   0%   {transform: rotate(-1deg);}
   20%  {transform: rotate(1deg);}
@@ -685,7 +628,7 @@ header{
         justify-content: space-between;
         align-items: center;
     }
-    .adminButton {
+    .adminButton{
         font-size: 2em;
         background: #3A3E41;
         padding: 0.75em;
@@ -791,30 +734,83 @@ header{
     .loadingImageContainer{
         width: 100%;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-    
+        
+        .rowOne, .rowTwo, .rowThree {
+            display: flex;
+        }
+       
         .loadingImage{
             margin: auto;
             animation: queuedRotate 1s infinite;
+            height: 20vmin;
+            width: 20vmin;
             
             .I {
-                height: 4vmin;
-                width: 4vmin;
+                height: 5vmin;
+                width: 5vmin;
                 background-image: url('/graphics/cyanBlock.png');
                 background-size: contain;
                 z-index: 100;
             }
             
+            .J {
+                height: 5vmin;
+                width: 5vmin;
+                background-image: url('/graphics/blueBlock.png');
+                background-size: contain;
+                z-index: 100;
+            }
+            
+            .L {
+                height: 5vmin;
+                width: 5vmin;
+                background-image: url('/graphics/orangeBlock.png');
+                background-size: contain;
+                z-index: 100;
+            }
+            
+            .O {
+                height: 5vmin;
+                width: 5vmin;
+                background-image: url('/graphics/yellowBlock.png');
+                background-size: contain;
+                z-index: 100;
+            }
+            
+            .S {
+                height: 5vmin;
+                width: 5vmin;
+                background-image: url('/graphics/greenBlock.png');
+                background-size: contain;
+                z-index: 100;
+            }
+            .T {
+                height: 5vmin;
+                width: 5vmin;
+                background-image: url('/graphics/purpleBlock.png');
+                background-size: contain;
+                z-index: 100;
+            }
+            .Z {
+                height: 5vmin;
+                width: 5vmin;
+                background-image: url('/graphics/redBlock.png');
+                background-size: contain;
+                z-index: 100;
+            }
+            
             .emptyCell {
-                height: 4vmin;
-                width: 4vmin;
+                height: 5vmin;
+                width: 5vmin;
             }
             
             .row {
                 display: flex;
                 justify-content: center;
-                height: 4vmin;
+                height: 5vmin;
                 pointer-events: none;
             }
         }
@@ -1058,7 +1054,7 @@ header{
 
         @keyframes shake {
             10%, 90% {
-                transform: translate3d(-10px, 0, 0);
+                transform: translate3d(-20px, 0, 0);
             }
             20%, 80% {
                 transform: translate3d(20px, 0, 0);
