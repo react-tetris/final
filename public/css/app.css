@@ -323,28 +323,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /*background: #25292C;*/
-    background: #3A3E41;
-    padding: 20px;
-    text-align: center;
-    border-radius: 50%;
-    color: #9b9b9b;
-    text-shadow: -1px -1px 0px rgba(255, 255, 255, 0.8), 1px 1px 2px black;
-    box-shadow: inset 3px 1px 2px rgba(255, 255, 255, 0.3), inset 3px 15px 45px rgba(255, 255, 255, 0.1), inset -3px -1px 2px rgba(0, 0, 0, 0.5), inset -3px -15px 45px rgba(0, 0, 0, 0.2), 1px 5px 30px -4px black;
-    -webkit-transition: 0.1s ease-out;
-    -moz-transition: 0.1s ease-out;
-    -o-transition: 0.1s ease-out;
-    transition: 0.1s ease-out; }
-  .gamePage .bombsButton:focus {
-    outline: none; }
-  .gamePage .bombsButton:active {
-    transform: scale(1.1); }
-  .gamePage .bombsButton {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-image: url("/graphics/BombFilled.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -415,9 +393,6 @@ header {
   justify-content: center;
   align-items: center;
   padding: 1em; }
-  header img {
-    height: 1em;
-    width: 1em; }
   header h1 {
     margin: 0;
     padding: 0;
@@ -587,24 +562,65 @@ header {
   .queuedPage .loadingImageContainer {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center; }
+    .queuedPage .loadingImageContainer .rowOne, .queuedPage .loadingImageContainer .rowTwo, .queuedPage .loadingImageContainer .rowThree {
+      display: flex; }
     .queuedPage .loadingImageContainer .loadingImage {
       margin: auto;
-      animation: queuedRotate 1s infinite; }
+      animation: queuedRotate 1s infinite;
+      height: 20vmin;
+      width: 20vmin; }
       .queuedPage .loadingImageContainer .loadingImage .I {
-        height: 4vmin;
-        width: 4vmin;
+        height: 5vmin;
+        width: 5vmin;
         background-image: url("/graphics/cyanBlock.png");
         background-size: contain;
         z-index: 100; }
+      .queuedPage .loadingImageContainer .loadingImage .J {
+        height: 5vmin;
+        width: 5vmin;
+        background-image: url("/graphics/blueBlock.png");
+        background-size: contain;
+        z-index: 100; }
+      .queuedPage .loadingImageContainer .loadingImage .L {
+        height: 5vmin;
+        width: 5vmin;
+        background-image: url("/graphics/orangeBlock.png");
+        background-size: contain;
+        z-index: 100; }
+      .queuedPage .loadingImageContainer .loadingImage .O {
+        height: 5vmin;
+        width: 5vmin;
+        background-image: url("/graphics/yellowBlock.png");
+        background-size: contain;
+        z-index: 100; }
+      .queuedPage .loadingImageContainer .loadingImage .S {
+        height: 5vmin;
+        width: 5vmin;
+        background-image: url("/graphics/greenBlock.png");
+        background-size: contain;
+        z-index: 100; }
+      .queuedPage .loadingImageContainer .loadingImage .T {
+        height: 5vmin;
+        width: 5vmin;
+        background-image: url("/graphics/purpleBlock.png");
+        background-size: contain;
+        z-index: 100; }
+      .queuedPage .loadingImageContainer .loadingImage .Z {
+        height: 5vmin;
+        width: 5vmin;
+        background-image: url("/graphics/redBlock.png");
+        background-size: contain;
+        z-index: 100; }
       .queuedPage .loadingImageContainer .loadingImage .emptyCell {
-        height: 4vmin;
-        width: 4vmin; }
+        height: 5vmin;
+        width: 5vmin; }
       .queuedPage .loadingImageContainer .loadingImage .row {
         display: flex;
         justify-content: center;
-        height: 4vmin;
+        height: 5vmin;
         pointer-events: none; }
   .queuedPage ul {
     list-style-type: none;
@@ -784,7 +800,7 @@ header {
       transform: translate3d(0, 0, 0); }
 @keyframes shake {
   10%, 90% {
-    transform: translate3d(-10px, 0, 0); }
+    transform: translate3d(-20px, 0, 0); }
   20%, 80% {
     transform: translate3d(20px, 0, 0); }
   30%, 50%, 70% {

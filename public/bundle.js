@@ -33868,17 +33868,34 @@
 	
 	      var IPiece = [[0, 0, 0, 0], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0]];
 	
+	      var JPiece = [[2, 0, 0], [2, 2, 2], [0, 0, 0]];
+	
+	      var LPiece = [[0, 0, 3], [3, 3, 3], [0, 0, 0]];
+	
+	      var OPiece = [[4, 4], [4, 4]];
+	
+	      var SPiece = [[0, 5, 5], [5, 5, 0], [0, 0, 0]];
+	
+	      var TPiece = [[0, 6, 0], [6, 6, 6], [0, 0, 0]];
+	
+	      var ZPiece = [[7, 7, 0], [0, 7, 7], [0, 0, 0]];
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'queuedPage' },
 	        _react2.default.createElement(
 	          'header',
 	          null,
-	          _react2.default.createElement('img', { src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
 	          _react2.default.createElement(
 	            'h1',
 	            null,
-	            'BOMBTRIS'
+	            'B'
+	          ),
+	          _react2.default.createElement('img', { className: 'bombLogo', src: 'http://flaticons.net/icons/Network%20and%20Security/Bomb.png' }),
+	          _react2.default.createElement(
+	            'h1',
+	            { className: 'mbtris' },
+	            'MBTRIS'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -33891,10 +33908,64 @@
 	          { className: 'loadingImageContainer' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'loadingImage' },
-	            IPiece.map(function (row, index) {
-	              return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
-	            })
+	            { className: 'rowOne' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'loadingImage' },
+	              IPiece.map(function (row, index) {
+	                return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'loadingImage' },
+	              JPiece.map(function (row, index) {
+	                return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'loadingImage' },
+	              SPiece.map(function (row, index) {
+	                return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+	              })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'rowTwo' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'loadingImage' },
+	              OPiece.map(function (row, index) {
+	                return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+	              })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'rowThree' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'loadingImage' },
+	              LPiece.map(function (row, index) {
+	                return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'loadingImage' },
+	              TPiece.map(function (row, index) {
+	                return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+	              })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'loadingImage' },
+	              ZPiece.map(function (row, index) {
+	                return _react2.default.createElement(_grid2.default.Row, { row: row, key: "pr" + index });
+	              })
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -37645,8 +37716,8 @@
 	
 	function extraLines(grid) {
 	
-	    grid.splice(0, 4);
-	    grid.push([8, 8, 8, 0, 0, 8, 8, 0, 8, 8], [0, 8, 8, 8, 0, 8, 0, 8, 8, 8], [8, 0, 8, 8, 8, 8, 8, 8, 0, 8], [8, 8, 0, 8, 8, 0, 8, 0, 8, 8]);
+	    grid.splice(0, 2);
+	    grid.push([8, 8, 8, 0, 0, 8, 8, 0, 8, 8], [0, 8, 8, 8, 0, 8, 0, 8, 8, 8]);
 	    return grid;
 	}
 	
