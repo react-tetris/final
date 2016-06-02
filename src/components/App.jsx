@@ -14,7 +14,8 @@ export default class App extends React.Component {
 		this.state = {
 			playState: 'STOPPED',
 			players: {},
-			nameTaken: false
+			nameTaken: false,
+      winner: {}
 		};
 
 		this.scores = {};
@@ -52,6 +53,17 @@ export default class App extends React.Component {
 			});
 		});
 	  
+    socket.on('game_over', function(winner) {
+      
+      that.setState({
+        playState: 'GAME_OVER',
+        winner: winner.winner,
+        isPlayer: false,
+        playerName: null,
+        pieces: null
+      });
+    })
+    
 //     socket.on('score_update', function(scoreData) {
 // 			that.scores[scoreData.name] = scoreData.score;
 // ​
@@ -77,6 +89,10 @@ export default class App extends React.Component {
 	render() {
 		if (this.state.playState === "STOPPED") {
       return <div className='alert'>loading...</div>;
+    }
+    
+    if (this.state.playState === "GAME_OVER") { 
+      return <div className='gameOverPage'><h3>GAME OVER! The winner is</h3><h1 className='gameOverWinner'>{this.state.winner.playerName}</h1></div>;
     }
 
     if (this.state.playState === 'ACCEPTING_PLAYERS') {

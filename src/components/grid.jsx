@@ -64,17 +64,22 @@ function Grid(props) {
         var shadowY = props.shadowY * props.scaling;
         return (
 
-            <div className={props.handicap === 'shake' ? 'shake container' : (props.handicap === 'blur' ? 'blur container' : (props.handicap === 'flip' ? 'flipdiv container' : 'container'))}>
+            <div className={props.handicap === 'shake' ? 'shake container' : (props.handicap === 'blur' ? 'blur container' : (props.handicap === 'flip' ? 'flipdiv container' : (props.lastPlayer ? 'container lastPlayer' : 'container')))}>
                 {props.handicap === 'troll' ? <div className='troll'><img src='http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' /></div> : '' }
                 {props.message ? <h1 className='message'>{props.message}</h1> : ''}
+<<<<<<< HEAD
+                {props.handicap === 'reverse' ? <h1 className='message'>REVERSE</h1> : ''}
+                <div className={props.lastPlayer ? "grid lastPlayer" : "grid"} id="grid">
+=======
                 {!props.message && props.handicap === 'reverse' ? <h1 className='message'>REVERSE</h1> : ''}
                 <div className="grid" id="grid">
+>>>>>>> 7e277914b941f24e83b4d7a09d24c1dabe0298c4
             {
                 props.grid.map(
                     (row, index) => <Row row={row} key={"r"+index} />
                 )
             }
-            </div>
+                </div>
             <div className="currentPiece" style={{position: 'absolute', top: currentY + 'vh', left: currentX + 'vh'}}>
                   {
                         props.activePiece.activePiece.map(
