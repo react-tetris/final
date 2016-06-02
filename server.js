@@ -37,12 +37,23 @@ io.on('connection', function (socket) {
   socket.on('dropPlayers', function (msg) {
     console.log('in the socket')
     PLAYERS = {};
+    MEGATRONS = [];
     io.sockets.emit('dropPlayers', 'ACCEPTING_PLAYERS')
     gameState = 'ACCEPTING_PLAYERS';
   })
 
   socket.on('start_game', startTheGame);
 
+  socket.on('bomb_sent', function (bomb) {
+    var victim = Math.floor(Math.random() * (Object.keys(PLAYERS).length -1));
+    Object.keys(PLAYERS).forEach(function (player, i) {
+      if(PLAYERS[player].socketId !== socket.id){
+        if(victim === i){
+          io.to(PLAYERS[player].socketId).emit('victimize', bomb);
+        }
+      }
+    })
+  });
 
   socket.on('megatron_activated', function() {
     MEGATRONS.push(socket);
@@ -56,7 +67,6 @@ io.on('connection', function (socket) {
     if (gameState !== 'PLAYING') {
       return;
     }
-    console.log(data);
     MEGATRONS.forEach(function(mt) {
       mt.emit('update_megatron', data);
     });

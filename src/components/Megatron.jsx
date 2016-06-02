@@ -9,7 +9,7 @@ function MegatronDisplay(props) {
     return (
         <div className='playerGrid'>
             <h2>{props.rank}</h2>
-            <Grid.Grid scaling={2} grid={props.grid} hardDrop={props.hardDrop ? gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null} activePiece={{ activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }} shadowY={gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) } />
+            <Grid.Grid scaling={2} grid={props.grid} handicap={props.handicapBombs[0] ? props.handicapBombs[0].name : null} hardDrop={props.hardDrop ? gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null} activePiece={{ activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }} shadowY={gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) } />
             <h3>{props.playerName}</h3>
             <h3>SCORE: {props.score}</h3>
         </div>
@@ -17,7 +17,6 @@ function MegatronDisplay(props) {
 }
 
 function MegatronScoreBoard(players) {
-    console.log(players)
     return (
         <div className='scoreBoard'>
             {Object.keys(players).map(function(player){
@@ -51,19 +50,19 @@ class Megatron extends React.Component {
         socket.on('update_megatron', function(data) {
             that.state.activePlayers[data.playerName] = data;
             that.state.playing = true;
-        })
-        
+        });
         this.timer = setInterval(function() {
             that.forceUpdate()
         }, 250);
 
 
-        socket.on('dropPlayers', function(data) {
-            console.log(data)
+        socket.on('dropPlayers', function() {
+            console.log("this is called")
             that.setState({
                 activePlayers: {}
             })
-        })
+        });
+        
     }
 
 

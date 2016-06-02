@@ -8,28 +8,11 @@ import Grid from './grid.jsx';
 export default class Queued extends React.Component {
   
   render() {
-    
-    var IPiece = [
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
-      [1, 1, 1, 1],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0]
-    ]
         
     var JPiece = [
       [2, 0, 0],
       [2, 2, 2],
       [0, 0, 0]]
-      
-    var LPiece = [
-      [0, 0, 3],
-      [3, 3, 3],
-      [0, 0, 0]]
-      
-    var OPiece = [
-      [4, 4],
-      [4, 4]]
       
     var SPiece = [
       [0, 5, 5],
@@ -51,15 +34,12 @@ export default class Queued extends React.Component {
       <div className='queuedPage'>
         <header>
          <h1>B</h1>
-          <img className='bombLogo' src='http://flaticons.net/icons/Network%20and%20Security/Bomb.png'/>
+         <img className='bombLogo' src='http://flaticons.net/icons/Network%20and%20Security/Bomb.png'/>
          <h1 className='mbtris'>MBTRIS</h1>
         </header>
          <h2>WAITING FOR PLAYERS</h2>
          <div className='loadingImageContainer'>
          <div className='rowOne'>
-            <div className='loadingImage'>
-                {IPiece.map((row, index) => <Grid.Row row={row} key={"pr"+index}/>)}
-            </div>
             <div className='loadingImage'>
                 {JPiece.map((row, index) => <Grid.Row row={row} key={"pr"+index}/>)}
              </div>
@@ -68,14 +48,6 @@ export default class Queued extends React.Component {
             </div>
          </div>
          <div className='rowTwo'>
-            <div className='loadingImage'>
-                {OPiece.map((row, index) => <Grid.Row row={row} key={"pr"+index}/>)}
-            </div>
-         </div>
-         <div className='rowThree'>
-            <div className='loadingImage'>
-                {LPiece.map((row, index) => <Grid.Row row={row} key={"pr"+index}/>)}
-            </div>
             <div className='loadingImage'>
                {TPiece.map((row, index) => <Grid.Row row={row} key={"pr"+index}/>)}
             </div>

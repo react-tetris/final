@@ -738,79 +738,57 @@ header{
         justify-content: center;
         align-items: center;
         
-        .rowOne, .rowTwo, .rowThree {
+        .rowOne, .rowTwo{
             display: flex;
         }
        
         .loadingImage{
             margin: auto;
             animation: queuedRotate 1s infinite;
+            animation-timing-function: linear;
             height: 20vmin;
             width: 20vmin;
             
-            .I {
-                height: 5vmin;
-                width: 5vmin;
-                background-image: url('/graphics/cyanBlock.png');
-                background-size: contain;
-                z-index: 100;
-            }
             
             .J {
-                height: 5vmin;
-                width: 5vmin;
+                height: 4vmin;
+                width: 4vmin;
                 background-image: url('/graphics/blueBlock.png');
                 background-size: contain;
                 z-index: 100;
             }
             
-            .L {
-                height: 5vmin;
-                width: 5vmin;
-                background-image: url('/graphics/orangeBlock.png');
-                background-size: contain;
-                z-index: 100;
-            }
-            
-            .O {
-                height: 5vmin;
-                width: 5vmin;
-                background-image: url('/graphics/yellowBlock.png');
-                background-size: contain;
-                z-index: 100;
-            }
-            
             .S {
-                height: 5vmin;
-                width: 5vmin;
+                height: 4vmin;
+                width: 4vmin;
                 background-image: url('/graphics/greenBlock.png');
                 background-size: contain;
                 z-index: 100;
             }
             .T {
-                height: 5vmin;
-                width: 5vmin;
+                height: 4vmin;
+                width: 4vmin;
                 background-image: url('/graphics/purpleBlock.png');
                 background-size: contain;
                 z-index: 100;
             }
             .Z {
-                height: 5vmin;
-                width: 5vmin;
+                height: 4vmin;
+                width: 4vmin;
                 background-image: url('/graphics/redBlock.png');
                 background-size: contain;
                 z-index: 100;
             }
             
             .emptyCell {
-                height: 5vmin;
-                width: 5vmin;
+                height: 4vmin;
+                width: 4vmin;
             }
             
             .row {
                 display: flex;
                 justify-content: center;
-                height: 5vmin;
+                height: 4vmin;
                 pointer-events: none;
             }
         }
@@ -858,9 +836,12 @@ header{
         0% {
             transform: rotateZ(0deg);
         }
+        50%{
+            transform: rotateZ(180deg);     
+        }  
         100%{
-            transform: rotateZ(180deg);
-        }   
+            transform: rotateZ(360deg);
+        } 
     }
 }
 

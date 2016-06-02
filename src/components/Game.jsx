@@ -79,6 +79,9 @@ export default class Game extends React.Component {
 		// setTimeout(function(){
 		// 	that.state.handicapBombs.push({name: 'flip', maxTime: 5000});
 		// }, 5000)
+		socket.on('victimize', function(bomb){
+			that.state.handicapBombs.push(bomb);
+		});
 		
 		socket.on('score_update', this.scoreUpdate);
 
@@ -98,10 +101,9 @@ export default class Game extends React.Component {
 				function(scoreData) {
 					return scoreData.name === that.props.playerName;
 				}
-			) + 1;
-
-			
-		} 
+			) + 1;	
+	} 
+		
 	componentWillUnmount() {
 		document.removeEventListener('keydown', this.handleKeydown);
 		document.removeEventListener('keyup', this.handleKeyup);
@@ -222,8 +224,8 @@ export default class Game extends React.Component {
 	handleBombClick(e){
 		e.preventDefault();
 		var bomb = this.state.handicapsAcc[0];
-		this.state.handicapBombs.push(bomb);
 		this.state.handicapsAcc.splice(0,1);
+		socket.emit('bomb_sent', bomb);
 	}
 	setRank(rank) {
 		this.state.rank = rank;
@@ -281,7 +283,7 @@ export default class Game extends React.Component {
 						})
 						return;
 					} else {
-						socket.emit('score_update', {name: this.props.playerName, score: newScore})
+						socket.emit('score_update', {name: this.props.playerName, score: newScore});
 						this.setState({
 							grid: clearedGrid,
 							nextPiece: constants.SHAPES[this.state.gameBag[this.pieceCounter + 1]],
@@ -317,7 +319,6 @@ export default class Game extends React.Component {
 				hardDrop: this.hardDrop,
 				playerName: this.props.playerName,
 				rank: this.state.rank,
-				handicapsAcc: this.state.handicapsAcc,
 				handicapBombs: this.state.handicapBombs
 			}
 
