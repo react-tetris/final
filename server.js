@@ -44,15 +44,13 @@ io.on('connection', function (socket) {
 
   socket.on('start_game', startTheGame);
 
-  socket.on('bomb_sent', function (bomb) {
+  socket.on('bomb_sent', function (bombObj) {
     var victim = Math.floor(Math.random() * (Object.keys(PLAYERS).length -1));
-    Object.keys(PLAYERS).forEach(function (player, i) {
-      if(PLAYERS[player].socketId !== socket.id){
-        if(victim === i){
-          io.to(PLAYERS[player].socketId).emit('victimize', bomb);
-        }
-      }
-    })
+    var playersArr = Object.keys(PLAYERS);
+    var playerWhoSentIndex = playersArr.indexOf(bombObj.playerName);
+    playersArr.splice(playerWhoSentIndex, 1);
+    var victimPlayer = playersArr[victim];
+    io.to(PLAYERS[victimPlayer].socketId).emit('victimize', bombObj.bomb);
   });
 
   socket.on('megatron_activated', function() {

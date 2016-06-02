@@ -87,7 +87,6 @@ export default class Game extends React.Component {
 
 	}
 	scoreUpdate(scoreData) {
-		console.log(scoreData, this.scores);
 		var that = this;
 			this.scores[scoreData.name] = scoreData.score;
 
@@ -225,7 +224,8 @@ export default class Game extends React.Component {
 		e.preventDefault();
 		var bomb = this.state.handicapsAcc[0];
 		this.state.handicapsAcc.splice(0,1);
-		socket.emit('bomb_sent', bomb);
+		var daBomb = {bomb: bomb, playerName: this.props.playerName}
+		socket.emit('bomb_sent', daBomb);
 	}
 	setRank(rank) {
 		this.state.rank = rank;
