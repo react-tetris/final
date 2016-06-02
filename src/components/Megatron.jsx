@@ -11,11 +11,12 @@ function MegatronDisplay(props) {
             <h2>{props.rank}</h2>
             <Grid.Grid scaling={2} lastPlayer={props.lastPlayer} grid={props.grid} handicap={props.handicapBombs[0] ? props.handicapBombs[0].name : null} hardDrop={props.hardDrop ? gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) : null} message={props.gameMessage ? (typeof props.gameMessage === "number" ? 4-props.gameMessage : props.gameMessage) : null} activePiece={{ activePiece: props.activePiece, activePiecePosition: props.activePiecePosition }} shadowY={gp.getBottomMostPosition(props.grid, props.activePiece, props.activePiecePosition.y, props.activePiecePosition.x) } />
             <h3>{props.playerName}</h3>
-            <h3>SCORE: {props.score}</h3>
+            <h3>{props.score}</h3>
         </div>
     );
 }
 
+<<<<<<< HEAD
 // function MegatronScoreBoard(players) {
 //     return (
 //         <div className='scoreBoard'>
@@ -32,6 +33,8 @@ function MegatronDisplay(props) {
 
 //     )
 // }
+=======
+>>>>>>> 7e277914b941f24e83b4d7a09d24c1dabe0298c4
 class Megatron extends React.Component {
 
     constructor(props) {
@@ -110,12 +113,19 @@ class Megatron extends React.Component {
         
         
         else {
-            TO_RENDER = (<div className='admin-wait'>Waiting for Admin to start game</div>)
+            TO_RENDER = (
+                <div className='admin-wait'>
+                    <h1>Waiting for Admin to start game</h1>
+                </div>)
         }
 
         return (
             <div className='megatron'>
-                  <h1>BOMBTRIS</h1>
+                  <header>
+                    <h1>B</h1>
+                    <img className='bombLogo' src='http://flaticons.net/icons/Network%20and%20Security/Bomb.png'/>
+                    <h1 className='mbtris'>MBTRIS</h1>
+                  </header>
                   <ReactHowler
                     src={'../sound/videoplayback.m4a'}
                     playing={this.state.playing}
