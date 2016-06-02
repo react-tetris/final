@@ -67,7 +67,7 @@ function Grid(props) {
             <div className={props.handicap === 'shake' ? 'shake container' : (props.handicap === 'blur' ? 'blur container' : (props.handicap === 'flip' ? 'flipdiv container' : 'container'))}>
                 {props.handicap === 'troll' ? <div className='troll'><img src='http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' /></div> : '' }
                 {props.message ? <h1 className='message'>{props.message}</h1> : ''}
-                {props.handicap === 'reverse' ? <h1 className='message'>REVERSE</h1> : ''}
+                {!props.message && props.handicap === 'reverse' ? <h1 className='message'>REVERSE</h1> : ''}
                 <div className="grid" id="grid">
             {
                 props.grid.map(

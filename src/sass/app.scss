@@ -227,7 +227,7 @@
 
     .header {
         width: 100%;
-        height: 20vh;
+        height: 15vh;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -546,6 +546,7 @@
 //----------------HEADER----------------
     
 header{
+        height: 20vh;
        font-size: 1em;
        font-size: 5vmin;
        display: flex;
@@ -902,7 +903,9 @@ header{
         justify-content: space-around;
         align-items: center;
     }
-    
+    .mbtris {
+        margin: -20px;
+    }
     .playerGrid{
         margin: auto auto;
 
@@ -1048,7 +1051,7 @@ header{
             width: 20vh;
             overflow: hidden;
             transition:all 2s ease-in-out;
-            margin: 0 auto;
+            margin: 1em auto;
         }
         .container.blur {
             z-index: 999;

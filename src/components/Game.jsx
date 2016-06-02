@@ -28,7 +28,7 @@ export default class Game extends React.Component {
 			handicapsAcc: [],
 			handicapBombs: [],
 			gameMessage: 1,
-			rank: '?'
+			rank: ''
 		}
 		this.serverTimer = 0;
 		this.updateGameState = this.updateGameState.bind(this);
@@ -73,9 +73,9 @@ export default class Game extends React.Component {
 		// setTimeout(function(){
 		// 	that.state.handicapBombs.push({name: 'shake', maxTime: 2500})
 		// }, 5000)
-		// setTimeout(function(){
-		// 	that.state.handicapBombs.push({name: 'reverse', maxTime: 5000});
-		// }, 5000)
+		setTimeout(function(){
+			that.state.handicapBombs.push({name: 'reverse', maxTime: 5000});
+		}, 10000)
 		// setTimeout(function(){
 		// 	that.state.handicapBombs.push({name: 'flip', maxTime: 5000});
 		// }, 5000)
@@ -366,7 +366,7 @@ export default class Game extends React.Component {
 							</div>
 							<div className="score">
 								<h2>SCORE</h2>
-								<h3>{this.state.score} ({this.state.rank})</h3>
+								<h3>{this.state.score}</h3>
 							</div>
 						</div>
 							<div className="handicaps">
