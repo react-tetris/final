@@ -32,10 +32,8 @@ class Admin extends React.Component {
     return (
       <div className='adminPage'>
             <h1 className='adminH1'>ADMIN</h1>
-            <div className='adminButtons'>
               <button className='adminButton' type='button' onClick={this.clearPlayers}>RESTART</button>
               <button className='adminButton' type='button' onClick={this.startGame}>START</button>
-            </div>  
       </div>
     )
   }

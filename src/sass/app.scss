@@ -2,11 +2,11 @@
      box-sizing: border-box;
      margin: 0;
      font-family: 'Orbitron', sans-serif;
+     color: white;
 }
 
 // ----------STYLING FOR GAME APP------------
 .gamePage{
-
     width: 100vw;
     height: 100vh;
     background-color: #1a1a1a;
@@ -17,21 +17,19 @@
 
     h1 {
         font-size: 3em;
-        font-family: 'Orbitron', sans-serif;
-        color: white;
     }
 
     h2 {
         font-size: 2em;
-        font-family: 'Orbitron', sans-serif;
-        color: white;
     }
 
     h3 {
         font-size: 1em;
-        font-family: 'Orbitron', sans-serif;
         font-weight: 500;
-        color: white;
+    }
+    
+    h4 {
+        font-size: 0.5em;
     }
 
     .row {
@@ -278,12 +276,12 @@
         width: 40vh;
         overflow: hidden;
         transition:all 2s ease-in-out;
-        /*pointer-events: none;*/
         margin: 0 auto;
     }
     .container.blur {
         z-index: 999;
         animation: filter-animation 5s infinite;
+        transition:all 2s ease-in-out;
     }
 
     @keyframes filter-animation {
@@ -418,19 +416,19 @@
         padding: 0.8em;
     }
 
-.bombsButton{
-    width: 80px;
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: url('/graphics/BombFilled.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    padding-right: 30px;
-    padding-top: 8px;
-    color: rgba(155,155,155,1);
-}
+    .bombsButton{
+        width: 80px;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url('/graphics/BombFilled.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        padding-right: 30px;
+        padding-top: 8px;
+        color: rgba(155,155,155,1);
+    }
 
     .cat {
         top: 45%;
@@ -444,6 +442,47 @@
     @keyframes creep {
         50%   {left: 0px;}
     }
+
+    // @media only screen and (min-device-width: 768px) and (max-device-width: 1000px){
+    //     h2 {
+    //         font-size: 2em;
+    //     }
+    //     h3 {
+    //         font-size: 1.5em;
+    //         font-weight: 500;
+    //     }
+    //     h4 {
+    //         font-size: 0.5em;
+    //     }
+    //     .bombsButton{
+    //         width: 4em;
+    //         height: 4em;
+    //         display: flex;
+    //         justify-content: center;
+    //         align-items: center;
+    //         background-image: url('/graphics/BombFilled.png');
+    //         background-size: contain;
+    //         background-repeat: no-repeat;
+    //         padding-right: 40px;
+    //         padding-top: 10px;
+    //         color: rgba(155,155,155,1);
+    //     }
+    //     .footer {
+    //         margin-left: 10vw;
+    //         padding: 0.5em;
+    //         width: 50vw;
+    //         height: 20vh;
+    //     }
+    //     .leftButton {
+    //         width: 15vw;
+    //         margin-left: 15vw;
+    //     }
+    //     .rightButton {
+    //         width: 15vw;
+    //         margin-right: 15vw;
+    //     }
+    // }
+    
 
     @media only screen and (min-device-width: 320px) and (max-device-width: 510px) and (orientation: portrait){
         .nextTitle{
@@ -503,6 +542,8 @@
     width: 100%;
     height: 100%;
 }
+
+//----------------HEADER----------------
     
 header{
        font-size: 1em;
@@ -510,31 +551,23 @@ header{
        display: flex;
        flex-direction: row;
        justify-content: center;
-       align-items: center;
+       align-items: baseline;
        padding: 1em;
        
-       h1{
-           margin: 0;
-           padding: 0;
-          -webkit-margin-before: 0;
-          -webkit-margin-after: 0;
+       img {
+           top: 10px;
        }
+       
+       .bombLogo{
+            top: -9px;
+            height: 2.5 em;
+            width: 2.5em;
+            transform: rotate(-40deg);
+        }
        
        .mbtris {
            margin: -7px;
        }
-       
-       .bombLogo{
-            position: relative;
-            bottom: 18px;
-            height: 2.5em;
-            width: 2.5em;
-            transform: rotate(-40deg);
-        }
-
-        .fireBomb {
-                display: inline-block;
-        }
    }
 
 
@@ -619,20 +652,15 @@ header{
     align-items: center;
 
     .adminH1 {
-        font-size: 5em;
+        font-size: 2em;
         text-align: center;
     }
-
-    .adminButtons {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    
     .adminButton{
-        font-size: 2em;
+        font-size: 1em;
         background: #3A3E41;
         padding: 0.75em;
-        margin: 0.75em;
+        margin: 0.5em;
         text-align: center;
         border-radius: 999px;
         color: white;
@@ -680,6 +708,7 @@ header{
 .enterInput {
     padding: 6px;
     border-radius: 5px;
+    color: black;
 }
 
 .enterButton {
@@ -709,13 +738,17 @@ header{
 .alert {
     background: url('/background.png');
     color: white;
-    font-size: 2em;
+    font-size: 1.5em;
     height: 100vh;
     width: 100vw;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.alertMessage {
+    margin: 1em;
 }
     
 //------------------QUEUED-------------------
@@ -800,7 +833,7 @@ header{
         margin: 0;
         margin-top: 2em;
         padding: 0;
-        font-size: 3vmin;
+        font-size: 4vmin;
         min-height: 30vh;
     }   
     
@@ -812,25 +845,31 @@ header{
     }
     
     header{
-        font-size: 1em;
-        font-size: 5vmin;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        padding: 1em;
-        
-        img{
-            height: 3em;
-            width: 3em;
+       margin-top: 2em;
+       font-size: 1em;
+       font-size: 5vmin;
+       display: flex;
+       flex-direction: row;
+       justify-content: center;
+       align-items: baseline;
+       padding: 1em;
+       
+       img {
+           top: 10px;
+       }
+       
+       .bombLogo{
+            top: -9px;
+            height: 2.5 em;
+            width: 2.5em;
+            transform: rotate(-40deg);
         }
-        h1{
-            margin: 0;
-            padding: 0;
-           -webkit-margin-before: 0;
-           -webkit-margin-after: 0;
-        }
-    }
+       
+       .mbtris {
+           margin: -7px;
+       }
+   }
+    
     
     @keyframes queuedRotate {
         0% {
