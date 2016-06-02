@@ -16,25 +16,6 @@ function MegatronDisplay(props) {
     );
 }
 
-<<<<<<< HEAD
-// function MegatronScoreBoard(players) {
-//     return (
-//         <div className='scoreBoard'>
-//             {Object.keys(players).map(function(player){
-//                 return (
-//                 <div>
-//                     {'Player: ' + players[player].playerName + "  Score: "  + players[player].score}
-//                     <h3>{'Rank: ' + players[player].rank}</h3>
-//                 </div>
-//                 )
-//             })}
-            
-//         </div>
-
-//     )
-// }
-=======
->>>>>>> 7e277914b941f24e83b4d7a09d24c1dabe0298c4
 class Megatron extends React.Component {
 
     constructor(props) {
