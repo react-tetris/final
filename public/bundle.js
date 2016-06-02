@@ -34346,6 +34346,7 @@
 				var that = this;
 				document.addEventListener('keydown', this.handleKeydown);
 				document.addEventListener('keyup', this.handleKeyup);
+				this.gameOver = false;
 				this.pieceCounter = 1;
 				this.gameStartTime = new Date();
 				this.beforeGame();
@@ -34381,6 +34382,9 @@
 	
 				_socket2.default.on('remove_player', function (deadPlayer) {
 					delete that.scores[deadPlayer];
+				});
+				_socket2.default.on('dropPlayers', function () {
+					that.gameOver = true;
 				});
 			}
 		}, {
@@ -34593,8 +34597,8 @@
 						activePiecePosition: this.state.activePiecePosition
 					});
 				} else {
-					if (this.time || this.hardDrop) {
-						if (new Date() - this.time > 500 || this.hardDrop) {
+					if (this.time || this.hardDrop || this.gameOver) {
+						if (new Date() - this.time > 500 || this.hardDrop || this.gameOver) {
 							this.time = null;
 							var finalY = this.state.activePiecePosition.y;
 							if (this.hardDrop) {
@@ -34603,11 +34607,11 @@
 							var mergedGrid = _game_play2.default.mergeGrid(this.state.grid, this.state.activePiece, this.state.activePiecePosition.x, finalY);
 							var gridStatus = _game_play2.default.clearLines(mergedGrid);
 							var clearedGrid = gridStatus.clearedGrid;
-							var gameOver = gridStatus.gameOver;
+							this.gameOver = gridStatus.gameOver;
 							var newLines = gridStatus.clearedLines + this.state.totalLines;
 							var newScore = _game_play2.default.combos(this.previousClearedLines, gridStatus.clearedLines) + this.state.score;
 							var newHandicapArr = _game_play2.default.getRandomBomb(this.state.handicapsAcc, gridStatus.clearedLines);
-							if (gameOver) {
+							if (this.gameOver) {
 								_socket2.default.emit('player_died', this.props.playerName);
 								this.setState({
 									handicapBombs: [],
@@ -37643,7 +37647,6 @@
 	
 	    _this.clearPlayers = _this.clearPlayers.bind(_this);
 	    _this.startGame = _this.startGame.bind(_this);
-	    _this.handleSound = _this.handleSound.bind(_this);
 	    return _this;
 	  }
 	
@@ -37656,13 +37659,6 @@
 	    key: 'startGame',
 	    value: function startGame() {
 	      _socket2.default.emit('start_game');
-	    }
-	  }, {
-	    key: 'handleSound',
-	    value: function handleSound() {
-	      this.setState({
-	        playing: true
-	      });
 	    }
 	  }, {
 	    key: 'render',
@@ -38122,6 +38118,7 @@
 	        key: 'componentWillUnmount',
 	        value: function componentWillUnmount() {
 	            this.state.socket.emit('megatron_deactivated');
+	            this.state.activePlayers = {};
 	            clearInterval(this.timer);
 	            this.lastPlayer = false;
 	        }
@@ -38140,6 +38137,7 @@
 	            var playerNames = Object.keys(players);
 	
 	            if (playerNames.length > 0) {
+	
 	                TO_RENDER = playerNames.map(function (playerName) {
 	                    var player = players[playerName];
 	                    player.lastPlayer = that.lastPlayer;

@@ -16,6 +16,7 @@ function MegatronDisplay(props) {
     );
 }
 
+
 class Megatron extends React.Component {
 
     constructor(props) {
@@ -30,7 +31,7 @@ class Megatron extends React.Component {
 
     componentDidMount() {
         var that = this;
-        socket.emit('megatron_activated')
+        socket.emit('megatron_activated');
         socket.on('update_megatron', function(data) {
             that.state.activePlayers[data.playerName] = data;
             that.state.musicPlaying = true;
@@ -64,7 +65,8 @@ class Megatron extends React.Component {
     }
 
     componentWillUnmount() {
-        this.state.socket.emit('megatron_deactivated')
+        this.state.socket.emit('megatron_deactivated');
+        this.state.activePlayers={};
         clearInterval(this.timer);
         this.lastPlayer = false;
     }
@@ -76,8 +78,9 @@ class Megatron extends React.Component {
 
         var players = this.state.activePlayers;
         var playerNames = Object.keys(players);
-
+        
         if (playerNames.length > 0) {
+
             TO_RENDER = playerNames.map(function(playerName) {
                 var player = players[playerName];
                 player.lastPlayer = that.lastPlayer;

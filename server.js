@@ -25,7 +25,7 @@ io.on('connection', function (socket) {
         if(PLAYERS[player].socketId === socket.id){
           delete PLAYERS[player];
         }
-    })
+    });
     io.sockets.emit('logout', socket.id);
   });
 
@@ -36,6 +36,7 @@ io.on('connection', function (socket) {
 
   socket.on('dropPlayers', function (msg) {
     PLAYERS = {};
+    console.log("after players dropped", PLAYERS)
     io.sockets.emit('dropPlayers', 'ACCEPTING_PLAYERS')
     gameState = 'ACCEPTING_PLAYERS';
   });
@@ -55,8 +56,10 @@ io.on('connection', function (socket) {
     MEGATRONS.push(socket);
   });
   socket.on('megatron_deactivated', function() {
+    console.log("before splice", MEGATRONS)
     var idx = MEGATRONS.find(socket);
     MEGATRONS.splice(idx, 1);
+    console.log("after splice", MEGATRONS)
   });
 
   socket.on('megatron_screen', function(data) {
@@ -86,12 +89,10 @@ io.on('connection', function (socket) {
       io.emit("remove_player", deadPlayer);
     }
     delete PLAYERS[deadPlayer];
-    
-    console.log(PLAYERS);
+   
   });
 
   socket.on("new_player", function (newPlayerName) {
-    console.log('new player', newPlayerName);
     if (Object.keys(PLAYERS).length >= 6) {
       socket.emit('game_status', 'TOO_MANY_PLAYERS');
     }
