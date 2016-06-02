@@ -28,7 +28,7 @@ export default class Game extends React.Component {
 			handicapsAcc: [],
 			handicapBombs: [],
 			gameMessage: 1,
-			rank: '?'
+			rank: ''
 		}
 		this.serverTimer = 0;
 		this.updateGameState = this.updateGameState.bind(this);
@@ -84,6 +84,10 @@ export default class Game extends React.Component {
 		});
 		
 		socket.on('score_update', this.scoreUpdate);
+		
+		socket.on('remove_player', function(deadPlayer){
+			delete that.scores[deadPlayer];
+		})
 
 	}
 	scoreUpdate(scoreData) {
@@ -114,6 +118,27 @@ export default class Game extends React.Component {
 	//reusable state value for any game message
 	beforeGame(){
 		var that = this;
+		
+		if(new Date() - this.serverTimer > 500){
+			var playerInfo = {
+				grid: this.state.grid,
+				nextPiece: this.state.nextPiece,
+				activePiece: this.state.activePiece,
+				activePiecePosition: this.state.activePiecePosition,
+				totalLines: this.state.totalLines,
+				score: this.state.score,
+				hardDrop: this.hardDrop,
+				playerName: this.props.playerName,
+				rank: this.state.rank,
+				handicapBombs: this.state.handicapBombs,
+				gameMessage: this.state.gameMessage
+			}
+
+			socket.emit('megatron_screen', playerInfo);
+
+			this.serverTimer = new Date();
+		}
+		
 		if(new Date() - this.gameStartTime < 3000){
 			this.state.gameMessage = Math.floor((new Date() - this.gameStartTime)/1000)+1;
 			this.setState({gameMessage: this.state.gameMessage});
@@ -277,10 +302,12 @@ export default class Game extends React.Component {
 					var newScore = gp.combos(this.previousClearedLines, gridStatus.clearedLines) + this.state.score;
 					var newHandicapArr = gp.getRandomBomb(this.state.handicapsAcc, gridStatus.clearedLines);
 					if (gameOver) {
+						socket.emit('player_died', this.props.playerName);
 						this.setState({
+							handicapBombs: [],
 							grid: clearedGrid,
 							gameMessage: "GAME OVER!"
-						})
+						});
 						return;
 					} else {
 						socket.emit('score_update', {name: this.props.playerName, score: newScore});
@@ -322,7 +349,7 @@ export default class Game extends React.Component {
 				handicapBombs: this.state.handicapBombs
 			}
 
-			socket.emit('megatron_screen', playerInfo)
+			socket.emit('megatron_screen', playerInfo);
 
 			this.serverTimer = new Date();
 		}
@@ -346,7 +373,7 @@ export default class Game extends React.Component {
 						</Hammer>
 					</div>
 					<Hammer onSwipe={this.handleSwipe} onTap={this.handleRotate} vertical={true} options={options}>
-					<Grid.Grid scaling={4} message={this.state.gameMessage ? (typeof this.state.gameMessage === "number" ? 4-this.state.gameMessage : this.state.gameMessage) : null} handicap={this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null } grid={this.state.grid} hardDrop={this.hardDrop ? gp.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null} activePiece={{activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition}} shadowY={gp.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x)} />
+					<Grid.Grid scaling={4} lastPlayer={false} message={this.state.gameMessage ? (typeof this.state.gameMessage === "number" ? 4-this.state.gameMessage : this.state.gameMessage) : null} handicap={this.state.handicapBombs[0] ? this.state.handicapBombs[0].name : null } grid={this.state.grid} hardDrop={this.hardDrop ? gp.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x) : null} activePiece={{activePiece: this.state.activePiece, activePiecePosition: this.state.activePiecePosition}} shadowY={gp.getBottomMostPosition(this.state.grid, this.state.activePiece, this.state.activePiecePosition.y, this.state.activePiecePosition.x)} />
 					</Hammer>
 					<div className='rightSideBar'>
 						<Hammer onTap={this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'reverse' ? this.handleLeftMove : this.handleRightMove}>
@@ -366,7 +393,7 @@ export default class Game extends React.Component {
 							</div>
 							<div className="score">
 								<h2>SCORE</h2>
-								<h3>{this.state.score} ({this.state.rank})</h3>
+								<h3>{this.state.score}</h3>
 							</div>
 						</div>
 							<div className="handicaps">

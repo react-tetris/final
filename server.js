@@ -32,15 +32,13 @@ io.on('connection', function (socket) {
   socket.on('entering_game', function() {
     console.log('Someone entered the game');
     socket.emit('game_status', gameState);
-  })
+  });
 
   socket.on('dropPlayers', function (msg) {
-    console.log('in the socket')
     PLAYERS = {};
-    MEGATRONS = [];
     io.sockets.emit('dropPlayers', 'ACCEPTING_PLAYERS')
     gameState = 'ACCEPTING_PLAYERS';
-  })
+  });
 
   socket.on('start_game', startTheGame);
 
@@ -55,11 +53,11 @@ io.on('connection', function (socket) {
 
   socket.on('megatron_activated', function() {
     MEGATRONS.push(socket);
-  })
+  });
   socket.on('megatron_deactivated', function() {
     var idx = MEGATRONS.find(socket);
     MEGATRONS.splice(idx, 1);
-  })
+  });
 
   socket.on('megatron_screen', function(data) {
     if (gameState !== 'PLAYING') {
@@ -71,11 +69,26 @@ io.on('connection', function (socket) {
   })
   
   socket.on('score_update', function(data) {
+    
     io.emit('score_update', {
       name: data.name,
       score: data.score
     });
-  })
+  });
+
+//------------SOMEONE DIES
+  socket.on('player_died', function(deadPlayer){
+    var numPlayers = Object.keys(PLAYERS).length;
+    if (numPlayers === 1) {
+      io.emit('game_over', {winner: PLAYERS[deadPlayer]});
+    }
+    else {
+      io.emit("remove_player", deadPlayer);
+    }
+    delete PLAYERS[deadPlayer];
+    
+    console.log(PLAYERS);
+  });
 
   socket.on("new_player", function (newPlayerName) {
     console.log('new player', newPlayerName);
@@ -105,7 +118,7 @@ io.on('connection', function (socket) {
         }
       }
     }
-  })
+  });
 });
 
 function startTheGame() {
