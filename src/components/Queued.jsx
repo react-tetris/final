@@ -50,9 +50,9 @@ export default class Queued extends React.Component {
     return (
       <div className='queuedPage'>
         <header>
-         <h1>B</h1>
+          <h1>B</h1>
           <img className='bombLogo' src='http://flaticons.net/icons/Network%20and%20Security/Bomb.png'/>
-         <h1 className='mbtris'>MBTRIS</h1>
+          <h1 className='mbtris'>MBTRIS</h1>
         </header>
          <h2>WAITING FOR PLAYERS</h2>
          <div className='loadingImageContainer'>

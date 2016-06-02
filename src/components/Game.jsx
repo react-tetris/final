@@ -248,7 +248,7 @@ export default class Game extends React.Component {
 		//this.setState?
 		}
 
-		var speed = this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'speedUp' ? 40 : (this.fastDrop ? 25 : this.state.ySpeed);
+		var speed = this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'speedUp' ? 35 : (this.fastDrop ? 25 : this.state.ySpeed);
 		var currentState = this.state;
 		var y = currentState.activePiecePosition.y;
 
