@@ -38119,7 +38119,8 @@
 	            _socket2.default.on('dropPlayers', function () {
 	                that.lastPlayer = false;
 	                that.setState({
-	                    activePlayers: {}
+	                    activePlayers: {},
+	                    musicPlaying: false
 	                });
 	                that.playerNames = [];
 	            });
@@ -38128,7 +38129,6 @@
 	                that.setState({
 	                    gameOver: true
 	                });
-	                that.state.musicPlaying = false;
 	                that.playerNames = [];
 	            });
 	        }

@@ -61,7 +61,8 @@ class Megatron extends React.Component {
         socket.on('dropPlayers', function() {
             that.lastPlayer = false;
             that.setState({
-                activePlayers: {}
+                activePlayers: {},
+                musicPlaying: false
             })
             that.playerNames = [];
         });
@@ -70,7 +71,6 @@ class Megatron extends React.Component {
             that.setState({
                 gameOver: true
             });
-            that.state.musicPlaying = false;
             that.playerNames = [];
         })
     }
