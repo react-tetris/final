@@ -34384,6 +34384,7 @@
 					delete that.scores[deadPlayer];
 				});
 				_socket2.default.on('dropPlayers', function () {
+					console.log("DROPPED");
 					that.gameOver = true;
 				});
 			}
@@ -34432,8 +34433,11 @@
 						handicapBombs: this.state.handicapBombs,
 						gameMessage: this.state.gameMessage
 					};
-	
-					_socket2.default.emit('megatron_screen', playerInfo);
+					if (!this.gameOver) {
+						_socket2.default.emit('megatron_screen', playerInfo);
+					} else {
+						return;
+					}
 	
 					this.serverTimer = new Date();
 				}
@@ -34441,6 +34445,7 @@
 				if (new Date() - this.gameStartTime < 3000) {
 					this.state.gameMessage = Math.floor((new Date() - this.gameStartTime) / 1000) + 1;
 					this.setState({ gameMessage: this.state.gameMessage });
+					console.log("still running before");
 					requestAnimationFrame(this.beforeGame);
 				} else {
 					this.setState({ gameMessage: "GO!" });
@@ -34658,13 +34663,20 @@
 						rank: this.state.rank,
 						handicapBombs: this.state.handicapBombs
 					};
-	
-					_socket2.default.emit('megatron_screen', playerInfo);
-	
+					if (!this.gameOver) {
+						_socket2.default.emit('megatron_screen', playerInfo);
+					} else {
+						return;
+					}
 					this.serverTimer = new Date();
 				}
 	
-				requestAnimationFrame(this.updateGameState);
+				if (!this.gameOver) {
+					console.log("still running in update GS");
+					requestAnimationFrame(this.updateGameState);
+				} else {
+					return;
+				}
 			}
 		}, {
 			key: 'render',
@@ -38075,6 +38087,7 @@
 	            musicPlaying: false
 	        };
 	        _this.lastPlayer = false;
+	        _this.playerNames = [];
 	        return _this;
 	    }
 	
@@ -38083,8 +38096,17 @@
 	        value: function componentDidMount() {
 	            var that = this;
 	            _socket2.default.emit('megatron_activated');
+	
+	            _socket2.default.on('changing_players', function (PLAYERS) {
+	                that.playerNames = Object.keys(PLAYERS);
+	                console.log(that.playerNames);
+	            });
+	
 	            _socket2.default.on('update_megatron', function (data) {
-	                that.state.activePlayers[data.playerName] = data;
+	                if (that.playerNames.indexOf(data.playerName) != -1) {
+	                    console.log(data.playerName);
+	                    that.state.activePlayers[data.playerName] = data;
+	                }
 	                that.state.musicPlaying = true;
 	            });
 	            this.timer = setInterval(function () {
@@ -38106,12 +38128,14 @@
 	                that.setState({
 	                    activePlayers: {}
 	                });
+	                that.playerNames = [];
 	            });
 	
 	            _socket2.default.on('game_over', function (winner) {
 	                that.setState({
 	                    gameOver: true
 	                });
+	                that.playerNames = [];
 	            });
 	        }
 	    }, {
@@ -38119,6 +38143,7 @@
 	        value: function componentWillUnmount() {
 	            this.state.socket.emit('megatron_deactivated');
 	            this.state.activePlayers = {};
+	            this.playerNames = [];
 	            clearInterval(this.timer);
 	            this.lastPlayer = false;
 	        }

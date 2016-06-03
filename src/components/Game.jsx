@@ -90,6 +90,7 @@ export default class Game extends React.Component {
 			delete that.scores[deadPlayer];
 		})
 		socket.on('dropPlayers', function(){
+			console.log("DROPPED")
 			that.gameOver = true;
 		});
 
@@ -137,8 +138,11 @@ export default class Game extends React.Component {
 				handicapBombs: this.state.handicapBombs,
 				gameMessage: this.state.gameMessage
 			}
-
-			socket.emit('megatron_screen', playerInfo);
+			if(!this.gameOver){
+				socket.emit('megatron_screen', playerInfo);
+			} else {
+				return;
+			}
 
 			this.serverTimer = new Date();
 		}
@@ -146,6 +150,7 @@ export default class Game extends React.Component {
 		if(new Date() - this.gameStartTime < 3000){
 			this.state.gameMessage = Math.floor((new Date() - this.gameStartTime)/1000)+1;
 			this.setState({gameMessage: this.state.gameMessage});
+			console.log("still running before")
 			requestAnimationFrame(this.beforeGame)
 		}
 		else {
@@ -352,13 +357,20 @@ export default class Game extends React.Component {
 				rank: this.state.rank,
 				handicapBombs: this.state.handicapBombs
 			}
-
-			socket.emit('megatron_screen', playerInfo);
-
+			if(!this.gameOver){
+				socket.emit('megatron_screen', playerInfo);
+			} else {
+				return;
+			}
 			this.serverTimer = new Date();
 		}
-
-		requestAnimationFrame(this.updateGameState);
+		
+		if(!this.gameOver){
+			console.log("still running in update GS")
+			requestAnimationFrame(this.updateGameState);
+		} else {
+			return;
+		}
 	}
 
 	render() {

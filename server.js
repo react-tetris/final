@@ -56,10 +56,8 @@ io.on('connection', function (socket) {
     MEGATRONS.push(socket);
   });
   socket.on('megatron_deactivated', function() {
-    console.log("before splice", MEGATRONS)
     var idx = MEGATRONS.find(socket);
     MEGATRONS.splice(idx, 1);
-    console.log("after splice", MEGATRONS)
   });
 
   socket.on('megatron_screen', function(data) {
@@ -125,6 +123,7 @@ io.on('connection', function (socket) {
 function startTheGame() {
   var pieces = getGamePieces();
   io.emit('game_status', 'PLAYING');
+  io.emit('changing_players', PLAYERS);
   gameState = 'PLAYING';
   for (var playerName in PLAYERS) {
     io.to(PLAYERS[playerName].socketId).emit('start_game', {pieces: pieces, name: playerName});
