@@ -38200,7 +38200,8 @@
 	                ),
 	                _react2.default.createElement(_reactHowler2.default, {
 	                    src: '../sound/videoplayback.m4a',
-	                    playing: this.state.musicPlaying
+	                    playing: this.state.musicPlaying,
+	                    loop: true
 	                }),
 	                _react2.default.createElement(
 	                    'div',

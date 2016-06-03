@@ -125,6 +125,7 @@ class Megatron extends React.Component {
                   <ReactHowler
                     src={'../sound/videoplayback.m4a'}
                     playing={this.state.musicPlaying}
+                    loop={true}
                    />
                  <div className='megatronContainer'>
                     {TO_RENDER}
