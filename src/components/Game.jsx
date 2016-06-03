@@ -66,9 +66,9 @@ export default class Game extends React.Component {
 		// setTimeout(function(){
 		// 	that.state.handicapBombs.push({name: 'blur', maxTime: 5000})
 		// }, 6000)
-		setTimeout(function(){
-			that.state.handicapBombs.push({name: 'cat', maxTime: 4000})
-		}, 2000)
+		// setTimeout(function(){
+		// 	that.state.handicapBombs.push({name: 'cat', maxTime: 4000})
+		// }, 2000)
 		// setTimeout(function(){
 		// 	that.state.handicapBombs.push({name: 'troll', maxTime: 5000})}, 2000)
 		// setTimeout(function(){
@@ -258,10 +258,12 @@ export default class Game extends React.Component {
 
 	handleBombClick(e){
 		e.preventDefault();
-		var bomb = this.state.handicapsAcc[0];
-		this.state.handicapsAcc.splice(0,1);
-		var daBomb = {bomb: bomb, playerName: this.props.playerName}
-		socket.emit('bomb_sent', daBomb);
+		if(this.state.handicapsAcc[0]){
+			var bomb = this.state.handicapsAcc[0];
+			this.state.handicapsAcc.splice(0,1);
+			var daBomb = {bomb: bomb, playerName: this.props.playerName}
+			socket.emit('bomb_sent', daBomb);	
+		}
 	}
 	setRank(rank) {
 		this.state.rank = rank;
