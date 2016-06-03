@@ -70,6 +70,7 @@ class Megatron extends React.Component {
             that.setState({
                 gameOver: true
             });
+            that.state.musicPlaying = false;
             that.playerNames = [];
         })
     }

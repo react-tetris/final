@@ -38128,6 +38128,7 @@
 	                that.setState({
 	                    gameOver: true
 	                });
+	                that.state.musicPlaying = false;
 	                that.playerNames = [];
 	            });
 	        }
