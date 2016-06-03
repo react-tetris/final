@@ -434,15 +434,16 @@
 
     .cat {
         top: 45%;
-        left: -250px;
+        left: -500px;
         transform: scaleX(-1);
         position: absolute;
         z-index: 2000;
-        animation: creep 2s;
+        animation: creep 4s linear;
+        animation-iteration-count: 2;
     }
 
     @keyframes creep {
-        50%   {left: 0px;}
+        50%   {left: -250px;}
     }
 
 
@@ -477,7 +478,7 @@
         .bombsButton {
             width: 4em;
             height: 4em;
-            padding-right: 2.5em;
+            padding-right: 2em;
         }
     }
 
@@ -1050,40 +1051,30 @@ header{
             animation: troll 5s ease-in-out;
         }
 
-        .troll img{
+        .troll img {
             width: 100%;
-            height: 100%;
         }
 
-        // @keyframes troll {
-        //     0%, 100% {
-        //         top: 500px;
-        //     }
-        //     50% {
-        //         top: 0px;
-        //     }
-        // }
-
-        // @keyframes troll {
-        //     5%, 95% {
-        //         transform: scale(0.2);
-        //     }
-        //     10%, 90% {
-        //         transform: scale(2) rotateZ(15deg);
-        //     }
-        //     20%, 80% {
-        //         transform: scale(3) rotateZ(-15deg);
-        //     }
-        //     30%, 50%, 70% {
-        //         transform: scale(4) rotateZ(15deg);
-        //     }
-        //     40%, 60% {
-        //         transform: scale(3);
-        //     }
-        //     100%{
-        //         transform: scale(0);
-        //     }
-        // }
+        @keyframes troll {
+            5%, 95% {
+                transform: scale(0.2);
+            }
+            10%, 90% {
+                transform: scale(1.5) rotateZ(15deg);
+            }
+            20%, 80% {
+                transform: scale(1.2) rotateZ(-15deg);
+            }
+            30%, 50%, 70% {
+                transform: scale(0.8) rotateZ(15deg);
+            }
+            40%, 60% {
+                transform: scale(1.8);
+            }
+            100%{
+                transform: scale(0);
+            }
+        }
 
         .message{
             position: absolute;
