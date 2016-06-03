@@ -552,7 +552,7 @@
 //----------------HEADER----------------
     
 header{
-        height: 20vh;
+       height: 20vh;
        font-size: 1em;
        font-size: 5vmin;
        display: flex;
@@ -839,16 +839,17 @@ header{
         justify-content: space-around;
         align-items: center;
     }
+
     .lastPlayer{
         -webkit-box-shadow: 0px 0px 200px 25px rgba(219,219,99,0.7);
         -moz-box-shadow: 0px 0px 200px 25px rgba(219,219,99,0.7);
-        box-shadow: 0px 0px 200px 25px rgba(219,219,99,0.7) !important;
-        
+        box-shadow: 0px 0px 200px 25px rgba(219,219,99,0.7) !important;      
     }
 
     .mbtris {
         margin: -20px;
     }
+
     .playerGrid{
         margin: auto auto;
 

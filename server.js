@@ -25,12 +25,11 @@ io.on('connection', function (socket) {
         if(PLAYERS[player].socketId === socket.id){
           delete PLAYERS[player];
         }
-    })
+    });
     io.sockets.emit('logout', socket.id);
   });
 
   socket.on('entering_game', function() {
-    console.log('Someone entered the game');
     socket.emit('game_status', gameState);
   });
 
@@ -86,12 +85,10 @@ io.on('connection', function (socket) {
       io.emit("remove_player", deadPlayer);
     }
     delete PLAYERS[deadPlayer];
-    
-    console.log(PLAYERS);
+   
   });
 
   socket.on("new_player", function (newPlayerName) {
-    console.log('new player', newPlayerName);
     if (Object.keys(PLAYERS).length >= 6) {
       socket.emit('game_status', 'TOO_MANY_PLAYERS');
     }
@@ -124,6 +121,7 @@ io.on('connection', function (socket) {
 function startTheGame() {
   var pieces = getGamePieces();
   io.emit('game_status', 'PLAYING');
+  io.emit('changing_players', PLAYERS);
   gameState = 'PLAYING';
   for (var playerName in PLAYERS) {
     io.to(PLAYERS[playerName].socketId).emit('start_game', {pieces: pieces, name: playerName});

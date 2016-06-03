@@ -10,7 +10,6 @@ class Admin extends React.Component {
 
     this.clearPlayers = this.clearPlayers.bind(this);
     this.startGame = this.startGame.bind(this);
-    this.handleSound = this.handleSound.bind(this)
   }
 
   clearPlayers() {
@@ -19,12 +18,6 @@ class Admin extends React.Component {
 
   startGame() {
     socket.emit('start_game');
-  }
-
-  handleSound() {
-    this.setState({
-      playing: true
-    })
   }
 
   render() {

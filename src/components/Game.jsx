@@ -52,6 +52,7 @@ export default class Game extends React.Component {
 		var that = this;
 		document.addEventListener('keydown', this.handleKeydown);
 		document.addEventListener('keyup', this.handleKeyup);
+		this.gameOver = false;
 		this.pieceCounter = 1;
 		this.gameStartTime = new Date();
 		this.beforeGame();
@@ -88,6 +89,9 @@ export default class Game extends React.Component {
 		socket.on('remove_player', function(deadPlayer){
 			delete that.scores[deadPlayer];
 		})
+		socket.on('dropPlayers', function(){
+			that.gameOver = true;
+		});
 
 	}
 	scoreUpdate(scoreData) {
@@ -133,8 +137,11 @@ export default class Game extends React.Component {
 				handicapBombs: this.state.handicapBombs,
 				gameMessage: this.state.gameMessage
 			}
-
-			socket.emit('megatron_screen', playerInfo);
+			if(!this.gameOver){
+				socket.emit('megatron_screen', playerInfo);
+			} else {
+				return;
+			}
 
 			this.serverTimer = new Date();
 		}
@@ -272,11 +279,9 @@ export default class Game extends React.Component {
 		else if (this.state.handicapBombs[0] && (new Date()-this.handicapStartTime > this.state.handicapBombs[0].maxTime)) {
 				if (this.state.handicapBombs[0].name === 'shake'){
 					this.state.grid = h.shake(this.state.grid)
-					//setState??
 				}
 		this.state.handicapBombs.splice(0, 1);
 		this.handicapStartTime = null;
-		//this.setState?
 		}
 
 		var speed = this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'speedUp' ? 35 : (this.fastDrop ? 25 : this.state.ySpeed);
@@ -291,8 +296,8 @@ export default class Game extends React.Component {
 				activePiecePosition: this.state.activePiecePosition,
 			});
 		} else {
-			if (this.time || this.hardDrop) {
-				if (new Date() - this.time > 500 || this.hardDrop) {
+			if (this.time || this.hardDrop || this.gameOver) {
+				if (new Date() - this.time > 500 || this.hardDrop || this.gameOver) {
 					this.time = null;
 					var finalY = this.state.activePiecePosition.y;
 					if (this.hardDrop){
@@ -301,11 +306,11 @@ export default class Game extends React.Component {
 					var mergedGrid = gp.mergeGrid(this.state.grid, this.state.activePiece, this.state.activePiecePosition.x, finalY);
 					var gridStatus = gp.clearLines(mergedGrid);
 					var clearedGrid = gridStatus.clearedGrid;
-					var gameOver = gridStatus.gameOver;
+					this.gameOver = gridStatus.gameOver;
 					var newLines = gridStatus.clearedLines + this.state.totalLines;
 					var newScore = gp.combos(this.previousClearedLines, gridStatus.clearedLines) + this.state.score;
 					var newHandicapArr = gp.getRandomBomb(this.state.handicapsAcc, gridStatus.clearedLines);
-					if (gameOver) {
+					if (this.gameOver) {
 						socket.emit('player_died', this.props.playerName);
 						this.setState({
 							handicapBombs: [],
@@ -352,13 +357,19 @@ export default class Game extends React.Component {
 				rank: this.state.rank,
 				handicapBombs: this.state.handicapBombs
 			}
-
-			socket.emit('megatron_screen', playerInfo);
-
+			if(!this.gameOver){
+				socket.emit('megatron_screen', playerInfo);
+			} else {
+				return;
+			}
 			this.serverTimer = new Date();
 		}
-
-		requestAnimationFrame(this.updateGameState);
+		
+		if(!this.gameOver){
+			requestAnimationFrame(this.updateGameState);
+		} else {
+			return;
+		}
 	}
 
 	render() {

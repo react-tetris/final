@@ -26,13 +26,21 @@ class Megatron extends React.Component {
             musicPlaying: false
         };
         this.lastPlayer = false;
+        this.playerNames = [];
     }
 
     componentDidMount() {
         var that = this;
-        socket.emit('megatron_activated')
+        socket.emit('megatron_activated');
+        
+        socket.on('changing_players', function(PLAYERS){
+            that.playerNames = Object.keys(PLAYERS);
+        })
+        
         socket.on('update_megatron', function(data) {
-            that.state.activePlayers[data.playerName] = data;
+            if(that.playerNames.indexOf(data.playerName) != -1){
+                that.state.activePlayers[data.playerName] = data;
+            }
             that.state.musicPlaying = true;
         });
         this.timer = setInterval(function() {
@@ -54,17 +62,21 @@ class Megatron extends React.Component {
             that.setState({
                 activePlayers: {}
             })
+            that.playerNames = [];
         });
         
         socket.on('game_over', function(winner) {
             that.setState({
                 gameOver: true
             });
+            that.playerNames = [];
         })
     }
 
     componentWillUnmount() {
-        this.state.socket.emit('megatron_deactivated')
+        this.state.socket.emit('megatron_deactivated');
+        this.state.activePlayers={};
+        this.playerNames=[];
         clearInterval(this.timer);
         this.lastPlayer = false;
     }
@@ -76,8 +88,9 @@ class Megatron extends React.Component {
 
         var players = this.state.activePlayers;
         var playerNames = Object.keys(players);
-
+        
         if (playerNames.length > 0) {
+
             TO_RENDER = playerNames.map(function(playerName) {
                 var player = players[playerName];
                 player.lastPlayer = that.lastPlayer;
@@ -109,7 +122,7 @@ class Megatron extends React.Component {
                   </header>
                   <ReactHowler
                     src={'../sound/videoplayback.m4a'}
-                    playing={this.state.playing}
+                    playing={this.state.musicPlaying}
                    />
                  <div className='megatronContainer'>
                     {TO_RENDER}
@@ -119,5 +132,4 @@ class Megatron extends React.Component {
     }
 }
 
-//<div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
 module.exports = Megatron;
