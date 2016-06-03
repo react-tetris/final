@@ -20,7 +20,7 @@
     }
 
     h2 {
-        font-size: 2em;
+        font-size: 1em;
     }
 
     h3 {
@@ -235,10 +235,12 @@
 
     .rightSideBar{
         height: 80vh;
+        width: 10vw;
         flex: 1;
     }
     .leftSideBar{
         height: 80vh;
+        width: 10vw;
         flex: 1;
     }
     .controlButton{
@@ -435,91 +437,71 @@
         left: -500px;
         transform: scaleX(-1);
         position: absolute;
-        z-index: 200;
-        animation: creep 2s;
+        z-index: 2000;
+        animation: creep 4s linear;
+        animation-iteration-count: 2;
     }
 
     @keyframes creep {
-        50%   {left: 0px;}
+        50%   {left: -250px;}
     }
 
-    // @media only screen and (min-device-width: 768px) and (max-device-width: 1000px){
-    //     h2 {
-    //         font-size: 2em;
-    //     }
-    //     h3 {
-    //         font-size: 1.5em;
-    //         font-weight: 500;
-    //     }
-    //     h4 {
-    //         font-size: 0.5em;
-    //     }
-    //     .bombsButton{
-    //         width: 4em;
-    //         height: 4em;
-    //         display: flex;
-    //         justify-content: center;
-    //         align-items: center;
-    //         background-image: url('/graphics/BombFilled.png');
-    //         background-size: contain;
-    //         background-repeat: no-repeat;
-    //         padding-right: 40px;
-    //         padding-top: 10px;
-    //         color: rgba(155,155,155,1);
-    //     }
-    //     .footer {
-    //         margin-left: 10vw;
-    //         padding: 0.5em;
-    //         width: 50vw;
-    //         height: 20vh;
-    //     }
-    //     .leftButton {
-    //         width: 15vw;
-    //         margin-left: 15vw;
-    //     }
-    //     .rightButton {
-    //         width: 15vw;
-    //         margin-right: 15vw;
-    //     }
-    // }
-    
 
-    @media only screen and (min-device-width: 320px) and (max-device-width: 510px) and (orientation: portrait){
+    @media only screen and (min-device-width: 415px){
         .nextTitle{
             display: none;
         }
         h2 {
-            font-size: 1em;
+            font-size: 1.5em;
             margin: 0;
         }
         h3{
+            font-size: 1em;
             margin: 0;
         }
         .message {
             font-size: 2em;
         }
-    }
 
-    @media only screen and (orientation: landscape) {
-        &::after {
-            content: "PLEASE FLIP YOUR DEVICE";
-            color: white;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3em;
-            background: url('/background.png');
-            position: fixed;
-            z-index: 9999;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        .rightButton {
+            width: 10vh;
+            margin-right: auto;
         }
-
+        .leftButton {
+            width: 10vh;
+            margin-left: auto;
+        }
+        .footer {
+            width: 60vh;
+            align-self: center;
+        }
+        .bombsButton {
+            width: 4em;
+            height: 4em;
+            padding-right: 2em;
+        }
     }
+
+    // @media only screen and (orientation: landscape) {
+    //     &::after {
+    //         content: "PLEASE FLIP YOUR DEVICE";
+    //         color: white;
+    //         text-align: center;
+    //         display: flex;
+    //         align-items: center;
+    //         justify-content: center;
+    //         font-family: 'Orbitron', sans-serif;
+    //         font-size: 3em;
+    //         background: url('/background.png');
+    //         position: fixed;
+    //         z-index: 9999;
+    //         top: 0;
+    //         left: 0;
+    //         width: 100%;
+    //         height: 100%;
+    //     }
+
+    // }
 
 }
 
@@ -594,76 +576,6 @@ header{
            margin: -7px;
        }
    }
-
-
-
-//---------------FLAME------------------
-
-.flameContainer{
-  left: 13px;
-  bottom: 17px;
-  width: 20px;
-  height: 20px;
-  position:relative;
-  transform-origin:center bottom;
-  animation-name: flicker;
-  animation-duration:3ms;
-  animation-delay:200ms;
-  animation-timing-function: ease-in;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
-
-.flame{
-  bottom:0;
-  position:absolute;
-  border-bottom-right-radius: 50%;
-  border-bottom-left-radius: 50%;
-  border-top-left-radius: 50%;
-  transform:rotate(-45deg) scale(1.5,1.5);
-
-&.yellow{
-  left:19px; 
-  width: 1px;
-  height: 1px;
-  background:gold;
-  box-shadow: 0px 0px 4.5px 2px gold;
-}
-
-&.orange{
-  left:19px; 
-  width: 2px;
-  height: 2px;
-  background:orange;
-  box-shadow: 0px 0px 4.5px 2px orange;
-}
-
-&.red{
-  left: 19px;
-  width: 3px;
-  height: 3px;
-  background:OrangeRed;
-  box-shadow: 0px 0px 2.5px 2px OrangeRed;
-}
-
-&.white{
-  left:19px; 
-  bottom:-4px;
-  width: 1px;
-  height: 1px;
-  background:white;
-  box-shadow: 0px 0px 4.5px 2px white;
-}
-}
-@keyframes flicker{
-  0%   {transform: rotate(-1deg);}
-  20%  {transform: rotate(1deg);}
-  40%  {transform: rotate(-1deg);}
-  60%  {transform: rotate(1deg) scaleY(1.04);}
-  80%  {transform: rotate(-2deg) scaleY(0.92);}
-  100% {transform: rotate(1deg);}
-}
-
 
 //---------------ADMIN PAGE-----------------
 .adminPage {
@@ -870,7 +782,7 @@ header{
     }
     
     header{
-       margin-top: 2em;
+       margin: 1em;
        font-size: 1em;
        font-size: 5vmin;
        display: flex;
@@ -927,13 +839,13 @@ header{
         justify-content: space-around;
         align-items: center;
     }
-    
+
     .lastPlayer{
         -webkit-box-shadow: 0px 0px 200px 25px rgba(219,219,99,0.7);
         -moz-box-shadow: 0px 0px 200px 25px rgba(219,219,99,0.7);
         box-shadow: 0px 0px 200px 25px rgba(219,219,99,0.7) !important;      
     }
-    
+
     .mbtris {
         margin: -20px;
     }
@@ -1132,7 +1044,7 @@ header{
         }
 
         .troll{
-            top: 30%;
+            top: 500px;
             width: 100%;
             position: absolute;
             z-index: 500;
@@ -1140,7 +1052,7 @@ header{
             animation: troll 5s ease-in-out;
         }
 
-        .troll img{
+        .troll img {
             width: 100%;
         }
 

@@ -16,7 +16,6 @@ function MegatronDisplay(props) {
     );
 }
 
-
 class Megatron extends React.Component {
 
     constructor(props) {

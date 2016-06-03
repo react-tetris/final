@@ -65,7 +65,8 @@ function Grid(props) {
         return (
 
             <div className={props.handicap === 'shake' ? 'shake container' : (props.handicap === 'blur' ? 'blur container' : (props.handicap === 'flip' ? 'flipdiv container' : (props.lastPlayer ? 'container lastPlayer' : 'container')))}>
-                {props.handicap === 'troll' ? <div className='troll'><img src='http://vignette2.wikia.nocookie.net/roblox/images/3/38/Transparent_Troll_Face.png/revision/latest?cb=20120713214853' /></div> : '' }
+                {props.handicap === 'troll' ? <div className='troll'><img src='https://mail.artikel-140.nl/img/catcool.png' /></div> : '' }
+                {props.handicap === 'cat' ? <div className='cat'><img src='http://66.media.tumblr.com/c346091b00f14fc5672a66c115e40170/tumblr_mo37dwMdF31s5jjtzo1_500.png' /></div> : '' }
                 {props.message ? <h1 className='message'>{props.message}</h1> : ''}
                 {props.handicap === 'reverse' ? <h1 className='message'>REVERSE</h1> : ''}
                 <div className={props.lastPlayer ? "grid lastPlayer" : "grid"} id="grid">

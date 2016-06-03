@@ -249,7 +249,7 @@ function getRandomBomb(handicapArr, clearedLines){
         {name: 'blur', maxTime: 5000},
         {name: 'flip', maxTime: 8000},
 		{name: 'troll', maxTime: 5000},
-		// {name: 'cat', maxTime: 5000}
+		{name: 'cat', maxTime: 4000}
         ];
 	var randomBomb = bombs[Math.floor(Math.random() * bombs.length)];
 

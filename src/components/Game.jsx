@@ -66,11 +66,11 @@ export default class Game extends React.Component {
 		// setTimeout(function(){
 		// 	that.state.handicapBombs.push({name: 'blur', maxTime: 5000})
 		// }, 6000)
+		setTimeout(function(){
+			that.state.handicapBombs.push({name: 'cat', maxTime: 4000})
+		}, 2000)
 		// setTimeout(function(){
-		// 	that.state.handicapBombs.push({name: 'cat', maxTime: 5000})
-		// }, 2000)
-		// setTimeout(function(){
-		// 	that.state.handicapBombs.push({name: 'troll', maxTime: 5000})
+		// 	that.state.handicapBombs.push({name: 'troll', maxTime: 5000})}, 2000)
 		// setTimeout(function(){
 		// 	that.state.handicapBombs.push({name: 'shake', maxTime: 2500})
 		// }, 5000)
@@ -192,6 +192,8 @@ export default class Game extends React.Component {
 						return;
 					case 32:
 						this.handleHardDrop();
+					case 13:
+						this.handleBombClick(e);
 				}
 			}
 			else {
@@ -210,6 +212,8 @@ export default class Game extends React.Component {
 						return;
 					case 32:
 						this.handleHardDrop();
+					case 13:
+						this.handleBombClick(e);
 				}
 			}
 		}

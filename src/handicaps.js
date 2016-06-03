@@ -4,6 +4,7 @@
 //{name: 'blur', maxTime: 10000}
 //{name: 'shake', maxTime: 10000}
 //{name: 'reverse', maxTime: 5000}
+//{name: 'cat', maxTime: 2000}
 
 function extraLines(grid){
 	
