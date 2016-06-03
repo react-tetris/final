@@ -90,7 +90,6 @@ export default class Game extends React.Component {
 			delete that.scores[deadPlayer];
 		})
 		socket.on('dropPlayers', function(){
-			console.log("DROPPED")
 			that.gameOver = true;
 		});
 
@@ -150,7 +149,6 @@ export default class Game extends React.Component {
 		if(new Date() - this.gameStartTime < 3000){
 			this.state.gameMessage = Math.floor((new Date() - this.gameStartTime)/1000)+1;
 			this.setState({gameMessage: this.state.gameMessage});
-			console.log("still running before")
 			requestAnimationFrame(this.beforeGame)
 		}
 		else {
@@ -277,11 +275,9 @@ export default class Game extends React.Component {
 		else if (this.state.handicapBombs[0] && (new Date()-this.handicapStartTime > this.state.handicapBombs[0].maxTime)) {
 				if (this.state.handicapBombs[0].name === 'shake'){
 					this.state.grid = h.shake(this.state.grid)
-					//setState??
 				}
 		this.state.handicapBombs.splice(0, 1);
 		this.handicapStartTime = null;
-		//this.setState?
 		}
 
 		var speed = this.state.handicapBombs[0] && this.state.handicapBombs[0].name === 'speedUp' ? 35 : (this.fastDrop ? 25 : this.state.ySpeed);
@@ -366,7 +362,6 @@ export default class Game extends React.Component {
 		}
 		
 		if(!this.gameOver){
-			console.log("still running in update GS")
 			requestAnimationFrame(this.updateGameState);
 		} else {
 			return;

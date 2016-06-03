@@ -30,13 +30,11 @@ io.on('connection', function (socket) {
   });
 
   socket.on('entering_game', function() {
-    console.log('Someone entered the game');
     socket.emit('game_status', gameState);
   });
 
   socket.on('dropPlayers', function (msg) {
     PLAYERS = {};
-    console.log("after players dropped", PLAYERS)
     io.sockets.emit('dropPlayers', 'ACCEPTING_PLAYERS')
     gameState = 'ACCEPTING_PLAYERS';
   });

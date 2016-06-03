@@ -36,12 +36,10 @@ class Megatron extends React.Component {
         
         socket.on('changing_players', function(PLAYERS){
             that.playerNames = Object.keys(PLAYERS);
-            console.log(that.playerNames);
         })
         
         socket.on('update_megatron', function(data) {
             if(that.playerNames.indexOf(data.playerName) != -1){
-                console.log(data.playerName)
                 that.state.activePlayers[data.playerName] = data;
             }
             that.state.musicPlaying = true;
@@ -125,7 +123,7 @@ class Megatron extends React.Component {
                   </header>
                   <ReactHowler
                     src={'../sound/videoplayback.m4a'}
-                    playing={this.state.playing}
+                    playing={this.state.musicPlaying}
                    />
                  <div className='megatronContainer'>
                     {TO_RENDER}
@@ -135,5 +133,4 @@ class Megatron extends React.Component {
     }
 }
 
-//<div className='scoreboard'>{MegatronScoreBoard(that.state.activePlayers)}</div>
 module.exports = Megatron;
