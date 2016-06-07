@@ -1,5 +1,5 @@
 #BOMBTRIS
-========
+=========
 
 Bombtris is a fast-paced multiplayer Tetris clone. Players can accumulate bombs by clearing lines and then release the bombs randomly in hopes of hindering the other player's performance.
 
@@ -14,4 +14,7 @@ Built with React.js, Hammer.js, Node.js, Express.js, Socket.io
 <img src="Bombtris_BlurScreenshot.PNG" width="200">
 <img src="Bombtris_ExtraLines.PNG" width="200">
 <img src="Bombtris_GameOver.PNG" width="200">
-<img src="Bombtris_WinnerSceenshot.PNG" width="200">
+
+[Bombtris](http://bombtris.herokuapp.com/ "Bombtris")
+[Bombtris Admin](http://bombtris.herokuapp.com/admin "Bombtris Admin")
+[Bombtris Megatron](http://bombtris.herokuapp.com/megatron "Bombtris Megatron")
