@@ -28,7 +28,7 @@ Built with React.js, Hammer.js, Node.js, Express.js, Socket.io
 <br>
 <br>
 ######Created By
->Carmen Holmes
->Joseph Sabbagh
+>Carmen Holmes<br>
+>Joseph Sabbagh<br>
 >Marie Godon
 
