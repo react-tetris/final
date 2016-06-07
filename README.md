@@ -15,7 +15,7 @@ Built with React.js, Hammer.js, Node.js, Express.js, Socket.io
 <img src="Bombtris_ExtraLines.PNG" width="200">
 <img src="Bombtris_GameOver.PNG" width="200">
 <br>
-<img src="Megatron_Screenshot.png" width=400">
+<img src="Megatron_Screenshot.png">
 ##Bombtris App
 
 [Bombtris](http://bombtris.herokuapp.com/ "Bombtris")
