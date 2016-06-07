@@ -16,5 +16,7 @@ Built with React.js, Hammer.js, Node.js, Express.js, Socket.io
 <img src="Bombtris_GameOver.PNG" width="200">
 
 [Bombtris](http://bombtris.herokuapp.com/ "Bombtris")
+<br>
 [Bombtris Admin](http://bombtris.herokuapp.com/admin "Bombtris Admin")
+<br>
 [Bombtris Megatron](http://bombtris.herokuapp.com/megatron "Bombtris Megatron")
