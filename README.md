@@ -7,6 +7,9 @@ The interface and all of the game logic was built entirely using JavaScript in R
 
 Built with React.js, Hammer.js, Node.js, Express.js, Socket.io
 
-![Go Screenshot](/Bombtris_GoScreenshot.PNG?raw=true)
-
 <img src="Bombtris_GoScreenshot.PNG" width="200">
+<img src="Bombtris_Screenshot.PNG" width="200">
+<img src="Bombtris_FlipScreenshot.PNG" width="200">
+<img src="Bombtris_BlurScreenshot.PNG" width="200">
+<img src="Bombtris_ExtraLines.PNG" width="200">
+<img src="Bombtris_GameOver.PNG" width="200">
