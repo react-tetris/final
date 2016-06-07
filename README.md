@@ -25,3 +25,10 @@ Built with React.js, Hammer.js, Node.js, Express.js, Socket.io
 [Bombtris Admin](http://bombtris.herokuapp.com/admin "Bombtris Admin")
 <br>
 [Bombtris Megatron](http://bombtris.herokuapp.com/megatron "Bombtris Megatron")
+<br>
+<br>
+######Created By
+>Carmen Holmes
+>Joseph Sabbagh
+>Marie Godon
+
